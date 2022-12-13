@@ -19,7 +19,12 @@ function App() {
       {DropDownPanel("ferit")}
 
       <div className="image-slider">
-        <img src={images['A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg']} />
+      {Object.entries(images).map((key, index)=>{
+        console.log(key)
+      return(   
+        <img src={images[key[0]]} />
+        )
+    })}
         {/* <img src={image2} />
         <img src={image3} />
         <img src={image4} /> */}
