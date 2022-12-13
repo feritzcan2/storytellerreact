@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/storytellerreact/static/css/main.e88684f3.css",
-    "main.js": "/storytellerreact/static/js/main.84334c79.js",
+    "main.js": "/storytellerreact/static/js/main.c741e5f5.js",
     "static/js/787.6c520046.chunk.js": "/storytellerreact/static/js/787.6c520046.chunk.js",
     "static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.b40189e28ba993f4f5cb.jpeg",
     "static/media/J - JANE EYRE - 2. SAYFA.jpeg": "/storytellerreact/static/media/J - JANE EYRE - 2. SAYFA.5f1898e3d8706d4ab871.jpeg",
@@ -211,11 +211,11 @@
     "static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.969d182b748797180b8d.jpeg",
     "index.html": "/storytellerreact/index.html",
     "main.e88684f3.css.map": "/storytellerreact/static/css/main.e88684f3.css.map",
-    "main.84334c79.js.map": "/storytellerreact/static/js/main.84334c79.js.map",
+    "main.c741e5f5.js.map": "/storytellerreact/static/js/main.c741e5f5.js.map",
     "787.6c520046.chunk.js.map": "/storytellerreact/static/js/787.6c520046.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e88684f3.css",
-    "static/js/main.84334c79.js"
+    "static/js/main.c741e5f5.js"
   ]
 }
