@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/storytellerreact/static/css/main.e88684f3.css",
-    "main.js": "/storytellerreact/static/js/main.c741e5f5.js",
+    "main.js": "/storytellerreact/static/js/main.b6def079.js",
     "static/js/787.6c520046.chunk.js": "/storytellerreact/static/js/787.6c520046.chunk.js",
     "static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.b40189e28ba993f4f5cb.jpeg",
     "static/media/J - JANE EYRE - 2. SAYFA.jpeg": "/storytellerreact/static/media/J - JANE EYRE - 2. SAYFA.5f1898e3d8706d4ab871.jpeg",
@@ -26,7 +26,7 @@
     "static/media/E - EZOP MASALLARI - 2. SAYFA.jpeg": "/storytellerreact/static/media/E - EZOP MASALLARI - 2. SAYFA.5176ab1d52d084a4c35c.jpeg",
     "static/media/Ü - ÜÇ SİLAHŞORLAR - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ü - ÜÇ SİLAHŞORLAR - 3. SAYFA.e7705de3bc34f38b5e5e.jpeg",
     "static/media/P - PAL SOKAĞI ÇOCUKLARI - 2. SAYFA.jpeg": "/storytellerreact/static/media/P - PAL SOKAĞI ÇOCUKLARI - 2. SAYFA.9eb64ff8004c80b066c4.jpeg",
-    "static/media/C - CİMRİ 2. SAYFA.jpeg": "/storytellerreact/static/media/C - CİMRİ 2. SAYFA.597f75c79d090091f9df.jpeg",
+    "static/media/C - CİMRİ -2. SAYFA.jpeg": "/storytellerreact/static/media/C - CİMRİ -2. SAYFA.597f75c79d090091f9df.jpeg",
     "static/media/D - DON KİŞOT - 2. SAYFA.jpeg": "/storytellerreact/static/media/D - DON KİŞOT - 2. SAYFA.b4fecf921221dbeaf3c5.jpeg",
     "static/media/T - TERS YÜZ ŞATOSU - 2. SAYFA.jpeg": "/storytellerreact/static/media/T - TERS YÜZ ŞATOSU - 2. SAYFA.e93ba936cc3c85530b84.jpeg",
     "static/media/İ - İNSAN NE İLE YAŞAR - 4. SAYFA.jpeg": "/storytellerreact/static/media/İ - İNSAN NE İLE YAŞAR - 4. SAYFA.411b35a8f3e7449af086.jpeg",
@@ -53,7 +53,7 @@
     "static/media/Ğ - DEĞİRMENİMDEN MEKTUPLAR - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ğ - DEĞİRMENİMDEN MEKTUPLAR - 2. SAYFA.bda30242745662c5591a.jpeg",
     "static/media/Ü - ÜÇ SİLAHŞORLAR - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ü - ÜÇ SİLAHŞORLAR - 2. SAYFA.baa57660beeaffc65920.jpeg",
     "static/media/K - KÜÇÜK PRENS - 1. SAYFA.jpeg": "/storytellerreact/static/media/K - KÜÇÜK PRENS - 1. SAYFA.549f2d869aa04c40d7d1.jpeg",
-    "static/media/A - AYA YOLCULUK 2. SAYFA.jpeg": "/storytellerreact/static/media/A - AYA YOLCULUK 2. SAYFA.01f12bc6f61c2dd2fce3.jpeg",
+    "static/media/A - AYA YOLCULUK - 2. SAYFA.jpeg": "/storytellerreact/static/media/A - AYA YOLCULUK - 2. SAYFA.01f12bc6f61c2dd2fce3.jpeg",
     "static/media/B- BEYAZ GEMİ - 2. SAYFA.jpeg": "/storytellerreact/static/media/B- BEYAZ GEMİ - 2. SAYFA.13160f04120f4a41dade.jpeg",
     "static/media/N - NOTRE DAME'IN KAMBURU - 1. SAYFA.jpeg": "/storytellerreact/static/media/N - NOTRE DAME'IN KAMBURU - 1. SAYFA.5f43beb1fee90a3aded2.jpeg",
     "static/media/Y - YANLIŞLIKLA DÜNYANIN ÖBÜR UCUNA UÇAN ÇOCUK - 2. SAYFA.jpeg": "/storytellerreact/static/media/Y - YANLIŞLIKLA DÜNYANIN ÖBÜR UCUNA UÇAN ÇOCUK - 2. SAYFA.83b4df615ed99325d1f5.jpeg",
@@ -148,7 +148,7 @@
     "static/media/F - FİLLER SULTANI İLE KIRMIZI SAKALLI TOPAL KARINCA - 1. SAYFA.jpeg": "/storytellerreact/static/media/F - FİLLER SULTANI İLE KIRMIZI SAKALLI TOPAL KARINCA - 1. SAYFA.da9731d8decbdf4d3bc7.jpeg",
     "static/media/D - DEDE KORKUT HİKAYELERİ - 2. SAYFA.jpeg": "/storytellerreact/static/media/D - DEDE KORKUT HİKAYELERİ - 2. SAYFA.28ce0b0ed80436c385e6.jpeg",
     "static/media/L - LEYLA İLE MECNUN - 3. SAYFA.jpeg": "/storytellerreact/static/media/L - LEYLA İLE MECNUN - 3. SAYFA.48ff57d2bbdd88ef5093.jpeg",
-    "static/media/C - CİMRİ 3. SAYFA.jpeg": "/storytellerreact/static/media/C - CİMRİ 3. SAYFA.334416c9ede9619053a5.jpeg",
+    "static/media/C - CİMRİ -3. SAYFA.jpeg": "/storytellerreact/static/media/C - CİMRİ -3. SAYFA.334416c9ede9619053a5.jpeg",
     "static/media/M - MATİLDA - 3. SAYFA.jpeg": "/storytellerreact/static/media/M - MATİLDA - 3. SAYFA.39f91aa7de8e6d17b57b.jpeg",
     "static/media/HER HİKAYENİN BAŞINA GELECEK 2. SAYFA.jpeg": "/storytellerreact/static/media/HER HİKAYENİN BAŞINA GELECEK 2. SAYFA.16616fd3c933e08579ee.jpeg",
     "static/media/Ç - ÇİZGİLİ PİJAMALI ÇOCUK - 1. SAYFA.jpeg": "/storytellerreact/static/media/Ç - ÇİZGİLİ PİJAMALI ÇOCUK - 1. SAYFA.f54fd4873f5a374d218d.jpeg",
@@ -168,7 +168,7 @@
     "static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 3. SAYFA.8803f76417b2daf98b7a.jpeg",
     "static/media/H - HACİVAT VE KARAGÖZ - 1. SAYFA.jpeg": "/storytellerreact/static/media/H - HACİVAT VE KARAGÖZ - 1. SAYFA.481ed1c5725650703e9d.jpeg",
     "static/media/M - MATİLDA - 1. SAYFA.jpeg": "/storytellerreact/static/media/M - MATİLDA - 1. SAYFA.ac7ff8115377da0b32b9.jpeg",
-    "static/media/E - ESİR ŞEHRİN İNSANLARI 3. SAYFA.jpeg": "/storytellerreact/static/media/E - ESİR ŞEHRİN İNSANLARI 3. SAYFA.b149f8fc7644a0b1140a.jpeg",
+    "static/media/E - ESİR ŞEHRİN İNSANLARI -3. SAYFA.jpeg": "/storytellerreact/static/media/E - ESİR ŞEHRİN İNSANLARI -3. SAYFA.b149f8fc7644a0b1140a.jpeg",
     "static/media/S - SADAKO - 3. SAYFA.jpeg": "/storytellerreact/static/media/S - SADAKO - 3. SAYFA.b659ca6f3dca61a71ae4.jpeg",
     "static/media/Ğ - DEĞİRMENİMDEN MEKTUPLAR - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ğ - DEĞİRMENİMDEN MEKTUPLAR - 3. SAYFA.2c98bcfcd07cdc0e12f0.jpeg",
     "static/media/V - VATAN YAHUT SİLİSTRE - 3. SAYFA.jpeg": "/storytellerreact/static/media/V - VATAN YAHUT SİLİSTRE - 3. SAYFA.cc0afc3f7e793a752136.jpeg",
@@ -202,7 +202,7 @@
     "static/media/F - FİLLER SULTANI İLE KIRMIZI SAKALLI TOPAL KARINCA - 3. SAYFA.jpeg": "/storytellerreact/static/media/F - FİLLER SULTANI İLE KIRMIZI SAKALLI TOPAL KARINCA - 3. SAYFA.5e282eb117111305dfdf.jpeg",
     "static/media/D - DEDE KORKUT HİKAYELERİ - 3. SAYFA.jpeg": "/storytellerreact/static/media/D - DEDE KORKUT HİKAYELERİ - 3. SAYFA.177649ccf7b23a8d6ae3.jpeg",
     "static/media/R - ROBİN HOOD - 1. SAYFA.jpeg": "/storytellerreact/static/media/R - ROBİN HOOD - 1. SAYFA.11667e1bf1179b1586c0.jpeg",
-    "static/media/B - BEYAZ GEMİ 3. SAYFA.jpeg": "/storytellerreact/static/media/B - BEYAZ GEMİ 3. SAYFA.f21849038b2863c391e8.jpeg",
+    "static/media/B - BEYAZ GEMİ - 3. SAYFA.jpeg": "/storytellerreact/static/media/B - BEYAZ GEMİ - 3. SAYFA.f21849038b2863c391e8.jpeg",
     "static/media/Ö - ÖLÜ OZANLAR DERNEĞİ - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ö - ÖLÜ OZANLAR DERNEĞİ - 3. SAYFA.99f6a00af984f022fb0f.jpeg",
     "static/media/I - SIRÇA KÖŞK - 3. SAYFA.jpeg": "/storytellerreact/static/media/I - SIRÇA KÖŞK - 3. SAYFA.fc64411bfc4241bc585b.jpeg",
     "static/media/B- BEYAZ DİŞ - 3. SAYFA.jpeg": "/storytellerreact/static/media/B- BEYAZ DİŞ - 3. SAYFA.c72e03d23c6d7e543870.jpeg",
@@ -211,11 +211,11 @@
     "static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.969d182b748797180b8d.jpeg",
     "index.html": "/storytellerreact/index.html",
     "main.e88684f3.css.map": "/storytellerreact/static/css/main.e88684f3.css.map",
-    "main.c741e5f5.js.map": "/storytellerreact/static/js/main.c741e5f5.js.map",
+    "main.b6def079.js.map": "/storytellerreact/static/js/main.b6def079.js.map",
     "787.6c520046.chunk.js.map": "/storytellerreact/static/js/787.6c520046.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e88684f3.css",
-    "static/js/main.c741e5f5.js"
+    "static/js/main.b6def079.js"
   ]
 }
