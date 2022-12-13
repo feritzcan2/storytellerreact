@@ -1,7 +1,21 @@
 .App {
   text-align: center;
 }
+.image-slider {
+  /* Use flexbox to place the images horizontally */
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
 
+  /* Add a sliding animation to the div element */
+  animation: slide 20s linear infinite;
+}
+img {
+  /* Set the width and height of the images */
+  width: 50vw;
+  height: 80vh;
+
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
