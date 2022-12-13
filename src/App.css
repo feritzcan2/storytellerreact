@@ -1,5 +1,28 @@
 .App {
   text-align: center;
+  background-color: #FDF4EF;
+}
+.dropdown-toggle::after{
+  content: none !important
+}
+.dropDownButotn{
+  width: 15vh;
+  height: 15vh;
+  font-weight: 700 !important;
+  font-size: 2.6rem!important;
+  color: #282c34!important;
+  background-color: wheat!important;
+
+}
+
+.topPanel{
+  width: 100vw;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #FDF4EF;
+
 }
 .image-slider {
   /* Use flexbox to place the images horizontally */
