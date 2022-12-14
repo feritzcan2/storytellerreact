@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/storytellerreact/static/css/main.e88684f3.css",
-    "main.js": "/storytellerreact/static/js/main.b6def079.js",
+    "main.css": "/storytellerreact/static/css/main.46893fa9.css",
+    "main.js": "/storytellerreact/static/js/main.4a00b2a0.js",
     "static/js/787.6c520046.chunk.js": "/storytellerreact/static/js/787.6c520046.chunk.js",
     "static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.b40189e28ba993f4f5cb.jpeg",
     "static/media/J - JANE EYRE - 2. SAYFA.jpeg": "/storytellerreact/static/media/J - JANE EYRE - 2. SAYFA.5f1898e3d8706d4ab871.jpeg",
@@ -140,6 +140,7 @@
     "static/media/Ğ - DEĞİRMENİMDEN MEKTUPLAR - 1. SAYFA.jpeg": "/storytellerreact/static/media/Ğ - DEĞİRMENİMDEN MEKTUPLAR - 1. SAYFA.f8cf672b907cbe5cf0d2.jpeg",
     "static/media/O - OZ BÜYÜCÜSÜ - 3. SAYFA.jpeg": "/storytellerreact/static/media/O - OZ BÜYÜCÜSÜ - 3. SAYFA.70df77d69f252a6a4fc3.jpeg",
     "static/media/O - OLİVER TWİST - 1. SAYFA.jpeg": "/storytellerreact/static/media/O - OLİVER TWİST - 1. SAYFA.9cad13b50fcac378259b.jpeg",
+    "static/media/first2.jpeg": "/storytellerreact/static/media/first2.a13ce20fde65b168ff35.jpeg",
     "static/media/A - ALICE HARİKALAR DİYARINDA - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALICE HARİKALAR DİYARINDA - 1. SAYFA.a7490ad97be1c5db42cb.jpeg",
     "static/media/B - BEYAZ GEMİ - 1. SAYFA.jpeg": "/storytellerreact/static/media/B - BEYAZ GEMİ - 1. SAYFA.75f27ed1d9280ee7fa85.jpeg",
     "static/media/K - KÜÇÜK AĞA - 3. SAYFA.jpeg": "/storytellerreact/static/media/K - KÜÇÜK AĞA - 3. SAYFA.cb3a8cda97450ef4de0a.jpeg",
@@ -156,6 +157,7 @@
     "static/media/P - PETER PAN - 1. SAYFA.jpeg": "/storytellerreact/static/media/P - PETER PAN - 1. SAYFA.902595cb7aa40eef2766.jpeg",
     "static/media/D - DON KİŞOT - 1. SAYFA.jpeg": "/storytellerreact/static/media/D - DON KİŞOT - 1. SAYFA.8f0d4afdbac5809336fc.jpeg",
     "static/media/Y - YAŞAR NE YAŞAR NE YAŞAMAZ - 1. SAYFA.jpeg": "/storytellerreact/static/media/Y - YAŞAR NE YAŞAR NE YAŞAMAZ - 1. SAYFA.3d5cebe406fef899c6d4.jpeg",
+    "static/media/last.jpeg": "/storytellerreact/static/media/last.35617a7dec172f54a857.jpeg",
     "static/media/P - PAL SOKAĞI ÇOCUKLARI - 3. SAYFA.jpeg": "/storytellerreact/static/media/P - PAL SOKAĞI ÇOCUKLARI - 3. SAYFA.d9d1cd6227cf0524c83d.jpeg",
     "static/media/A - AYA YOLCULUK - 3. SAYFA.jpeg": "/storytellerreact/static/media/A - AYA YOLCULUK - 3. SAYFA.d1af8d788aeef99eeb31.jpeg",
     "static/media/O - OLİVER TWİST - 3. SAYFA.jpeg": "/storytellerreact/static/media/O - OLİVER TWİST - 3. SAYFA.74504dc38f56c09c883a.jpeg",
@@ -174,6 +176,7 @@
     "static/media/V - VATAN YAHUT SİLİSTRE - 3. SAYFA.jpeg": "/storytellerreact/static/media/V - VATAN YAHUT SİLİSTRE - 3. SAYFA.cc0afc3f7e793a752136.jpeg",
     "static/media/I - IŞIN ÇAĞI ÇOCUKLARI - 3. SAYFA.jpeg": "/storytellerreact/static/media/I - IŞIN ÇAĞI ÇOCUKLARI - 3. SAYFA.38855ba533f98af2f314.jpeg",
     "static/media/E - EZOP MASALLARI - 3. SAYFA.jpeg": "/storytellerreact/static/media/E - EZOP MASALLARI - 3. SAYFA.df6422d778b670929bed.jpeg",
+    "static/media/first1.jpeg": "/storytellerreact/static/media/first1.fd207a5e29d1708825d8.jpeg",
     "static/media/Ç - ÇİZGİLİ PİJAMALI ÇOCUK - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ç - ÇİZGİLİ PİJAMALI ÇOCUK - 3. SAYFA.f6e91de0faf6baa0b18a.jpeg",
     "static/media/T - TERS YÜZ ŞATOSU - 3. SAYFA.jpeg": "/storytellerreact/static/media/T - TERS YÜZ ŞATOSU - 3. SAYFA.b883c2d72b8ee5ea7b8c.jpeg",
     "static/media/Ö - ÖZGÜR ROSTO - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ö - ÖZGÜR ROSTO - 3. SAYFA.ade25134e9f011c11b3b.jpeg",
@@ -210,12 +213,12 @@
     "static/media/N - NUTUK - 3. SAYFA.jpeg": "/storytellerreact/static/media/N - NUTUK - 3. SAYFA.69cc5647a9bbc27951ef.jpeg",
     "static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.969d182b748797180b8d.jpeg",
     "index.html": "/storytellerreact/index.html",
-    "main.e88684f3.css.map": "/storytellerreact/static/css/main.e88684f3.css.map",
-    "main.b6def079.js.map": "/storytellerreact/static/js/main.b6def079.js.map",
+    "main.46893fa9.css.map": "/storytellerreact/static/css/main.46893fa9.css.map",
+    "main.4a00b2a0.js.map": "/storytellerreact/static/js/main.4a00b2a0.js.map",
     "787.6c520046.chunk.js.map": "/storytellerreact/static/js/787.6c520046.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e88684f3.css",
-    "static/js/main.b6def079.js"
+    "static/css/main.46893fa9.css",
+    "static/js/main.4a00b2a0.js"
   ]
 }
