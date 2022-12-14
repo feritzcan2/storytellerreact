@@ -1,7 +1,10 @@
 {
   "files": {
-    "main.css": "/storytellerreact/static/css/main.46893fa9.css",
-    "main.js": "/storytellerreact/static/js/main.ce6e287b.js",
+    "main.css": "/storytellerreact/static/css/main.ca2b2e06.css",
+    "main.js": "/storytellerreact/static/js/main.4dd4556b.js",
+    "static/js/498.e223ae54.chunk.js": "/storytellerreact/static/js/498.e223ae54.chunk.js",
+    "static/js/703.5adaa702.chunk.js": "/storytellerreact/static/js/703.5adaa702.chunk.js",
+    "static/js/258.6809a07e.chunk.js": "/storytellerreact/static/js/258.6809a07e.chunk.js",
     "static/js/787.6c520046.chunk.js": "/storytellerreact/static/js/787.6c520046.chunk.js",
     "static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.b40189e28ba993f4f5cb.jpeg",
     "static/media/J - JANE EYRE - 2. SAYFA.jpeg": "/storytellerreact/static/media/J - JANE EYRE - 2. SAYFA.5f1898e3d8706d4ab871.jpeg",
@@ -213,12 +216,15 @@
     "static/media/N - NUTUK - 3. SAYFA.jpeg": "/storytellerreact/static/media/N - NUTUK - 3. SAYFA.69cc5647a9bbc27951ef.jpeg",
     "static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.969d182b748797180b8d.jpeg",
     "index.html": "/storytellerreact/index.html",
-    "main.46893fa9.css.map": "/storytellerreact/static/css/main.46893fa9.css.map",
-    "main.ce6e287b.js.map": "/storytellerreact/static/js/main.ce6e287b.js.map",
+    "main.ca2b2e06.css.map": "/storytellerreact/static/css/main.ca2b2e06.css.map",
+    "main.4dd4556b.js.map": "/storytellerreact/static/js/main.4dd4556b.js.map",
+    "498.e223ae54.chunk.js.map": "/storytellerreact/static/js/498.e223ae54.chunk.js.map",
+    "703.5adaa702.chunk.js.map": "/storytellerreact/static/js/703.5adaa702.chunk.js.map",
+    "258.6809a07e.chunk.js.map": "/storytellerreact/static/js/258.6809a07e.chunk.js.map",
     "787.6c520046.chunk.js.map": "/storytellerreact/static/js/787.6c520046.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.46893fa9.css",
-    "static/js/main.ce6e287b.js"
+    "static/css/main.ca2b2e06.css",
+    "static/js/main.4dd4556b.js"
   ]
 }
