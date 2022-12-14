@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate } from "react-router-dom";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import backgroundImage from "../StaticImages/kapak.jpg"; 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
@@ -23,11 +24,12 @@ class Home extends React.Component {
 
   return (
   
-    <div className="home-container" style={{display:'flex',height:"100vh",backgroundColor:'#FFF4EE',justifyContent:'center',alignItems:'center'}}>
-      <div style={{padding:'30px', width:"50vh",border:'3px solid #fff',borderRadius:'10px',backgroundColor:'white',boxShadow:"5px 4px 6px 5px rgb(86 38 223 / 10%)"}}>
+    <div className="home-container" style={{backgroundImage:`url(${backgroundImage})`
+    ,display:'flex',height:"100vh",backgroundColor:'#FFF4EE',justifyContent:'center',alignItems:'center'}}>
+      <div style={{padding:'30px',opacity:'0.8', width:"50vh",border:'3px solid #fff',borderRadius:'10px',backgroundColor:'white',boxShadow:"5px 4px 6px 5px rgb(86 38 223 / 10%)"}}>
       <h1 style={{color:'#352477'}}>Öykünü Oluştur</h1>
         <div style ={{height:"20px"}}></div>
-      <h6 style={{color:'#352477'}}>Hayal gücünü geliştiren, yaratıcılığı destekleyen, isme özel en güzel hediye
+      <h6 style={{color:'#352477'}}>Genel kültürünü destekleyen, yazma ve okuma becerini geliştiren bir kitap
 </h6>
 <div style ={{height:"5px"}}></div>
 
@@ -43,7 +45,7 @@ class Home extends React.Component {
         <Form.Control style = {{border:'3px solid #352477'}}type="email" placeholder="name@example.com" />
       </FloatingLabel>
       <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{this.setState({redirect:true})}}>
-        ÖNİZLEME
+        ÖN İZLEME
       </Button>
       { 
    this.state.redirect && <Navigate to={"story/"+this.state.name} replace={true}/>

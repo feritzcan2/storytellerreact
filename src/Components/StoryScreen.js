@@ -32,7 +32,6 @@ class StoryScreen extends React.Component {
     for (let index = 0; index < nameArr.length; index++) {
       const element = nameArr[index];
       if(element ===' ') continue;
-      console.log(element)
 
       var el = this.getActiveForChar(element,index)
       actives[index] = el
@@ -82,7 +81,42 @@ makePdf=()=>{
   })
 
   // Add an image to the PDF
-  doc.addImage(require("../StaticImages/last.jpeg"), "JPEG", 0, 40, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getWidth()*540/960);
+  var y = 0;
+  var height =
+  doc.addImage(require("../StaticImages/kapak.jpg"), "JPEG", 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+  doc.addImage(require("../StaticImages/first1.jpeg"), "JPEG", 0,  doc.internal.pageSize.getHeight()/2,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+doc.addPage();
+doc.addImage(require("../StaticImages/first2.jpeg"), "JPEG", 0,  0,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+let cift = false;
+const nameArr=Array.from(this.state.name.toLocaleUpperCase('tr-TR'))
+
+var actives = {}
+for (let index = 0; index < nameArr.length; index++) {
+  var pages = this.state.activesForIndex[index].pages
+  console.log(pages)
+  for (let index2 = 0; index2 < pages.length; index2++) {
+    var element = pages[index2]
+    if(cift==false){
+      doc.addImage(require("../Images/"+element.link), "JPEG", 0,  doc.internal.pageSize.getHeight()/2,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+        cift=true;
+    }
+    else{
+      cift = false;
+      doc.addPage()
+      doc.addImage(require("../Images/"+element.link), "JPEG", 0,  0,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+    }
+  }
+}
+if(cift==false){
+  doc.addImage(require("../StaticImages/last.jpeg"), "JPEG", 0,  doc.internal.pageSize.getHeight()/2,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+    cift=true;
+}
+else{
+  cift = false;
+  doc.addPage()
+  doc.addImage(require("../StaticImages/last.jpeg"), "JPEG", 0,  0,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+}
+
 
   // Save the PDF
   doc.save("my-pdf.pdf");
@@ -92,7 +126,7 @@ makePdf=()=>{
   render() {
     return (
     
-      <div className="App">
+      <div className="App" style ={{alignItems:"center"}}>
         {WelcomePanel(this.state.name)}
         <DropDownPanel 
         name={this.state.name} images = {dict}
@@ -105,6 +139,8 @@ makePdf=()=>{
           <img src={firstImage2} />
         {Object.entries(this.state.activesForIndex).map((key, index)=>{
        
+       console.log(key[1])
+
           return key[1].pages.map((name,index2)=>{
             return(   
               <img key = {index+":"+index2} src={name.src} />
