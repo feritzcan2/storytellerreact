@@ -16,7 +16,6 @@ import Home from './Components/Home';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
         <div className="container">
         <Routes>
         <Route path="/" element={<Home />} />
@@ -24,7 +23,6 @@ function App() {
              <Route path="/story/:cocugunAdi" element={<StoryScreen />} /> 
         </Routes>
         </div>
-      </BrowserRouter>
     </div>
   );
 }
