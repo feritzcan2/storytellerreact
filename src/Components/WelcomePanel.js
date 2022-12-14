@@ -7,7 +7,7 @@ function WelcomePanel(name) {
 
   return (
     <div className = "welcomePanel">
-      <h3>FERİT için</h3>
+      <h3>{name} için</h3>
       <h3 >için hazırlanmış özel bir kitap</h3>
       <h3>Resimlere tıklayarak hikayeleri değiştirebilirsiniz.</h3>
     </div>

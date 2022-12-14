@@ -19,14 +19,28 @@ function importAll(r) {
             var name = splited[1].trim();
             var splitPage = splited[2].split(".");
             if(!dict[char]){
-                dict[char]  = [{active:false,char:char,name:name,page:splitPage[0],link:key[0],src:images[key[0]]}]
+                dict[char]  = [{active:false,char:char,name:name,pages:[{page:splitPage[0].trim(),link:key[0],src:images[key[0]]}]}]
             }else{
-                dict[char].push( {active:false,char:char,name:name,page:splitPage[0],link:key[0],src:images[key[0]]})
+              let found = false;
+              for (let arrIndex = 0; arrIndex < dict[char].length; arrIndex++) {
+                const element = dict[char][arrIndex];
+                if(element.name ===name){
+                  element.pages.push({page:splitPage[0].trim(),link:key[0],src:images[key[0]]})
+                  element.pages.sort(compareNumbers)
+                  found = true;
+                }
+              }
+              if(found ===false){
+                dict[char].push( {active:false,char:char,name:name,pages:[{page:splitPage[0].trim(),link:key[0],src:images[key[0]]}]})
+              }
 
             }
         }
     })}
     return dict;
+  }
+  function compareNumbers(a, b) {
+    return a.page - b.page;
   }
   var dict = getDict(images);
 export default dict  

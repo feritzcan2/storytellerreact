@@ -14,8 +14,8 @@ class DropDownPanel extends React.Component {
     var arr = [];
     for (let index = 0; index < this.state.dict[char].length; index++) {
       const element =this.state.dict[char][index];
-      if(element.active == false || index == element.activeCharIndex)
       arr.push(element.name)
+
     }
     var filtered = arr.filter((v, i, a) => a.indexOf(v) === i);
     return  filtered

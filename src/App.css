@@ -16,8 +16,7 @@
 }
 
 .topPanel{
-  width: 100vw;
-  height: 20vh;
+  height: 15vh;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -29,14 +28,17 @@
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
+  padding-top: 20px;
 
   /* Add a sliding animation to the div element */
   animation: slide 20s linear infinite;
 }
 img {
+  padding-right: 10px;
+  padding-left: 20px;
   /* Set the width and height of the images */
-  width: 750px;
-  height: 750px;
+  width: 960px;
+  height: 540px;
 
 }
 .App-logo {
