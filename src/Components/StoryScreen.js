@@ -8,6 +8,9 @@ import firstImage1 from '../StaticImages/first1.jpeg'
 import firstImage2 from '../StaticImages/first2.jpeg'
 import last from '../StaticImages/last.jpeg'
 import { useParams } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import { jsPDF } from "jspdf";
+
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
 }
@@ -23,11 +26,14 @@ class StoryScreen extends React.Component {
  
 
   getActiveForWord(name){
-    const nameArr=Array.from(name.toUpperCase())
+    const nameArr=Array.from(name.toLocaleUpperCase('tr-TR'))
 
     var actives = {}
     for (let index = 0; index < nameArr.length; index++) {
       const element = nameArr[index];
+      if(element ===' ') continue;
+      console.log(element)
+
       var el = this.getActiveForChar(element,index)
       actives[index] = el
     }
@@ -67,6 +73,21 @@ class StoryScreen extends React.Component {
    
  
 }
+makePdf=()=>{
+
+  const doc = new jsPDF({
+    orientation: 'p',
+    unit: 'px',
+    format: 'letter'
+  })
+
+  // Add an image to the PDF
+  doc.addImage(require("../StaticImages/last.jpeg"), "JPEG", 0, 40, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getWidth()*540/960);
+
+  // Save the PDF
+  doc.save("my-pdf.pdf");
+  
+}
   
   render() {
     return (
@@ -97,6 +118,9 @@ class StoryScreen extends React.Component {
           <img src={image3} />
           <img src={image4} /> */}
         </div>
+        <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{this.makePdf()}}>
+        PDF OLARAK İNDİR
+      </Button>
       </div>
     );  }
 }

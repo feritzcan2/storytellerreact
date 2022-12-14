@@ -7,12 +7,10 @@ function WelcomePanel(name) {
 
   return (
     <div className = "welcomePanel">
-      <h3>{name} için</h3>
-      <h3 >için hazırlanmış özel bir kitap</h3>
-      <h3>Resimlere tıklayarak hikayeleri değiştirebilirsiniz.</h3>
+      <h1 style={{color:'#352477'}}>{name} </h1>
+      <h6 style={{color:'#352477'}}>için hazırlanmış özel bir kitap</h6>
+      <h6 style={{color:'#352477'}}>Aşağıdaki harflere tıklayarak istediğiniz öyküyü seçebilirsiniz..</h6>
     </div>
-    
-  
   );
 }
 

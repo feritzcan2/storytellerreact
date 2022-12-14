@@ -16,7 +16,7 @@ class Home extends React.Component {
 
   }
   onChange=(params)=> {
-  this.setState({name:params.target.value})
+  this.setState({name:params.target.value.replace(/ /g,'')})
  }
 
  render() {
@@ -25,7 +25,7 @@ class Home extends React.Component {
   
     <div className="home-container" style={{display:'flex',height:"100vh",backgroundColor:'#FFF4EE',justifyContent:'center',alignItems:'center'}}>
       <div style={{padding:'30px', width:"50vh",border:'3px solid #fff',borderRadius:'10px',backgroundColor:'white',boxShadow:"5px 4px 6px 5px rgb(86 38 223 / 10%)"}}>
-      <h1 style={{color:'#352477'}}>Kitap Hazırla</h1>
+      <h1 style={{color:'#352477'}}>Öykünü Oluştur</h1>
         <div style ={{height:"20px"}}></div>
       <h6 style={{color:'#352477'}}>Hayal gücünü geliştiren, yaratıcılığı destekleyen, isme özel en güzel hediye
 </h6>

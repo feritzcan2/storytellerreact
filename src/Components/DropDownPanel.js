@@ -11,6 +11,7 @@ class DropDownPanel extends React.Component {
     this.state = { counter: 0 ,dict : props.images};
   }
   getNotUsed(char,index){
+
     var arr = [];
     for (let index = 0; index < this.state.dict[char].length; index++) {
       const element =this.state.dict[char][index];
@@ -25,7 +26,7 @@ class DropDownPanel extends React.Component {
   }
 
   render() {
-    const newArray=Array.from(this.props.name.toUpperCase())
+    const newArray=Array.from(this.props.name.toLocaleUpperCase('tr-TR'))
     let self = this
     return (
       <div className = "topPanel">
@@ -33,13 +34,13 @@ class DropDownPanel extends React.Component {
 
         return(   
            <Dropdown key = {index}>
-          <Dropdown.Toggle  id="dropdown-button-dark-example1" variant="secondary" className='dropDownButotn'>
+          <Dropdown.Toggle  id="dropdown-button-dark-example1" variant="secondary" className={item!=' '?'dropDownButotn':'dropDownButotnEmpty'}>
             {item}
           </Dropdown.Toggle>
   
           <Dropdown.Menu variant="dark">
             {
-              this.getNotUsed(item,index).map((name,index2)=>{
+              item!=' ' && this.getNotUsed(item,index).map((name,index2)=>{
 
                 return      (  <Dropdown.Item onClick={()=>{this.props.handleChange(item,index,name)}}  key= {index2}active = 
                   {name==(this.props.activesForIndex[index]&&
