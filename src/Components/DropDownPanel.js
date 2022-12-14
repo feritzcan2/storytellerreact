@@ -44,7 +44,7 @@ class DropDownPanel extends React.Component {
                 return      (  <Dropdown.Item onClick={()=>{this.props.handleChange(item,index,name)}}  key= {index2}active = 
                   {name==(this.props.activesForIndex[index]&&
                   this.props.activesForIndex[index].name)}
-                   href="#/action-2">{name}</Dropdown.Item>)
+                  >{name}</Dropdown.Item>)
               })
             }
            
