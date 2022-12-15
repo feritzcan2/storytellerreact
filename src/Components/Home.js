@@ -6,6 +6,8 @@ import backgroundImage from "../StaticImages/kapak.jpg";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
+import { createHashHistory } from 'history'
+
 class Home extends React.Component {
 
   constructor(props) {
@@ -21,6 +23,7 @@ class Home extends React.Component {
  }
 
  render() {
+  const history = createHashHistory()
 
   return (
   
@@ -44,7 +47,10 @@ class Home extends React.Component {
       >
         <Form.Control style = {{border:'3px solid #352477'}}type="email" placeholder="name@example.com" />
       </FloatingLabel>
-      <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{this.setState({redirect:true})}}>
+      <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{
+        history.push('/')
+
+        this.setState({redirect:true})}}>
         ÖN İZLEME
       </Button>
       { 

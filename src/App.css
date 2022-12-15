@@ -2,6 +2,15 @@
   text-align: center;
   background-color: #FDF4EF;
 }
+.head-text {
+  position: relative;
+}
+.text-on-image {
+ position: absolute;
+ color: white;
+ left: 35%;
+ bottom: 56%;
+}
 .home-container{
   height: 100vh;
   background-position: center;

@@ -4,6 +4,7 @@ import DropDownPanel from './DropDownPanel';
 import WelcomePanel from './WelcomePanel';
 import dict from '../Utils/ImageLoader';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import kapak from '../StaticImages/kapak.jpg'
 import firstImage1 from '../StaticImages/first1.jpeg'
 import firstImage2 from '../StaticImages/first2.jpeg'
 import last from '../StaticImages/last.jpeg'
@@ -22,6 +23,8 @@ class StoryScreen extends React.Component {
     let { cocugunAdi } = props.params;
     console.log("params "+cocugunAdi)
     this.state = { name: cocugunAdi ,activesForIndex : this.getActiveForWord(cocugunAdi)};
+
+    
   }
  
 
@@ -109,12 +112,18 @@ for (let index = 0; index < nameArr.length; index++) {
 }
 if(cift==false){
   doc.addImage(require("../StaticImages/last.jpeg"), "JPEG", 0,  doc.internal.pageSize.getHeight()/2,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
-    cift=true;
+  doc.setFontSize(17);     
+  doc.setTextColor(255, 255, 255);
+  doc.text(140,doc.internal.pageSize.getHeight()/2+120, this.state.name);
+  cift=true;
 }
 else{
   cift = false;
   doc.addPage()
   doc.addImage(require("../StaticImages/last.jpeg"), "JPEG", 0,  0,  doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight()/2);
+  doc.setFontSize(17);     
+  doc.setTextColor(255, 255, 255);
+  doc.text(140,120, this.state.name);
 }
 
 
@@ -135,7 +144,8 @@ else{
          />
 
         <div className="image-slider">
-           <img src={firstImage1} />
+        <img src={kapak} />
+        <img src={firstImage1} />
           <img src={firstImage2} />
         {Object.entries(this.state.activesForIndex).map((key, index)=>{
        
@@ -148,7 +158,14 @@ else{
           })
         
       })}
-                <img src={last} />
+  <div className = "head-text">
+        <div className = "head-image">
+          <img src = {last} alt = "Freedom Blog" />
+        </div>
+          <div class='text-on-image'>
+             <h3> {this.state.name}</h3>
+          </div>
+      </div>
 
           {/* <img src={image2} />
           <img src={image3} />
