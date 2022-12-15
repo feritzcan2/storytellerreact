@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/storytellerreact/static/css/main.77c13804.css",
-    "main.js": "/storytellerreact/static/js/main.66f767cb.js",
+    "main.css": "/storytellerreact/static/css/main.bb7bd10f.css",
+    "main.js": "/storytellerreact/static/js/main.a4a70171.js",
     "static/js/498.e223ae54.chunk.js": "/storytellerreact/static/js/498.e223ae54.chunk.js",
     "static/js/703.5adaa702.chunk.js": "/storytellerreact/static/js/703.5adaa702.chunk.js",
     "static/js/258.6809a07e.chunk.js": "/storytellerreact/static/js/258.6809a07e.chunk.js",
     "static/js/787.6c520046.chunk.js": "/storytellerreact/static/js/787.6c520046.chunk.js",
     "static/media/kapak.jpg": "/storytellerreact/static/media/kapak.22744fee74900032150c.jpg",
+    "static/media/first1.jpeg": "/storytellerreact/static/media/first1.43c942bdf0b1993afa96.jpeg",
     "static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.jpeg": "/storytellerreact/static/media/Ş - ŞİMDİKİ ÇOCUKLAR HARİKA - 2. SAYFA.b40189e28ba993f4f5cb.jpeg",
     "static/media/J - JANE EYRE - 2. SAYFA.jpeg": "/storytellerreact/static/media/J - JANE EYRE - 2. SAYFA.5f1898e3d8706d4ab871.jpeg",
     "static/media/S - SİYAH İNCİ - 2. SAYFA.jpeg": "/storytellerreact/static/media/S - SİYAH İNCİ - 2. SAYFA.2a907d911a1887f2a3e9.jpeg",
@@ -180,7 +181,6 @@
     "static/media/V - VATAN YAHUT SİLİSTRE - 3. SAYFA.jpeg": "/storytellerreact/static/media/V - VATAN YAHUT SİLİSTRE - 3. SAYFA.cc0afc3f7e793a752136.jpeg",
     "static/media/I - IŞIN ÇAĞI ÇOCUKLARI - 3. SAYFA.jpeg": "/storytellerreact/static/media/I - IŞIN ÇAĞI ÇOCUKLARI - 3. SAYFA.38855ba533f98af2f314.jpeg",
     "static/media/E - EZOP MASALLARI - 3. SAYFA.jpeg": "/storytellerreact/static/media/E - EZOP MASALLARI - 3. SAYFA.df6422d778b670929bed.jpeg",
-    "static/media/first1.jpeg": "/storytellerreact/static/media/first1.fd207a5e29d1708825d8.jpeg",
     "static/media/Ç - ÇİZGİLİ PİJAMALI ÇOCUK - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ç - ÇİZGİLİ PİJAMALI ÇOCUK - 3. SAYFA.f6e91de0faf6baa0b18a.jpeg",
     "static/media/T - TERS YÜZ ŞATOSU - 3. SAYFA.jpeg": "/storytellerreact/static/media/T - TERS YÜZ ŞATOSU - 3. SAYFA.b883c2d72b8ee5ea7b8c.jpeg",
     "static/media/Ö - ÖZGÜR ROSTO - 3. SAYFA.jpeg": "/storytellerreact/static/media/Ö - ÖZGÜR ROSTO - 3. SAYFA.ade25134e9f011c11b3b.jpeg",
@@ -217,15 +217,15 @@
     "static/media/N - NUTUK - 3. SAYFA.jpeg": "/storytellerreact/static/media/N - NUTUK - 3. SAYFA.69cc5647a9bbc27951ef.jpeg",
     "static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.969d182b748797180b8d.jpeg",
     "index.html": "/storytellerreact/index.html",
-    "main.77c13804.css.map": "/storytellerreact/static/css/main.77c13804.css.map",
-    "main.66f767cb.js.map": "/storytellerreact/static/js/main.66f767cb.js.map",
+    "main.bb7bd10f.css.map": "/storytellerreact/static/css/main.bb7bd10f.css.map",
+    "main.a4a70171.js.map": "/storytellerreact/static/js/main.a4a70171.js.map",
     "498.e223ae54.chunk.js.map": "/storytellerreact/static/js/498.e223ae54.chunk.js.map",
     "703.5adaa702.chunk.js.map": "/storytellerreact/static/js/703.5adaa702.chunk.js.map",
     "258.6809a07e.chunk.js.map": "/storytellerreact/static/js/258.6809a07e.chunk.js.map",
     "787.6c520046.chunk.js.map": "/storytellerreact/static/js/787.6c520046.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.77c13804.css",
-    "static/js/main.66f767cb.js"
+    "static/css/main.bb7bd10f.css",
+    "static/js/main.a4a70171.js"
   ]
 }
