@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/storytellerreact/static/css/main.bb7bd10f.css",
-    "main.js": "/storytellerreact/static/js/main.a4a70171.js",
+    "main.js": "/storytellerreact/static/js/main.6e7fe7ba.js",
     "static/js/498.e223ae54.chunk.js": "/storytellerreact/static/js/498.e223ae54.chunk.js",
     "static/js/703.5adaa702.chunk.js": "/storytellerreact/static/js/703.5adaa702.chunk.js",
     "static/js/258.6809a07e.chunk.js": "/storytellerreact/static/js/258.6809a07e.chunk.js",
@@ -218,7 +218,7 @@
     "static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.jpeg": "/storytellerreact/static/media/A - ALACAKARANLIK KUŞLARI - 1. SAYFA.969d182b748797180b8d.jpeg",
     "index.html": "/storytellerreact/index.html",
     "main.bb7bd10f.css.map": "/storytellerreact/static/css/main.bb7bd10f.css.map",
-    "main.a4a70171.js.map": "/storytellerreact/static/js/main.a4a70171.js.map",
+    "main.6e7fe7ba.js.map": "/storytellerreact/static/js/main.6e7fe7ba.js.map",
     "498.e223ae54.chunk.js.map": "/storytellerreact/static/js/498.e223ae54.chunk.js.map",
     "703.5adaa702.chunk.js.map": "/storytellerreact/static/js/703.5adaa702.chunk.js.map",
     "258.6809a07e.chunk.js.map": "/storytellerreact/static/js/258.6809a07e.chunk.js.map",
@@ -226,6 +226,6 @@
   },
   "entrypoints": [
     "static/css/main.bb7bd10f.css",
-    "static/js/main.a4a70171.js"
+    "static/js/main.6e7fe7ba.js"
   ]
 }
