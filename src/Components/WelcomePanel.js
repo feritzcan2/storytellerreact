@@ -7,7 +7,7 @@ function WelcomePanel(name) {
 
   return (
     <div className = "welcomePanel">
-      <h1 style={{color:'#352477'}}>{name} </h1>
+      <h1 style={{color:'#352477'}}>{name.toLocaleUpperCase('tr-TR')} </h1>
       <h6 style={{color:'#352477'}}>için hazırlanmış özel bir kitap</h6>
       <h6 style={{color:'#352477'}}>Aşağıdaki harflere tıklayarak istediğiniz öyküyü seçebilirsiniz..</h6>
     </div>
