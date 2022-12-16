@@ -11,6 +11,7 @@ import last from '../StaticImages/last.jpeg'
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { jsPDF } from "jspdf";
+import printJS from 'print-js'
 
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
@@ -75,7 +76,7 @@ class StoryScreen extends React.Component {
    
  
 }
-makePdf=()=>{
+makePdf=(print)=>{
 
   const doc = new jsPDF({
     orientation: 'p',
@@ -127,8 +128,16 @@ else{
 }
 
 
-  // Save the PDF
+if(print){
+  const data = doc.output('blob')
+  const blobUrl = URL.createObjectURL(data);
+  printJS(blobUrl);
+}
+else{
   doc.save("my-pdf.pdf");
+
+}
+  // Save the PDF
   
 }
   
@@ -171,8 +180,11 @@ else{
           <img src={image3} />
           <img src={image4} /> */}
         </div>
-        <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{this.makePdf()}}>
+        <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{this.makePdf(false)}}>
         PDF OLARAK İNDİR
+      </Button>
+      <Button style= {{backgroundColor:'#352477'}} variant="primary" size="lg" onClick={()=>{this.makePdf(true)}}>
+        YAZDIR
       </Button>
       </div>
     );  }
