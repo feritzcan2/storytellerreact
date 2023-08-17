@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/storytellerreact/static/css/main.0b4b6e8c.css",
-    "main.js": "/storytellerreact/static/js/main.5f45a047.js",
-    "static/js/406.3ec13a40.chunk.js": "/storytellerreact/static/js/406.3ec13a40.chunk.js",
-    "static/css/254.f68d8bdd.chunk.css": "/storytellerreact/static/css/254.f68d8bdd.chunk.css",
-    "static/js/254.a13d98a9.chunk.js": "/storytellerreact/static/js/254.a13d98a9.chunk.js",
-    "static/media/Linearicons-Free.svg?w118d": "/storytellerreact/static/media/Linearicons-Free.8c9b472b63c5ac84ede6.svg",
-    "static/media/Pe-icon-7-stroke.svg?d7yf1v": "/storytellerreact/static/media/Pe-icon-7-stroke.09c6a96523589cb91799.svg",
-    "static/media/city1.jpg": "/storytellerreact/static/media/city1.fadfec7c097747ec76eb.jpg",
-    "static/media/Pe-icon-7-stroke.eot": "/storytellerreact/static/media/Pe-icon-7-stroke.1d449ea50ab8389ee078.eot",
-    "static/media/Pe-icon-7-stroke.woff?d7yf1v": "/storytellerreact/static/media/Pe-icon-7-stroke.11f7c073b050d62afb33.woff",
-    "static/media/Pe-icon-7-stroke.ttf?d7yf1v": "/storytellerreact/static/media/Pe-icon-7-stroke.7233a7aee250f9b77fba.ttf",
-    "static/media/Linearicons-Free.eot": "/storytellerreact/static/media/Linearicons-Free.eb992e965197b4672140.eot",
-    "static/media/Linearicons-Free.woff?w118d": "/storytellerreact/static/media/Linearicons-Free.a78a26fb0b18bc4cde28.woff",
-    "static/media/Linearicons-Free.ttf?w118d": "/storytellerreact/static/media/Linearicons-Free.5cbe0a85581dc42087ac.ttf",
-    "static/media/Linearicons-Free.woff2?w118d": "/storytellerreact/static/media/Linearicons-Free.857c65d6452680b4f3b1.woff2",
-    "index.html": "/storytellerreact/index.html",
-    "main.0b4b6e8c.css.map": "/storytellerreact/static/css/main.0b4b6e8c.css.map",
-    "main.5f45a047.js.map": "/storytellerreact/static/js/main.5f45a047.js.map",
-    "406.3ec13a40.chunk.js.map": "/storytellerreact/static/js/406.3ec13a40.chunk.js.map",
-    "254.f68d8bdd.chunk.css.map": "/storytellerreact/static/css/254.f68d8bdd.chunk.css.map",
-    "254.a13d98a9.chunk.js.map": "/storytellerreact/static/js/254.a13d98a9.chunk.js.map"
+    "main.css": "./static/css/main.f04b9174.css",
+    "main.js": "./static/js/main.847ed240.js",
+    "static/js/406.3ec13a40.chunk.js": "./static/js/406.3ec13a40.chunk.js",
+    "static/css/254.f68d8bdd.chunk.css": "./static/css/254.f68d8bdd.chunk.css",
+    "static/js/254.a13d98a9.chunk.js": "./static/js/254.a13d98a9.chunk.js",
+    "static/media/Linearicons-Free.svg?w118d": "./static/media/Linearicons-Free.8c9b472b63c5ac84ede6.svg",
+    "static/media/Pe-icon-7-stroke.svg?d7yf1v": "./static/media/Pe-icon-7-stroke.09c6a96523589cb91799.svg",
+    "static/media/city1.jpg": "./static/media/city1.fadfec7c097747ec76eb.jpg",
+    "static/media/Pe-icon-7-stroke.eot": "./static/media/Pe-icon-7-stroke.1d449ea50ab8389ee078.eot",
+    "static/media/Pe-icon-7-stroke.woff?d7yf1v": "./static/media/Pe-icon-7-stroke.11f7c073b050d62afb33.woff",
+    "static/media/Pe-icon-7-stroke.ttf?d7yf1v": "./static/media/Pe-icon-7-stroke.7233a7aee250f9b77fba.ttf",
+    "static/media/Linearicons-Free.eot": "./static/media/Linearicons-Free.eb992e965197b4672140.eot",
+    "static/media/Linearicons-Free.woff?w118d": "./static/media/Linearicons-Free.a78a26fb0b18bc4cde28.woff",
+    "static/media/Linearicons-Free.ttf?w118d": "./static/media/Linearicons-Free.5cbe0a85581dc42087ac.ttf",
+    "static/media/Linearicons-Free.woff2?w118d": "./static/media/Linearicons-Free.857c65d6452680b4f3b1.woff2",
+    "index.html": "./index.html",
+    "main.f04b9174.css.map": "./static/css/main.f04b9174.css.map",
+    "main.847ed240.js.map": "./static/js/main.847ed240.js.map",
+    "406.3ec13a40.chunk.js.map": "./static/js/406.3ec13a40.chunk.js.map",
+    "254.f68d8bdd.chunk.css.map": "./static/css/254.f68d8bdd.chunk.css.map",
+    "254.a13d98a9.chunk.js.map": "./static/js/254.a13d98a9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b4b6e8c.css",
-    "static/js/main.5f45a047.js"
+    "static/css/main.f04b9174.css",
+    "static/js/main.847ed240.js"
   ]
 }
