@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
 import { Slider } from "react-burgers";
-
+import img from "./logo.jpg";
 import AppMobileMenu from "../AppMobileMenu";
 
 import {
@@ -45,7 +45,7 @@ class HeaderLogo extends React.Component {
         <div className="app-header__logo">
           <div
             style={{
-              backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSAUNCrha9COBqZa0xVB_Pmqr_aV3-i_z3LQ&usqp=CAU")`,
+              backgroundImage: `url(${img})`,
             }}
           />
           <div className="header__pane ms-auto">

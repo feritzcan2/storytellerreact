@@ -4,6 +4,9 @@ import React, { Suspense, lazy, Fragment } from "react";
 import { ToastContainer } from "react-toastify";
 
 const RandevuTakip = lazy(() => import("../../DemoPages/RandevuTakip"));
+const NotificationSettings = lazy(() =>
+  import("../../DemoPages/NotificationSettings")
+);
 
 const AppMain = (data) => {
   return (
@@ -26,6 +29,10 @@ const AppMain = (data) => {
         <Route
           path="/randevuTakibi"
           render={(props) => <RandevuTakip {...props} data={data} />}
+        />
+        <Route
+          path="/bildirimAyarlari"
+          render={(props) => <NotificationSettings {...props} data={data} />}
         />
       </Suspense>
       {/* Charts */}

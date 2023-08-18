@@ -111,7 +111,7 @@ export const dateTrackerNav = [
   {
     icon: "pe-7s-display2",
     label: "Bildirim Ayarları",
-    to: "#/tables/regular-tables",
+    to: "#/bildirimAyarlari",
   },
 ];
 export const FormsNav = [

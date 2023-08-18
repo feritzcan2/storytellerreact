@@ -13,7 +13,9 @@ export default class CountryTrackerPage extends React.Component {
       <Fragment>
         <PageTitle
           heading="Randevu Takibi"
-          subheading="Notifications represent one of the best ways to give feedback for various users actions."
+          subheading="Randevu takibi bölümünde, seçili ülkedeki randevuları anlık olarak görebilirsiniz."
+          subheading2="Veriler direkt olarak ilgili ülkenin randevu sisteminden anlık olarak çekilmektedir. Güncelleme zamanı verinin kaç dakika önce çekildiğini göstermektedir."
+          subheading3="Takip planlayıcı, hangi aralıklarda yer açılması durumunda size bildirim gönderileceğini belirtmektedir."
           icon="pe-7s-glasses icon-gradient bg-love-kiss"
         />
         <div className="mbg-3 h-auto ps-0 pe-0 bg-transparent no-border card-header">
