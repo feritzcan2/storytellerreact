@@ -23,14 +23,14 @@ class OfficeAvailableDates extends Component {
   static getDefaultState() {
     return {
       activeTab: 0,
-      data: [
+      officeData: [
         {
           Office: "Altunzade",
           AvailableDates: ["2023-10-20", "2023-10-20", "2023-10-20"],
         },
         {
           Office: "Altunzade",
-          AvailableDates: ["2023-10-20", "2023-10-20", "2023-10-20"],
+          AvailableDates: ["2023-18-20"],
         },
       ],
     };
@@ -51,53 +51,78 @@ class OfficeAvailableDates extends Component {
             <Card className="main-card mb-3">
               <CardBody>
                 <Nav pills fill>
-                  {this.props.data.officeData.map((popover, i) => {
-                    return (
-                      <NavItem>
-                        <NavLink
-                          href="#"
-                          className={classnames({
-                            active: this.state.activeTab === i,
-                          })}
-                          onClick={() => {
-                            this.toggle(i);
-                          }}
-                        >
-                          {popover.officeName}
-                        </NavLink>
-                      </NavItem>
-                    );
-                  })}
+                  {this.props.data.officeData
+                    .slice() // Create a copy of the officeData array
+                    .sort((a, b) => {
+                      debugger;
+                      // Compare the minimum available dates
+                      const minDateA = Math.min(
+                        ...a.dates.map((date) => new Date(date))
+                      );
+                      const minDateB = Math.min(
+                        ...b.dates.map((date) => new Date(date))
+                      );
+                      return minDateA - minDateB; // Sort in ascending order
+                    })
+                    .map((popover, i) => {
+                      return (
+                        <NavItem>
+                          <NavLink
+                            href="#"
+                            className={classnames({
+                              active: this.state.activeTab === i,
+                            })}
+                            onClick={() => {
+                              this.toggle(i);
+                            }}
+                          >
+                            {popover.officeName}
+                          </NavLink>
+                        </NavItem>
+                      );
+                    })}
                 </Nav>
                 <TabContent activeTab={"" + this.state.activeTab}>
-                  {this.props.data.officeData.map((popover, i) => {
-                    return (
-                      <TabPane tabId={"" + i}>
-                        {popover.dates.map((date, i) => {
-                          return (
-                            <Alert color="success">
+                  {this.props.data.officeData
+                    .sort((a, b) => {
+                      debugger;
+                      // Compare the minimum available dates
+                      const minDateA = Math.min(
+                        ...a.dates.map((date) => new Date(date))
+                      );
+                      const minDateB = Math.min(
+                        ...b.dates.map((date) => new Date(date))
+                      );
+                      return minDateA - minDateB; // Sort in ascending order
+                    })
+                    .map((popover, i) => {
+                      return (
+                        <TabPane tabId={"" + i}>
+                          {popover.dates.map((date, i) => {
+                            return (
+                              <Alert color="success">
+                                <a
+                                  style={{ marginLeft: "50px" }}
+                                  className="alert-link"
+                                >
+                                  {date.split("T")[0]}
+                                </a>
+                              </Alert>
+                            );
+                          })}
+                          {popover.dates.length == 0 && (
+                            <Alert color="danger">
                               <a
                                 style={{ marginLeft: "50px" }}
                                 className="alert-link"
                               >
-                                {date.split("T")[0]}
+                                UYGUN RANDEVU YOK
                               </a>
                             </Alert>
-                          );
-                        })}
-                        {popover.dates.length == 0 && (
-                          <Alert color="danger">
-                            <a
-                              style={{ marginLeft: "50px" }}
-                              className="alert-link"
-                            >
-                              UYGUN RANDEVU YOK
-                            </a>
-                          </Alert>
-                        )}
-                      </TabPane>
-                    );
-                  })}
+                          )}
+                        </TabPane>
+                      );
+                    })}
                 </TabContent>
               </CardBody>
               <CardFooter>

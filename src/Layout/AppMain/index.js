@@ -16,11 +16,8 @@ const AppMain = (data) => {
           <div className="loader-container">
             <div className="loader-container-inner">
               <h6 className="mt-3">
-                Please wait while we load all the Elements examples
-                <small>
-                  Because this is a demonstration we load at once all the
-                  Elements examples. This wouldn't happen in a real live app!
-                </small>
+                Lütfen site yüklenirken bekleyin.
+                <small>Randevular güncelleniyor....</small>
               </h6>
             </div>
           </div>
