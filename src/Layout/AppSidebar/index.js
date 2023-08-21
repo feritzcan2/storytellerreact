@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import Nav from "../AppNav/VerticalNavWrapper";
 
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 import HeaderLogo from "../AppLogo";
@@ -13,9 +13,7 @@ import { setEnableMobileMenu } from "../../reducers/ThemeOptions";
 
 class AppSidebar extends Component {
   state = {
-    items: [
-      { id: 1, text: 'Buy eggs' },
-    ]
+    items: [{ id: 1, text: "Buy eggs" }],
   };
 
   toggleMobileSidebar = () => {
@@ -34,13 +32,21 @@ class AppSidebar extends Component {
 
     return (
       <Fragment>
-        <div className="sidebar-mobile-overlay" onClick={this.toggleMobileSidebar}/>
+        <div
+          className="sidebar-mobile-overlay"
+          onClick={this.toggleMobileSidebar}
+        />
         <TransitionGroup>
-          <CSSTransition component="div"
+          <CSSTransition
+            component="div"
             className={cx("app-sidebar", backgroundColor, {
               "sidebar-shadow": enableSidebarShadow,
             })}
-             appear={true} enter={false} exit={false} timeout={500}>
+            appear={true}
+            enter={false}
+            exit={false}
+            timeout={500}
+          >
             <div>
               <HeaderLogo />
               <PerfectScrollbar>
@@ -48,13 +54,14 @@ class AppSidebar extends Component {
                   <Nav />
                 </div>
               </PerfectScrollbar>
-              <div className={cx("app-sidebar-bg", backgroundImageOpacity)}
+              <div
+                className={cx("app-sidebar-bg", backgroundImageOpacity)}
                 style={{
                   backgroundImage: enableBackgroundImage
                     ? "url(" + backgroundImage + ")"
                     : null,
-                }}>
-              </div>
+                }}
+              ></div>
             </div>
           </CSSTransition>
         </TransitionGroup>
