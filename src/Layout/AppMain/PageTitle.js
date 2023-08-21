@@ -27,21 +27,24 @@ class PageTitle extends Component {
       <div className="app-page-title">
         <div className="page-title-wrapper">
           <div className="page-title-heading">
-            <div className={cx("page-title-icon", {
+            <div
+              className={cx("page-title-icon", {
                 "d-none": !enablePageTitleIcon,
-              })}>
+              })}
+            >
               <i className={icon} />
             </div>
             <div>
               {heading}
-              <div className={cx("page-title-subheading", {
+              <div
+                className={cx("page-title-subheading", {
                   "d-none": !enablePageTitleSubheading,
-                })}>
+                })}
+              >
                 {subheading}
               </div>
             </div>
           </div>
-          <div className="page-title-actions">{this.randomize(arr)}</div>
         </div>
       </div>
     );

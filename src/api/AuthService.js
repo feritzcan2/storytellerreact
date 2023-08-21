@@ -1,11 +1,16 @@
 import { useHistory } from "react-router-dom";
 import { setToken } from "../context/AuthContext";
 import api from "./api";
+import { GlobalContext } from "../context/GlobalProvider";
+import { useContext } from "react";
 
 export default function UserAuth() {
   let history = useHistory();
+  let { setUserData } = useContext(GlobalContext);
+
   const setUserContext = async (result) => {
     setToken(result.data.tokenData.jwtToken);
+    setUserData(result.data);
     return history.push("/");
   };
 

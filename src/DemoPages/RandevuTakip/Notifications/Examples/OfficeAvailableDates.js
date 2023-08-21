@@ -48,7 +48,7 @@ const OfficeAvailableDates = (props) => {
                             active: activeTab === i,
                           })}
                           onClick={() => {
-                            this.setActiveTab(i);
+                            setActiveTab(i);
                           }}
                         >
                           {popover.officeName}
