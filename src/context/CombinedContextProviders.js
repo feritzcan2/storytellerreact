@@ -1,4 +1,3 @@
-import ContextProviderComposer from "./ContextProviderComposer";
 import { GlobalProvider } from "./GlobalProvider";
 import React from "react";
 
@@ -12,4 +11,10 @@ const CombinedContextProviders = ({ children }) => {
   );
 };
 
+const ContextProviderComposer = ({ contextProviders, children }) => {
+  return contextProviders.reduceRight(
+    (children, parent) => React.cloneElement(parent, { children }),
+    children
+  );
+};
 export default CombinedContextProviders;
