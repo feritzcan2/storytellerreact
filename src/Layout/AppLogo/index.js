@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
 import { Slider } from "react-burgers";
-import img from "./logo.jpg";
+
 import AppMobileMenu from "../AppMobileMenu";
 
 import {
@@ -36,25 +36,14 @@ class HeaderLogo extends React.Component {
   };
 
   render() {
-    let { enableClosedSidebar } = this.props;
-
-    const {} = this.state;
-
     return (
       <Fragment>
         <div className="app-header__logo">
-          <div
-            style={{
-              backgroundImage: `url(${img})`,
-            }}
-          />
+          <div className="logo-src" />
           <div className="header__pane ms-auto">
             <div onClick={this.toggleEnableClosedSidebar}>
-              <Slider
-                active={enableClosedSidebar}
-                type="elastic"
-                onClick={() => this.setState({ active: !this.state.active })}
-              />
+              <Slider width={26} lineHeight={2} lineSpacing={5} color="#6c757d"
+                active={this.state.active} onClick={() => this.setState({ active: !this.state.active })}/>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import Nav from "../AppNav/VerticalNavWrapper";
 
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import PerfectScrollbar from "react-perfect-scrollbar";
 import HeaderLogo from "../AppLogo";
@@ -12,7 +12,11 @@ import HeaderLogo from "../AppLogo";
 import { setEnableMobileMenu } from "../../reducers/ThemeOptions";
 
 class AppSidebar extends Component {
-  state = {};
+  state = {
+    items: [
+      { id: 1, text: 'Buy eggs' },
+    ]
+  };
 
   toggleMobileSidebar = () => {
     let { enableMobileMenu, setEnableMobileMenu } = this.props;
@@ -26,41 +30,31 @@ class AppSidebar extends Component {
       enableSidebarShadow,
       backgroundImage,
       backgroundImageOpacity,
-      data,
     } = this.props;
 
     return (
       <Fragment>
-        <div
-          className="sidebar-mobile-overlay"
-          onClick={this.toggleMobileSidebar}
-        />
+        <div className="sidebar-mobile-overlay" onClick={this.toggleMobileSidebar}/>
         <TransitionGroup>
-          <CSSTransition
-            component="div"
+          <CSSTransition component="div"
             className={cx("app-sidebar", backgroundColor, {
               "sidebar-shadow": enableSidebarShadow,
             })}
-            appear={true}
-            timeout={1500}
-            enter={false}
-            exit={false}
-          >
+             appear={true} enter={false} exit={false} timeout={500}>
             <div>
               <HeaderLogo />
               <PerfectScrollbar>
                 <div className="app-sidebar__inner">
-                  <Nav data={data} />
+                  <Nav />
                 </div>
               </PerfectScrollbar>
-              <div
-                className={cx("app-sidebar-bg", backgroundImageOpacity)}
+              <div className={cx("app-sidebar-bg", backgroundImageOpacity)}
                 style={{
                   backgroundImage: enableBackgroundImage
                     ? "url(" + backgroundImage + ")"
                     : null,
-                }}
-              ></div>
+                }}>
+              </div>
             </div>
           </CSSTransition>
         </TransitionGroup>

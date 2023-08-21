@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import {
   Alert,
@@ -41,26 +41,18 @@ const locale = {
     date: () => "mm/dd/yyyy",
   },
 };
-class OfficeTrackingDates extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: true,
-      startDate: new Date(props.data.trackingStartDate),
-      endDate: new Date(props.data.trackingEndDate),
-      changed: false,
-    };
+const OfficeTrackingDates = (props) => {
+  const { startDate, setStartDate } = useState(props.data.trackingStartDate);
+  const { endDate, setEndDate } = useState(props.data.trackingEndDate);
+  const { isUpdated, setIsUpdated } = useState(false);
 
-    this.onDismiss = this.onDismiss.bind(this);
-  }
-
-  updateDate = (serviceType, startDate, endDate) => {
+  const updateDate = (serviceType, startDate, endDate) => {
     var requestOptions = {
       method: "GET",
       redirect: "follow",
     };
     fetch(
-      "http://triviastars-env.eba-vqcrvzer.eu-central-1.elasticbeanstalk.com/admin/updateTrackingDate?serviceType=" +
+      "http://api.vizedefteri.com/admin/updateTrackingDate?serviceType=" +
         serviceType +
         "&startDate=" +
         startDate.toJSON() +
@@ -74,87 +66,72 @@ class OfficeTrackingDates extends React.Component {
       })
       .catch((error) => console.log("error", error));
   };
-  setStartDate(date) {
-    this.setState({ startDate: date, changed: true });
-  }
-  setEndDate(date) {
-    this.setState({ endDate: date, changed: true });
-  }
-  onDismiss() {
-    this.setState({ visible: false });
-  }
 
-  render() {
-    return (
-      <Fragment>
-        <Row>
-          <Col md="12">
-            <Card className="main-card mb-3">
-              <CardBody>
-                <Row md="6">
-                  <InputGroup>
-                    <div
-                      style={{
-                        padding: "5px",
-                        backgroundColor: "#EFF9FF",
-                        alignSelf: "center",
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <h5 style={{ marginRight: "20px" }}>Başlangıç tarihi </h5>
-                      <DatePicker
-                        locale={locale}
-                        selected={this.state.startDate}
-                        onChange={(date) => this.setStartDate(date)}
-                      />
-                    </div>
-                  </InputGroup>
-                </Row>
-                <Row md="6">
-                  <InputGroup>
-                    <div
-                      style={{
-                        marginTop: "10px",
-                        padding: "5px",
-                        backgroundColor: "#EFF9FF",
-                        alignSelf: "center",
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <h5 style={{ marginRight: "20px" }}>Bitiş tarihi </h5>
-                      <DatePicker
-                        locale={locale}
-                        selected={this.state.endDate}
-                        onChange={(date) => this.setEndDate(date)}
-                      />
-                    </div>
-                  </InputGroup>
-                </Row>
-                <Row md="6">
-                  <Button
-                    onClick={() => {
-                      this.updateDate(
-                        this.props.data.serviceType,
-                        this.state.startDate,
-                        this.state.endDate
-                      );
+  return (
+    <Fragment>
+      <Row>
+        <Col md="12">
+          <Card className="main-card mb-3">
+            <CardBody>
+              <Row md="6">
+                <InputGroup>
+                  <div
+                    style={{
+                      padding: "5px",
+                      backgroundColor: "#EFF9FF",
+                      alignSelf: "center",
+                      display: "flex",
+                      flexDirection: "row",
                     }}
-                    active={this.state.changed}
-                    className="m-3"
-                    color="primary"
                   >
-                    Kaydet
-                  </Button>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </Fragment>
-    );
-  }
-}
+                    <h5 style={{ marginRight: "20px" }}>Başlangıç tarihi </h5>
+                    <DatePicker
+                      locale={locale}
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                    />
+                  </div>
+                </InputGroup>
+              </Row>
+              <Row md="6">
+                <InputGroup>
+                  <div
+                    style={{
+                      marginTop: "10px",
+                      padding: "5px",
+                      backgroundColor: "#EFF9FF",
+                      alignSelf: "center",
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <h5 style={{ marginRight: "20px" }}>Bitiş tarihi </h5>
+                    <DatePicker
+                      locale={locale}
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
+                    />
+                  </div>
+                </InputGroup>
+              </Row>
+              <Row md="6">
+                <Button
+                  onClick={() => {
+                    updateDate(props.data.serviceType, startDate, endDate);
+                  }}
+                  active={isUpdated}
+                  className="m-3"
+                  color="primary"
+                >
+                  Kaydet
+                </Button>
+              </Row>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </Fragment>
+  );
+};
 
 export default OfficeTrackingDates;
