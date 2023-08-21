@@ -5,10 +5,8 @@ const ProtectedRoute = ({ user, children }) => {
   var auth = isAuthenticated();
 
   if (!auth) {
-    console.log("not authenticated");
     return <Redirect to="/login" replace />;
   }
-  console.log(" authenticated");
 
   return children;
 };

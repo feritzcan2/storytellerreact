@@ -5,6 +5,7 @@ import Loader from "react-loaders";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "../../DemoPages/Auth/ProtectedRoute";
 import CountryService from "../../api/CountryService";
+import { isAuthenticated } from "../../context/AuthContext";
 const RandevuTakip = lazy(() => import("../../DemoPages/RandevuTakip"));
 const Login = lazy(() => import("../../DemoPages/Login"));
 
@@ -12,7 +13,14 @@ const AppMain = () => {
   const { getCountryData } = CountryService();
 
   useEffect(() => {
-    setInterval(() => getCountryData(), 5000);
+    if (isAuthenticated()) {
+      getCountryData();
+    }
+    setInterval(() => {
+      if (isAuthenticated()) {
+        getCountryData();
+      }
+    }, 5000);
   }, []);
 
   return (
