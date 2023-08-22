@@ -1,10 +1,10 @@
 {
-  "name": "architectui-react-pro",
+  "name": "vize-defteri",
   "version": "2.0.0",
   "private": true,
-  "description": "ArchitectUI - Bootstrap 5 Premium Admin Dashboard Template",
-  "author": "DashboardPack.com",
-  "homepage": "https://demo.dashboardpack.com/architectui-react-pro",
+  "description": "Vize Defteri",
+  "author": "vize-defteri",
+  "homepage": ".",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dpackdev/architectui-react-pro"
