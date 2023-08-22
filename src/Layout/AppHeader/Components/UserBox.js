@@ -28,10 +28,11 @@ import "react-toastify/dist/ReactToastify.css";
 import city3 from "../../../assets/utils/images/dropdown-header/city3.jpg";
 import avatar1 from "../../../assets/utils/images/avatars/1.jpg";
 import { GlobalContext } from "../../../context/GlobalProvider";
+import AuthService from "../../../api/AuthService";
 
 const UserBox = (props) => {
   const { userData } = useContext(GlobalContext);
-  console.log(userData);
+  const { logout } = AuthService();
   const notify2 = () =>
     toast(
       "You don't have any new items in your calendar for today! Go out and play!",
@@ -88,6 +89,7 @@ const UserBox = (props) => {
                               </div>
                               <div className="widget-content-right me-2">
                                 <Button
+                                  onClick={logout}
                                   className="btn-pill btn-shadow btn-shine"
                                   color="focus"
                                 >
@@ -103,12 +105,8 @@ const UserBox = (props) => {
                 </UncontrolledButtonDropdown>
               </div>
               <div className="widget-content-left  ms-3 header-user-info">
-                <div className="widget-heading">
-                  {userData.userData.username}
-                </div>
-                <div className="widget-subheading">
-                  {userData.userData.companyName}
-                </div>
+                <div className="widget-heading">{userData.username}</div>
+                <div className="widget-subheading">{userData.companyName}</div>
               </div>
             </div>
           </div>

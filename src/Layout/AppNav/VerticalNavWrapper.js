@@ -23,7 +23,7 @@ class Nav extends Component {
           className="vertical-nav-menu"
           classNameStateIcon="pe-7s-angle-down"
         />
-        <h5 className="app-sidebar__heading">Menu</h5>
+        <h5 className="app-sidebar__heading"></h5>
       </Fragment>
     );
   }

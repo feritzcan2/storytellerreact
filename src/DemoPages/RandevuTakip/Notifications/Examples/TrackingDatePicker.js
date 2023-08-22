@@ -52,7 +52,7 @@ const OfficeTrackingDates = (props) => {
       redirect: "follow",
     };
     fetch(
-      "http://localhost:5016/admin/updateTrackingDate?serviceType=" +
+      "https://api.vizedefteri.com/admin/updateTrackingDate?serviceType=" +
         serviceType +
         "&startDate=" +
         startDate.toJSON() +
