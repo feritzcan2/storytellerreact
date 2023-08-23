@@ -7,7 +7,7 @@
   "homepage": ".",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dpackdev/architectui-react-pro"
+    "url": "https://github.com/feritzcan2/storytellerreact"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
