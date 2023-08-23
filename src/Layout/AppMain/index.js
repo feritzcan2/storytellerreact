@@ -18,8 +18,6 @@ const AppMain = () => {
   const { getUserData } = AuthService();
 
   useEffect(() => {
-    console.log("AppMain");
-
     if (isAuthenticated()) {
       getUserData();
       getCountryData();

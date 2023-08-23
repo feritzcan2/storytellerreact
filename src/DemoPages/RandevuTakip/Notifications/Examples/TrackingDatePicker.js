@@ -12,6 +12,7 @@ import {
   CardTitle,
   CardFooter,
   Button,
+  Input,
 } from "reactstrap";
 
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +24,7 @@ import { ModalTitle } from "react-bootstrap";
 import { SubTitle } from "chart.js";
 import moment from "moment/moment";
 import { date } from "date-arithmetic";
+import CountryService from "../../../../api/CountryService";
 const days = ["Pt", "Sa", "Ça", "Pe", "Cu", "Ct", "Pz"];
 const months = [
   "Ocak",
@@ -49,22 +51,36 @@ const locale = {
   },
 };
 const OfficeTrackingDates = (props) => {
+  const { updateTrackingRange } = CountryService();
+  const [startDate, setStartDate] = useState(
+    new Date(props.data.trackingStartDate)
+  );
   console.log(props.data);
-  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [isNotifUpdated, setNotifUpdated] = useState(false);
+  const [isNotificationsEnabled, setNotificationsEnabled] = useState(
+    props.data.notificationsEnabled
+  );
 
+  const toggleCheckbox = () => {
+    let newVal = !isNotificationsEnabled;
+    setNotificationsEnabled(!isNotificationsEnabled);
+    setNotifUpdated(props.data.notificationsEnabled !== newVal);
+  };
   useEffect(() => {
     if (isUpdated === false) {
       setStartDate(new Date(props.data.trackingStartDate));
       setEndDate(new Date(props.data.trackingEndDate));
+    }
+    if (isNotifUpdated === false) {
+      setNotificationsEnabled(props.data.notificationsEnabled);
     }
   }, [props.data]);
 
   const handleChange = (start, end) => {
     start = start || startDate;
     end = end || endDate;
-    debugger;
     if (moment(start).isAfter(moment(end))) {
       end = start;
     }
@@ -73,21 +89,25 @@ const OfficeTrackingDates = (props) => {
     setEndDate(end);
   };
   const updateDate = (serviceType, startDate, endDate) => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-    fetch(
-      "https://api.vizedefteri.com/admin/updateTrackingDate?serviceType=" +
-        serviceType +
-        "&startDate=" +
-        startDate.toJSON() +
-        "&endDate=" +
-        endDate.toJSON(),
-      requestOptions
-    )
-      .then((response) => {})
-      .then((result) => {})
+    updateTrackingRange({
+      serviceType,
+      startDate,
+      endDate,
+      isNotificationsEnabled,
+    })
+      .then((response) => {
+        if (response !== true) {
+          setStartDate(new Date(props.data.trackingStartDate));
+          setEndDate(new Date(props.data.trackingEndDate));
+          setNotificationsEnabled(props.data.notificationsEnabled);
+        }
+        setIsUpdated(false);
+        setNotifUpdated(false);
+      })
+      .then((result) => {
+        setIsUpdated(false);
+        setNotifUpdated(false);
+      })
       .catch((error) => console.log("error", error));
   };
 
@@ -136,15 +156,46 @@ const OfficeTrackingDates = (props) => {
                 </FormGroup>
               </Col>
             </Row>
+            <FormGroup
+              check
+              style={{
+                display: "flex",
+                justifyContent: "left",
+                alignItems: "center",
+              }}
+            >
+              <Input
+                onChange={() => {
+                  toggleCheckbox();
+                }}
+                checked={isNotificationsEnabled}
+                style={{
+                  height: "1.5rem",
+                  width: "1.5rem",
+                  minHeight: "20px",
+                  marginRight: "20px",
+
+                  minWidth: "20px",
+                }}
+                type="checkbox"
+                placeholder="lg"
+              />
+              <Label style={{ fontSize: "1rem" }} className="w-55" check>
+                {props.data.name} mail bildirimlerini aç / kapa.
+              </Label>
+            </FormGroup>
           </Form>
         </CardBody>
         <CardFooter>
           <Button
-            outline={!isUpdated}
-            disabled={!isUpdated}
+            outline={!isUpdated && !isNotifUpdated}
+            disabled={!isUpdated && !isNotifUpdated}
             size="lg"
             block
-            color={!isUpdated ? "focus" : "success"}
+            onClick={() => {
+              updateDate(props.data.serviceType, startDate, endDate);
+            }}
+            color={!isUpdated && !isNotifUpdated ? "focus" : "success"}
           >
             Kaydet
           </Button>
