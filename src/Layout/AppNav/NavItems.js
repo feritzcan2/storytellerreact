@@ -87,6 +87,28 @@ export const dateTrackerNav = [
   {
     icon: "pe-7s-diamond",
     label: "Ülkeler",
+    content: [
+      {
+        label: "Almanya",
+        to: "#/randevuTakibi/almanya",
+      },
+      {
+        label: "Hollanda",
+        to: "#/randevuTakibi/hollanda",
+      },
+      {
+        label: "İspanya",
+        to: "#/randevuTakibi/ispanya",
+      },
+      {
+        label: "İtalya",
+        to: "#/randevuTakibi/italya",
+      },
+      {
+        label: "Yunanistan",
+        to: "#/randevuTakibi/yunanistan",
+      },
+    ],
   },
   {
     icon: "pe-7s-display2",

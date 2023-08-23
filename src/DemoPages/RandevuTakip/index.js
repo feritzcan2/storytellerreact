@@ -30,7 +30,9 @@ const Components = ({ match, data }) => {
                 popover.name && (
                   <Route
                     key={popover.name}
-                    path={`${match.url}/${popover.name.toLowerCase()}`}
+                    path={`${match.url}/${popover.name.toLocaleLowerCase(
+                      "tr-TR"
+                    )}`}
                     render={(props) => <CountryTrackerPage data={popover} />}
                   />
                 )
