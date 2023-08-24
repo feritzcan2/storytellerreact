@@ -8,7 +8,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import { HashRouter } from "react-router-dom";
 import "./assets/base.scss";
-import Main from "./DemoPages/Main";
+import Main from "./screens/Main";
 import configureStore from "./config/configureStore";
 import { Provider } from "react-redux";
 
@@ -31,8 +31,8 @@ const renderApp = (Component) => {
 renderApp(Main);
 
 if (module.hot) {
-  module.hot.accept("./DemoPages/Main", () => {
-    const NextApp = require("./DemoPages/Main").default;
+  module.hot.accept("./screens/Main", () => {
+    const NextApp = require("./screens/Main").default;
     renderApp(NextApp);
   });
 }
