@@ -6,7 +6,7 @@ import AuthService from "../../api/AuthService";
 // Layout
 import SweetAlert from "react-bootstrap-sweetalert";
 
-const LoginBoxed = ({ match }) => {
+const LoginPage = ({ match }) => {
   const { countryAppointmentData } = useContext(GlobalContext);
   const { loginUser } = AuthService();
   const [email, setEmali] = useState(""); // Declare a state variable...
@@ -103,4 +103,4 @@ const LoginBoxed = ({ match }) => {
   );
 };
 
-export default LoginBoxed;
+export default LoginPage;

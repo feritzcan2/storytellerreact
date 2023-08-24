@@ -14,10 +14,10 @@ import {
 } from "reactstrap";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-import PageTitle from "../../../Layout/AppMain/PageTitle";
-import CountryService from "../../../api/CountryService";
-import AuthService from "../../../api/AuthService";
-import { GlobalContext } from "../../../context/GlobalProvider";
+import PageTitle from "../../../../Layout/AppMain/PageTitle";
+import CountryService from "../../../../api/CountryService";
+import AuthService from "../../../../api/AuthService";
+import { GlobalContext } from "../../../../context/GlobalProvider";
 
 export const NotificationEmailTable = (props) => {
   const { addMail, deleteMail } = CountryService();

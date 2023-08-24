@@ -18,6 +18,7 @@ class Nav extends Component {
       <Fragment>
         <h5 className="app-sidebar__heading">Randevu Takibi</h5>
         <MetisMenu
+          iconNamePrefix=""
           content={dateTrackerNav}
           activeLinkFromLocation
           className="vertical-nav-menu"

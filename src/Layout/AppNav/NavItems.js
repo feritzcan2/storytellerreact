@@ -101,6 +101,10 @@ export const dateTrackerNav = [
         to: "#/randevuTakibi/ispanya",
       },
       {
+        label: "İtalya",
+        to: "#/randevuTakibi/italya",
+      },
+      {
         label: "Yunanistan",
         to: "#/randevuTakibi/yunanistan",
       },
