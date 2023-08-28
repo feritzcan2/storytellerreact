@@ -6,8 +6,8 @@ export const MainNav = [
   },
   {
     icon: "pe-7s-browser",
-    label: "Pages",
-    to: "#/dashboards/sales",
+    label: "Müşteri Detay",
+    to: "#/musteri/detay",
   },
 ];
 export const dateTrackerNav = [
@@ -16,6 +16,8 @@ export const dateTrackerNav = [
     label: "Ülkeler",
     content: [
       {
+        icon: "pe-7s-de",
+
         label: "Almanya",
         to: "#/randevuTakibi/almanya",
       },

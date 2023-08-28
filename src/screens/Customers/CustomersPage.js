@@ -1,9 +1,10 @@
-import React, { Fragment, Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import { Route } from "react-router-dom";
 
 // COMPONENTS
 
 import { Loader } from "react-bootstrap-typeahead";
+import CustomerInfoScreen from "./CustomerInfo/CustomerInfoScreen";
 import CustomerListScreen from "./CustomerList/CustomerListScreen";
 const CustomersPage = ({ match, data }) => {
   return (
@@ -26,6 +27,7 @@ const CustomersPage = ({ match, data }) => {
       }
     >
       <Route path="/musteri/liste" component={CustomerListScreen} />
+      <Route path="/musteri/detay" component={CustomerInfoScreen} />
     </Suspense>
   );
 };
