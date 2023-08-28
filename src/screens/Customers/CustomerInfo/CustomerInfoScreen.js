@@ -35,9 +35,7 @@ const CustomerInfoScreen = ({ match, data }) => {
               <CustomerDetailsPanel />
               <Row>
                 <Col sm="12" lg="6">
-                  <Card className="mb-3">
-                    <CustomerFileList />
-                  </Card>
+                  <CustomerFileList />
                 </Col>
                 <Col sm="12" lg="6">
                   <CustomerEventHistory />
