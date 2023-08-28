@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import MetisMenu from "react-metismenu";
 import { setEnableMobileMenu } from "../../reducers/ThemeOptions";
-import { dateTrackerNav } from "./NavItems";
+import { MainNav, dateTrackerNav } from "./NavItems";
 
 class Nav extends Component {
   state = {};
@@ -16,6 +16,14 @@ class Nav extends Component {
   render() {
     return (
       <Fragment>
+        <h5 className="app-sidebar__heading">Müşteriler</h5>
+        <MetisMenu
+          iconNamePrefix=""
+          content={MainNav}
+          activeLinkFromLocation
+          className="vertical-nav-menu"
+          classNameStateIcon="pe-7s-angle-down"
+        />
         <h5 className="app-sidebar__heading">Randevu Takibi</h5>
         <MetisMenu
           iconNamePrefix=""
@@ -24,7 +32,6 @@ class Nav extends Component {
           className="vertical-nav-menu"
           classNameStateIcon="pe-7s-angle-down"
         />
-        <h5 className="app-sidebar__heading"></h5>
       </Fragment>
     );
   }
