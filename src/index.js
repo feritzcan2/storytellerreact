@@ -11,6 +11,8 @@ import "./assets/base.scss";
 import Main from "./screens/Main";
 import configureStore from "./config/configureStore";
 import { Provider } from "react-redux";
+import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import FormWizardVar1 from "./screens/CustomerApp/CustomerRegisterPage";
 
 const store = configureStore();
 const rootElement = document.getElementById("root");
@@ -20,7 +22,16 @@ const renderApp = (Component) => {
     <Provider store={store}>
       <CombinedContextProviders>
         <HashRouter>
-          <Component />
+          <Switch>
+            <Route path="/some-path">
+              {/* Render a component specific to the "/some-path" route */}
+              <FormWizardVar1 />
+            </Route>
+            <Route path="/">
+              {/* Render the Main component for the default route */}
+              <Component />
+            </Route>
+          </Switch>
         </HashRouter>
       </CombinedContextProviders>
     </Provider>,

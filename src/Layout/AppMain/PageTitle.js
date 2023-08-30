@@ -15,10 +15,11 @@ class PageTitle extends Component {
       heading,
       icon,
       subheading,
+      style = {},
     } = this.props;
 
     return (
-      <div className="app-page-title">
+      <div style={style} className="app-page-title">
         <div className="page-title-wrapper">
           <div className="page-title-heading">
             <div
