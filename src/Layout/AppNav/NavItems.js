@@ -1,8 +1,8 @@
 export const MainNav = [
   {
     icon: "pe-7s-rocket",
-    label: "Müşteri Listesi",
-    to: "#/musteri/liste",
+    label: "Appointment Form",
+    to: "#/musteri/appointment",
   },
   {
     icon: "pe-7s-browser",

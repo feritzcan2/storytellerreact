@@ -23,7 +23,7 @@ const renderApp = (Component) => {
       <CombinedContextProviders>
         <HashRouter>
           <Switch>
-            <Route path="/some-path">
+            <Route path="/musteri/appointment">
               {/* Render a component specific to the "/some-path" route */}
               <FormWizardVar1 />
             </Route>
