@@ -1,6 +1,8 @@
+import { Divider } from "@mui/material";
 import React, { Fragment } from "react";
-import { FormGroup, Label, Input } from "reactstrap";
-
+import { FormGroup, Label, Input, Button } from "reactstrap";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button as UploadButton, message, Upload } from "antd";
 export default class WizardStep2 extends React.Component {
   render() {
     return (
@@ -16,26 +18,125 @@ export default class WizardStep2 extends React.Component {
               Lütfen aşağıdaki formu kullanarak gerekli belgeleri sistemimize
               yükleyin.
             </p>
+            <p>
+              Yüklediğiniz belgeler, tarafımızdan kontrol edilip onaylanacaktır.
+            </p>
           </h3>
           <FormGroup>
-            <Label
-              style={{ fontSize: "0.9rem" }}
-              className="badge bg-focus"
-              for="exampleCheckbox"
+            <Divider className="mb-5 mt-3" />
+
+            <FormGroup
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              E-Devlet üzerinden alınacak belgeler
-            </Label>
-            <FormGroup>
-              <Label for="exampleCustomFileBrowser">
-                File Browser with Custom Label
-              </Label>
-              <Input
-                type="file"
-                id="exampleCustomFileBrowser"
-                name="customFile"
-                label="Yo, piSck a file!"
-              />
+              <Button
+                style={{ fontSize: "0.9rem", width: "100%" }}
+                className="mb-4 me-2"
+                color="primary"
+              >
+                Şengen vize başvuru formu
+                <span className="badge bg-light"> INDIR</span>
+              </Button>
+              <p className="mt-2">
+                Vize başvuru formunu indirip doldurduktan sonra lütfen dosyayı
+                seçin.
+              </p>
+              <Upload>
+                <UploadButton icon={<UploadOutlined />}>
+                  Doldurduğun formu yüklemek için tıkla
+                </UploadButton>
+              </Upload>
             </FormGroup>
+            <Divider className="mb-2 mt-5" />
+
+            <FormGroup
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                style={{ fontSize: "0.9rem", width: "100%" }}
+                className="mb-4 me-2"
+                color="primary"
+              >
+                Ulaşım, Konaklama biletleri
+                <span className="badge bg-light"> BİLGİ AL </span>
+              </Button>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <p className="mt-2">Uçak rezervasyonu:</p>
+                <Upload>
+                  <UploadButton icon={<UploadOutlined />}>
+                    Yüklemek için tıkla
+                  </UploadButton>
+                </Upload>
+              </div>
+            </FormGroup>
+
+            <FormGroup
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                style={{ fontSize: "0.9rem", width: "100%" }}
+                className="mb-4 me-2"
+                color="primary"
+              >
+                E-Devletten alınacak belgeler
+                <span className="badge bg-light"> BİLGİ AL </span>
+              </Button>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <p className="mt-2">Uçak rezervasyonu:</p>
+                <Upload>
+                  <UploadButton icon={<UploadOutlined />}>
+                    Yüklemek için tıkla
+                  </UploadButton>
+                </Upload>
+              </div>
+            </FormGroup>
+            <FormGroup
+              style={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <p className="mt-2">Otel Rezervasyonu:</p>
+              <Upload>
+                <UploadButton icon={<UploadOutlined />}>
+                  Yüklemek için tıkla
+                </UploadButton>
+              </Upload>
+            </FormGroup>
+            <Divider className="mb-5 mt-3" />
             <FormGroup check>
               <Input id="checkbox2" type="checkbox" />{" "}
               <Label check>Or this one</Label>
