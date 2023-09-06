@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useCallback, useMemo } from 'react';
+import { useEffect, useReducer, useCallback, useMemo, useContext } from 'react';
 // utils
 import axios, { endpoints } from 'src/utils/axios';
 //
 import { AuthContext } from './auth-context';
 import { isValidToken, setSession } from './utils';
+import { GlobalContext } from 'src/context/GlobalProvider';
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +54,7 @@ const STORAGE_KEY = 'accessToken';
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  let { setUserData } = useContext(GlobalContext);
 
   const initialize = useCallback(async () => {
     try {
@@ -64,7 +66,7 @@ export function AuthProvider({ children }) {
         const response = await axios.get(endpoints.auth.me);
 
         const { user } = response.data;
-
+        debugger;
         dispatch({
           type: 'INITIAL',
           payload: {
@@ -100,14 +102,16 @@ export function AuthProvider({ children }) {
   // LOGIN
   const login = useCallback(async (email, password) => {
     const data = {
-      email,
+      username: email,
       password,
     };
 
     const response = await axios.post(endpoints.auth.login, data);
-
-    const { accessToken, user } = response.data;
-
+    let user = response.data.user;
+    let accessToken = response.data.tokenData?.jwtToken;
+    if (user != null) {
+      setUserData(user);
+    }
     setSession(accessToken);
 
     dispatch({

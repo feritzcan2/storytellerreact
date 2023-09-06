@@ -19,11 +19,29 @@ import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
 // auth
 import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
 import CombinedContextProviders from './context/CombinedContextProviders';
-import AppMain from './AppMain';
+import { Fragment, useEffect } from 'react';
+import CountryService from './api/CountryService';
+import AuthService from './api/AuthService';
+import { isAuthenticated } from './context/AuthContext';
 
 // ----------------------------------------------------------------------
 
-export default function App() {
+export default function AppMain() {
+  const { getCountryData } = CountryService();
+  const { getUserData } = AuthService();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      getUserData();
+      getCountryData();
+    }
+    setInterval(() => {
+      if (isAuthenticated()) {
+        getCountryData();
+      }
+    }, 5000);
+  }, []);
+
   const charAt = `
 
   ░░░    ░░░
@@ -39,29 +57,8 @@ export default function App() {
   useScrollToTop();
 
   return (
-    <CombinedContextProviders>
-      <AuthProvider>
-        <SettingsProvider
-          defaultSettings={{
-            themeMode: 'light', // 'light' | 'dark'
-            themeDirection: 'ltr', //  'rtl' | 'ltr'
-            themeContrast: 'default', // 'default' | 'bold'
-            themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-            themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-            themeStretch: false,
-          }}
-        >
-          <ThemeProvider>
-            <MotionLazy>
-              <SettingsDrawer />
-              <ProgressBar />
-              <AuthConsumer>
-                <AppMain />
-              </AuthConsumer>
-            </MotionLazy>
-          </ThemeProvider>{' '}
-        </SettingsProvider>
-      </AuthProvider>
-    </CombinedContextProviders>
+    <Fragment>
+      <Router />
+    </Fragment>
   );
 }
