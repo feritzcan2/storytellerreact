@@ -28,7 +28,7 @@ export const _appRelated = ['Chrome', 'Drive', 'Dropbox', 'Evernote', 'Github'].
   }
 );
 
-export const _appInstalled = ['Germany', 'England', 'France', 'Korean', 'USA'].map(
+export const _appInstalled = ['Almanya', 'İtalya', 'Yunanistan', 'Hollanda', 'İspanya'].map(
   (name, index) => ({
     id: _mock.id(index),
     name,

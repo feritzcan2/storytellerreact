@@ -95,7 +95,7 @@ export const countries = [
   { code: 'CZ', label: 'Czech Republic', phone: '420' },
   {
     code: 'DE',
-    label: 'Germany',
+    label: 'Almanya',
     phone: '49',
     suggested: true,
   },

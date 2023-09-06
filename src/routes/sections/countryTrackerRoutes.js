@@ -9,12 +9,10 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/dashboard/one'));
-const PageTwo = lazy(() => import('src/pages/dashboard/two'));
-const PageThree = lazy(() => import('src/pages/dashboard/three'));
-const PageFour = lazy(() => import('src/pages/dashboard/four'));
-const PageFive = lazy(() => import('src/pages/dashboard/five'));
-const PageSix = lazy(() => import('src/pages/dashboard/six'));
+const CountryTrackerPage = lazy(() => import('src/pages/countryTracker/CountryTrackerPage'));
+const NotificationSettingsPage = lazy(() =>
+  import('src/pages/countryTracker/NotificationSettingsPage')
+);
 
 // ----------------------------------------------------------------------
 
@@ -31,13 +29,13 @@ export const countryTrackerRoutes = [
       </AuthGuard>
     ),
     children: [
-      { element: <IndexPage />, index: true },
-      { path: 'ispanya', element: <PageTwo /> },
-      { path: 'almanya', element: <PageThree /> },
-      { path: 'yunanistan', element: <PageThree /> },
-      { path: 'italya', element: <PageThree /> },
-      { path: 'hollanda', element: <PageThree /> },
-      { path: 'bildirimAyarlari', element: <PageThree /> },
+      { element: <CountryTrackerPage />, index: true },
+      { path: 'ispanya', element: <CountryTrackerPage country="ispanya" /> },
+      { path: 'almanya', element: <CountryTrackerPage country="almanya" /> },
+      { path: 'yunanistan', element: <CountryTrackerPage country="yunanistan" /> },
+      { path: 'italya', element: <CountryTrackerPage country="italya" /> },
+      { path: 'hollanda', element: <CountryTrackerPage country="hollanda" /> },
+      { path: 'bildirimAyarlari', element: <NotificationSettingsPage /> },
     ],
   },
 ];
