@@ -13,25 +13,28 @@ import { useSettingsContext } from 'src/components/settings';
 // assets
 import { SeoIllustration } from 'src/assets/illustrations';
 //
-import AppWidget from '../app-widget';
-import AppWelcome from '../app-welcome';
-import AppFeatured from '../app-featured';
-import AppNewInvoice from '../app-new-invoice';
-import ClosestAppointmentComponent from '../app-top-authors';
-import AppTopRelated from '../app-top-related';
-import AppAreaInstalled from '../app-area-installed';
-import AppWidgetSummary from '../app-widget-summary';
-import AppCurrentDownload from '../app-current-download';
-import AppTopInstalledCountries from '../app-top-installed-countries';
-import InvoiceAnalytic from '../invoice-analytic';
+import AppWidget from '../app/app-widget';
+import AppWelcome from '../app/app-welcome';
+import AppFeatured from '../app/app-featured';
+import AppNewInvoice from '../app/app-new-invoice';
+import ClosestAppointmentComponent from '../app/app-top-authors';
+import AppTopRelated from '../app/app-top-related';
+import AppAreaInstalled from '../app/app-area-installed';
+import AppWidgetSummary from '../app/app-widget-summary';
+import AppCurrentDownload from '../app/app-current-download';
+import InvoiceAnalytic from '../app/invoice-analytic';
 import Scrollbar from 'src/components/scrollbar/scrollbar';
 import { Card, Divider, Typography, alpha } from '@mui/material';
 import { bgGradient } from 'src/theme/css';
+import CountryDatesWidget from './CountryDatesWidget';
+import { GlobalContext } from 'src/context/GlobalProvider';
+import { useContext } from 'react';
 
 // ----------------------------------------------------------------------
 
-export default function OverviewAppView() {
+export default function DashboardView() {
   const { user } = useMockedUser();
+  const { countryAppointmentData } = useContext(GlobalContext);
 
   const theme = useTheme();
 
@@ -42,7 +45,10 @@ export default function OverviewAppView() {
       <Grid container spacing={3}>
         <Grid xs={12} md={12} lg={12}>
           <Grid xs={6} md={6} lg={6}>
-            <AppTopInstalledCountries title="En Yakın Randevu" list={_appInstalled} />
+            <CountryDatesWidget
+              countryAppointmentData={countryAppointmentData}
+              list={_appInstalled}
+            />
           </Grid>
           <Divider sx={{ mt: 3, mb: 3 }}></Divider>
           <Grid xs={6} md={6} lg={6}>
@@ -129,7 +135,7 @@ export default function OverviewAppView() {
           />
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <AppTopInstalledCountries title="En Yakın Randevu" list={_appInstalled} />
+          <CountryDatesWidget title="En Yakın Randevu" list={_appInstalled} />
         </Grid>
         <Grid xs={12} md={6} lg={8}>
           <AppAreaInstalled
@@ -198,7 +204,7 @@ export default function OverviewAppView() {
           <AppTopRelated title="Top Related Applications" list={_appRelated} />
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <AppTopInstalledCountries title="Top Installed Countries" list={_appInstalled} />
+          <CountryDatesWidget title="Top Installed Countries" list={_appInstalled} />
         </Grid>
         <Grid xs={12} md={6} lg={4}>
           <ClosestAppointmentComponent title="Top Authors" list={_appAuthors} />

@@ -1,14 +1,14 @@
-import axios from "axios";
-import { getToken, logout } from "../context/AuthContext";
+import axios from 'axios';
+import { getToken, logout } from '../context/AuthContext';
 const api = axios.create({
-  baseURL: "https://api.vizedefteri.com/admin",
+  // baseURL: "https://api.vizedefteri.com/admin",
+  baseURL: 'http://localhost:5016/admin',
 });
 
 api.interceptors.request.use(async (config) => {
   const token = getToken();
-  axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-  axios.defaults.headers.common["Access-Control-Allow-Methods"] =
-    "DELETE, POST, GET, OPTIONS";
+  axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'DELETE, POST, GET, OPTIONS';
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

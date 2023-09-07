@@ -14,6 +14,7 @@ import { Card, CardHeader, Stack } from '@mui/material';
 import { bgGradient } from 'src/theme/css';
 import EmailListTable from './NotificationSettingsView';
 import ComponentBlock from 'src/pages/component-block';
+import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
@@ -44,47 +45,84 @@ export default function AvailableDatesView(props) {
     setValue(newValue);
   };
   const { country } = props;
+
+  if (props.countryData === undefined) return <LoadingScreen />;
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Typography variant="h4">
-        {' '}
-        {country.charAt(0).toLocaleUpperCase('tr-TR') + country.slice(1)} için uygun tarihler{' '}
+        {props.countryData.name.charAt(0).toLocaleUpperCase('tr-TR') +
+          props.countryData.name.slice(1)}{' '}
+        için uygun tarihler
       </Typography>
 
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            {props.countryData.officeData
+              .sort((a, b) => {
+                // Compare the minimum available dates
+                const minDateA = Math.min(...a.dates.map((date) => new Date(date)));
+                const minDateB = Math.min(...b.dates.map((date) => new Date(date)));
+                return minDateA - minDateB; // Sort in ascending order
+              })
+              .map((popover, i) => {
+                return <Tab label={popover.officeName} />;
+              })}
           </Tabs>
         </Box>
-        <CustomTabPanel value={value} index={0}>
-          <Stack spacing={10}>
-            <DateRow />
-            <Card sx={{ width: 1 }}>
-              <CardHeader title="Basic Table" />
-              <EmailListTable />
-            </Card>
-          </Stack>
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          Item Two
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
-          Item Three
-        </CustomTabPanel>
+        {props.countryData.officeData
+          .sort((a, b) => {
+            // Compare the minimum available dates
+            const minDateA = Math.min(...a.dates.map((date) => new Date(date)));
+            const minDateB = Math.min(...b.dates.map((date) => new Date(date)));
+            return minDateA - minDateB; // Sort in ascending order
+          })
+          .map((popover, i) => {
+            let updateMinutes = getMinuteDifference(popover);
+            return (
+              <CustomTabPanel value={value} index={i}>
+                {popover.dates.length != 0 && (
+                  <Stack spacing={1}>
+                    {popover.dates.map((date, i) => {
+                      if (i < 3)
+                        return (
+                          <DateRow
+                            key={popover.officeName + 'i'}
+                            updateMinutes={updateMinutes}
+                            date={date.split('T')[0]}
+                          />
+                        );
+                    })}
+                  </Stack>
+                )}
+                {popover.dates.length == 0 && updateMinutes < 15 && (
+                  <DateRow
+                    key={popover.officeName + 'i'}
+                    updateMinutes={updateMinutes}
+                    color="error"
+                  />
+                )}
+                {popover.dates.length == 0 && updateMinutes >= 15 && (
+                  <DateRow
+                    key={popover.officeName + 'i'}
+                    updateMinutes={updateMinutes}
+                    color="warning"
+                  />
+                )}
+              </CustomTabPanel>
+            );
+          })}
       </Box>
     </Container>
   );
 }
 
-function DateRow({ title, total, icon, color = 'primary', sx, ...other }) {
+function DateRow({ updateMinutes, date, title, total, icon, color = 'primary', sx, ...other }) {
   const theme = useTheme();
 
   return (
     <Stack
-      alignItems="center"
+      component="span"
       sx={{
         ...bgGradient({
           direction: '135deg',
@@ -102,11 +140,22 @@ function DateRow({ title, total, icon, color = 'primary', sx, ...other }) {
     >
       {icon && <Box sx={{ width: 64, height: 64, mb: 1 }}>{icon}</Box>}
 
-      <Typography variant="h3">15 Mayıs 2023</Typography>
+      <Typography component={'span'} variant="h3">
+        {color === 'error' ? 'Uygun Tarih Yok' : color === 'warning' ? 'Güncellenmedi' : date}
+      </Typography>
 
-      <Typography variant="subtitle2" sx={{ opacity: 0.64 }}>
-        15 dakika önce güncellendi
+      <Typography component={'span'} variant="subtitle2" sx={{ opacity: 0.64 }}>
+        {color === 'warning'
+          ? 'Sistemden veri alınamadı. Lütfen kendiniz kontrol edin.'
+          : updateMinutes + '  dakika önce güncellendi.'}
       </Typography>
     </Stack>
   );
 }
+const getMinuteDifference = (data) => {
+  let date1 = new Date();
+  let date2 = new Date(data.updateDate);
+  const diffInMilliseconds = Math.abs(date2 - date1);
+  const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+  return diffInMinutes;
+};
