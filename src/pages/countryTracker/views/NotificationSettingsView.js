@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Box, Card, CardHeader, Container, IconButton, Tooltip, Typography } from '@mui/material';
 import Iconify from 'src/components/iconify/iconify';
 import { useSettingsContext } from 'src/components/settings';
+import UserListView from './userList/user-list-view';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -33,7 +34,7 @@ export default function NotificationSettingsView(props) {
 
       <Card sx={{ width: 1, mt: 5 }}>
         <CardHeader title="Email Listesi" />
-        <EmailListTable />
+        <UserListView />
       </Card>
     </Container>
   );
