@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Card, CardHeader, Container, IconButton, Tooltip, Typography } from '@mui/material';
 import Iconify from 'src/components/iconify/iconify';
+import { useSettingsContext } from 'src/components/settings';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -21,8 +22,13 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 export default function NotificationSettingsView(props) {
+  const settings = useSettingsContext();
+
   return (
-    <Container>
+    <Container
+      sx={{ position: 'absolute', bottom: 50 }}
+      maxWidth={settings.themeStretch ? false : 'xl'}
+    >
       <Typography variant="h4"> Bildirim ayarları</Typography>
 
       <Card sx={{ width: 1, mt: 5 }}>
@@ -50,6 +56,17 @@ function EmailListTable() {
           </TableRow>
         </TableHead>
         <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell>{row.calories}</TableCell>
+              <TableCell>{row.calories}</TableCell>
+              <TableCell align="right" component="th" scope="row">
+                <IconButton color={'inherit'} onClick={popover.onOpen}>
+                  <Iconify icon="eva:more-vertical-fill" />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
           {rows.map((row) => (
             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell>{row.calories}</TableCell>
