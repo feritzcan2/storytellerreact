@@ -11,7 +11,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 const CountryTrackerPage = lazy(() => import('src/pages/countryTracker/CountryTrackerPage'));
 const NotificationSettingsPage = lazy(() =>
-  import('src/pages/countryTracker/NotificationSettingsPage')
+  import('src/pages/countryTracker/notificationSettings/NotificationSettingsPage')
 );
 
 // ----------------------------------------------------------------------

@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 // @mui
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { trTR } from '@mui/material/locale';
 
 // components
 import { useSettingsContext } from 'src/components/settings';
@@ -60,7 +61,7 @@ export default function ThemeProvider({ children }) {
     [baseOption, directionOption, darkModeOption, presetsOption, contrastOption.theme]
   );
 
-  const theme = createTheme(memoizedValue);
+  const theme = createTheme(memoizedValue, trTR);
 
   theme.components = merge(componentsOverrides(theme), contrastOption.components);
 

@@ -12,7 +12,6 @@ import { useSettingsContext } from 'src/components/settings';
 import { useTheme } from '@emotion/react';
 import { Card, CardHeader, Stack } from '@mui/material';
 import { bgGradient } from 'src/theme/css';
-import EmailListTable from './NotificationSettingsView';
 import ComponentBlock from 'src/pages/component-block';
 import { LoadingScreen } from 'src/components/loading-screen';
 
