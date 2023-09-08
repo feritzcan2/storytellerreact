@@ -1,9 +1,14 @@
 {
-  "name": "@minimal-kit/simple-cra-js",
-  "author": "Minimals",
-  "version": "5.5.0",
-  "description": "Simple Cra & JavaScript",
+  "name": "vize-defteri",
+  "version": "2.0.0",
   "private": true,
+  "description": "Vize Defteri",
+  "author": "vize-defteri",
+  "homepage": ".",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feritzcan2/storytellerreact"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -12,7 +17,7 @@
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "clear-all": "rm -rf node_modules .next out dist build",
-    "re-start": "rm -rf node_modules .next out dist build && yarn install && yarn start",
+    "re-start": "rm -rf node _modules .next out dist build && yarn install && yarn start",
     "re-build": "rm -rf node_modules .next out dist build && yarn install && yarn build",
     "re-build-test": "rm -rf node_modules .next out dist build && npm install && npm run build"
   },
