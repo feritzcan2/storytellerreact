@@ -1,18 +1,14 @@
-import api from "./api";
-import { useContext, useReducer } from "react";
-import { GlobalContext } from "../context/GlobalProvider";
+import api from './api';
+import { useContext, useReducer } from 'react';
+import { GlobalContext } from '../context/GlobalProvider';
 
 export default function CountryService() {
-  let {
-    setCountryAppointmentData,
-    setUserData,
-    userData,
-    countryAppointmentData,
-  } = useContext(GlobalContext);
+  let { setCountryAppointmentData, setUserData, userData, countryAppointmentData } =
+    useContext(GlobalContext);
 
   const getCountryData = async (data, errorMsg) => {
     return api
-      .get("countryData")
+      .get('countryData')
       .then(async (result) => {
         if (result !== undefined && result.data.error === null) {
           console.log(result.data.countryData);
@@ -24,8 +20,8 @@ export default function CountryService() {
       .catch((err) => {
         if (errorMsg !== undefined)
           errorMsg(
-            "Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com",
-            "danger"
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
           );
       });
   };
@@ -34,27 +30,23 @@ export default function CountryService() {
     const { serviceType, startDate, endDate, isNotificationsEnabled } = data;
     return api
       .get(
-        "updateTrackingDate?serviceType=" +
+        'updateTrackingDate?serviceType=' +
           serviceType +
-          "&startDate=" +
+          '&startDate=' +
           startDate.toISOString() +
-          "&endDate=" +
+          '&endDate=' +
           endDate.toISOString() +
-          "&isNotificationsEnabled=" +
+          '&isNotificationsEnabled=' +
           isNotificationsEnabled
       )
       .then(async (result) => {
-        debugger;
-
         if (
           result !== undefined &&
           result.data === true &&
           (result.data.error === null || result.data.error === undefined)
         ) {
           let newData = countryAppointmentData;
-          var foundIndex = newData.findIndex(
-            (x) => x.serviceType == serviceType
-          );
+          var foundIndex = newData.findIndex((x) => x.serviceType == serviceType);
           if (foundIndex != null) {
             newData[foundIndex].trackingStartDate = startDate.toISOString();
             newData[foundIndex].trackingEndDate = endDate.toISOString();
@@ -68,8 +60,8 @@ export default function CountryService() {
       .catch((err) => {
         if (errorMsg !== undefined)
           errorMsg(
-            "Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com",
-            "danger"
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
           );
       });
   };
@@ -77,7 +69,7 @@ export default function CountryService() {
   const addMail = async (data, errorMsg) => {
     const { name, mail } = data;
     return api
-      .post("mail", {
+      .post('mail', {
         name,
         mail,
       })
@@ -96,15 +88,15 @@ export default function CountryService() {
       .catch((err) => {
         if (errorMsg !== undefined)
           errorMsg(
-            "Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com",
-            "danger"
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
           );
       });
   };
   const deleteMail = async (data, errorMsg) => {
     const { email } = data;
     return api
-      .delete("mail?Email=" + email)
+      .delete('mail?Email=' + email)
       .then(async (result) => {
         if (
           result !== undefined &&
@@ -120,8 +112,8 @@ export default function CountryService() {
       .catch((err) => {
         if (errorMsg !== undefined)
           errorMsg(
-            "Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com",
-            "danger"
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
           );
       });
   };

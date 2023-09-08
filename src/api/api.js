@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { getToken, logout } from '../context/AuthContext';
 const api = axios.create({
-  // baseURL: "https://api.vizedefteri.com/admin",
-  baseURL: 'http://localhost:5016/admin',
+  baseURL: 'https://api.vizedefteri.com/admin',
+  //  baseURL: 'http://localhost:5016/admin',
 });
 
 api.interceptors.request.use(async (config) => {
