@@ -15,7 +15,7 @@ export default function UserAuth() {
 
   const getUserData = async (data, errorMsg) => {
     return api
-      .get('userData')
+      .get('admin/userData')
       .then(async (result) => {
         if (result.data.error === null || result.data.error === undefined) {
           setUserData(result.data);
@@ -36,7 +36,7 @@ export default function UserAuth() {
     const { username, password } = data;
     debugger;
     return api
-      .post('login', {
+      .post('admin/login', {
         username,
         password,
       })

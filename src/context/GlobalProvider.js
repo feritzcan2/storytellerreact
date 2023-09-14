@@ -1,10 +1,11 @@
-import React, { createContext, useReducer, useEffect } from "react";
-import AppReducer from "./AppReducer";
-import CountryService from "../api/CountryService";
+import React, { createContext, useReducer, useEffect } from 'react';
+import AppReducer from './AppReducer';
+import CountryService from '../api/CountryService';
 
 const initialState = {
   countryAppointmentData: [],
   userData: null,
+  customerList: null,
 };
 
 //const localState = JSON.parse(localStorage.getItem("cm"));
@@ -16,14 +17,20 @@ export const GlobalProvider = ({ children }) => {
 
   function setCountryAppointmentData(data) {
     dispatch({
-      type: "SET_COUNTRY_APPOINTMENT_DATA",
+      type: 'SET_COUNTRY_APPOINTMENT_DATA',
+      payload: data,
+    });
+  }
+  function setCustomers(data) {
+    dispatch({
+      type: 'SET_CUSTOMERS',
       payload: data,
     });
   }
 
   function setUserData(data) {
     dispatch({
-      type: "SET_USER_DATA",
+      type: 'SET_USER_DATA',
       payload: data,
     });
   }
@@ -35,6 +42,8 @@ export const GlobalProvider = ({ children }) => {
         userData: state.userData,
         setCountryAppointmentData: setCountryAppointmentData,
         setUserData: setUserData,
+        customerList: state.customerList,
+        setCustomers: setCustomers,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Fragment } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
@@ -41,14 +41,15 @@ import {
 import UserTableRow from './components/user-table-row';
 import UserTableToolbar from './components/user-table-row';
 import UserTableFiltersResult from './components/user-table-row';
+import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
+const STATUS_OPTIONS = [{ value: 'all', label: 'Hepsi' }, ...USER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name' },
-  { id: 'phoneNumber', label: 'Phone Number', width: 180 },
+  { id: 'name', label: 'İsim' },
+  { id: 'phoneNumber', label: 'Telefon', width: 180 },
   { id: 'company', label: 'Company', width: 220 },
   { id: 'role', label: 'Role', width: 180 },
   { id: 'status', label: 'Status', width: 100 },
@@ -63,7 +64,9 @@ const defaultFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function UserListView() {
+export default function UserListView(props) {
+  console.log(props);
+  if (props.customers === null) return <LoadingScreen />;
   const table = useTable();
 
   const settings = useSettingsContext();
@@ -146,6 +149,30 @@ export default function UserListView() {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+        <Fragment
+          action={
+            <Button
+              component={RouterLink}
+              //  href={paths.dashboard.user.new}
+              variant="contained"
+              startIcon={<Iconify icon="mingcute:add-line" />}
+            >
+              Yeni Müşteri
+            </Button>
+          }
+          sx={{
+            mb: { xs: 3, md: 5 },
+          }}
+        />
+        <Button
+          sx={{ alignSelf: 'end' }}
+          component={RouterLink}
+          //  href={paths.dashboard.user.new}
+          variant="contained"
+          startIcon={<Iconify icon="mingcute:add-line" />}
+        >
+          New User
+        </Button>
         <Card>
           <Tabs
             value={filters.status}

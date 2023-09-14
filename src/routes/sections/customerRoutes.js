@@ -6,6 +6,8 @@ import { AuthGuard } from 'src/auth/guard';
 import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
+import UserListView from 'src/pages/customer/userList/user-list-view';
+import CustomerPage from 'src/pages/customer/CustomerPage';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +29,7 @@ export const customerRoutes = [
     ),
     children: [
       { element: <IndexPage />, index: true },
-      { path: 'yeni', element: <IndexPage /> },
+      { path: 'yeni', element: <CustomerPage /> },
       { path: 'liste', element: <IndexPage /> },
     ],
   },
