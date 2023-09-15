@@ -47,15 +47,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 const STATUS_OPTIONS = [{ value: 'all', label: 'Hepsi' }, ...USER_STATUS_OPTIONS];
 
-const TABLE_HEAD = [
-  { id: 'name', label: 'İsim' },
-  { id: 'phoneNumber', label: 'Telefon', width: 180 },
-  { id: 'company', label: 'Company', width: 220 },
-  { id: 'role', label: 'Role', width: 180 },
-  { id: 'status', label: 'Status', width: 100 },
-  { id: '', width: 88 },
-];
-
 const defaultFilters = {
   name: '',
   role: [],
@@ -65,8 +56,14 @@ const defaultFilters = {
 // ----------------------------------------------------------------------
 
 export default function UserListView(props) {
-  console.log(props);
-  if (props.customers === null) return <LoadingScreen />;
+  if (props.tableData === null) return <LoadingScreen />;
+
+  const { columns, customers } = props.tableData;
+  let TABLE_HEAD = [];
+  columns.forEach((element) => {
+    TABLE_HEAD.push({ id: element.id, label: element.columnName, width: 100 });
+  });
+
   const table = useTable();
 
   const settings = useSettingsContext();
@@ -75,7 +72,7 @@ export default function UserListView(props) {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState(customers);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -280,6 +277,7 @@ export default function UserListView(props) {
                     )
                     .map((row) => (
                       <UserTableRow
+                        columns={columns}
                         key={row.id}
                         row={row}
                         selected={table.selected.includes(row.id)}

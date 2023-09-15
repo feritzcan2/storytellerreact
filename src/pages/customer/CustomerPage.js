@@ -21,7 +21,7 @@ export default function CustomerPage() {
         <title> Dashboard: Five</title>
       </Helmet>
 
-      <UserListView customers={customerList} />
+      <UserListView tableData={customerList} />
     </>
   );
 }

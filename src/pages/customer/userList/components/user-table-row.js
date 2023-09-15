@@ -21,7 +21,15 @@ import UserQuickEditForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+const NEGATIVE_LABEL_TEXTS = ['Randevu Yok'];
+export default function UserTableRow({
+  columns,
+  row,
+  selected,
+  onEditRow,
+  onSelectRow,
+  onDeleteRow,
+}) {
   if (row === undefined) return null;
   const { name, avatarUrl, company, role, status, email, phoneNumber } = row;
 
@@ -30,7 +38,85 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
   const quickEdit = useBoolean();
 
   const popover = usePopover();
+  const labelColor = (column, value) => {
+    if (column.labelColor !== undefined && column.labelColor !== null) return column.labelColor;
+    if (NEGATIVE_LABEL_TEXTS.includes(value)) return 'error';
 
+    return 'success';
+  };
+  return (
+    <>
+      <TableRow hover selected={selected}>
+        <TableCell padding="checkbox">
+          <Checkbox checked={selected} onClick={onSelectRow} />
+        </TableCell>
+        {columns.map((column) => {
+          console.log(row);
+
+          return (
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>
+              {column.isLabel === true && (
+                <Label color={labelColor(column, row[column['key']])}>{row[column['key']]}</Label>
+              )}
+              {column.isLabel !== true && (
+                <ListItemText
+                  primary={row[column['key']]}
+                  secondary={column['subKey'] !== undefined ? row[column['subKey']] : undefined}
+                  primaryTypographyProps={{ typography: 'body2' }}
+                  secondaryTypographyProps={{
+                    component: 'span',
+                    color: 'text.disabled',
+                  }}
+                />
+              )}
+            </TableCell>
+          );
+        })}
+      </TableRow>
+
+      <UserQuickEditForm currentUser={row} open={quickEdit.value} onClose={quickEdit.onFalse} />
+
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        arrow="right-top"
+        sx={{ width: 140 }}
+      >
+        <MenuItem
+          onClick={() => {
+            confirm.onTrue();
+            popover.onClose();
+          }}
+          sx={{ color: 'error.main' }}
+        >
+          <Iconify icon="solar:trash-bin-trash-bold" />
+          Delete
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            onEditRow();
+            popover.onClose();
+          }}
+        >
+          <Iconify icon="solar:pen-bold" />
+          Edit
+        </MenuItem>
+      </CustomPopover>
+
+      <ConfirmDialog
+        open={confirm.value}
+        onClose={confirm.onFalse}
+        title="Delete"
+        content="Are you sure want to delete?"
+        action={
+          <Button variant="contained" color="error" onClick={onDeleteRow}>
+            Delete
+          </Button>
+        }
+      />
+    </>
+  );
   return (
     <>
       <TableRow hover selected={selected}>
