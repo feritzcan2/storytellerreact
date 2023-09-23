@@ -181,7 +181,6 @@ export default function UserListView(props) {
           {columns
             .filter((column) => column.filter !== undefined && column.filter !== null)
             .map((column) => {
-              debugger;
               return (
                 <Tabs
                   value={filters[column.key]}

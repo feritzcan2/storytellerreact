@@ -47,7 +47,7 @@ export default function AvailableDatesView(props) {
 
   if (props.countryData === undefined) return <LoadingScreen />;
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <Container sx={{ minHeight: '40vh' }} maxWidth={settings.themeStretch ? false : 'xl'}>
       <Typography variant="h4">
         {props.countryData.name.charAt(0).toLocaleUpperCase('tr-TR') +
           props.countryData.name.slice(1)}{' '}

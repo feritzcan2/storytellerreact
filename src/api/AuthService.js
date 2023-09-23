@@ -34,7 +34,6 @@ export default function UserAuth() {
   };
   const loginUser = async (data, errorMsg) => {
     const { username, password } = data;
-    debugger;
     return api
       .post('admin/login', {
         username,
