@@ -41,30 +41,36 @@ import {
 import UserTableRow from './components/user-table-row';
 import UserTableToolbar from './components/user-table-toolbar';
 import UserTableFiltersResult from './components/user-table-filters-result';
+import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
 const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
-
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name' },
-  { id: 'phoneNumber', label: 'Phone Number', width: 180 },
-  { id: 'company', label: 'Company', width: 220 },
-  { id: 'role', label: 'Role', width: 180 },
-  { id: 'status', label: 'Status', width: 100 },
-  { id: '', width: 88 },
-];
 
 const defaultFilters = {
   name: '',
   role: [],
   status: 'all',
 };
-
+const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 // ----------------------------------------------------------------------
 
-export default function UserListView() {
+export default function UserListView(props) {
+  if (props.tableData === null) return <LoadingScreen />;
+
+  const { columns, customers } = props.tableData;
   const table = useTable();
+  const defaultFilters = {
+    name: '',
+    role: [],
+  };
+  const TABLE_HEAD = [];
+  columns.forEach((element) => {
+    TABLE_HEAD.push({ id: element.id, label: element.columnName, width: 100 });
+    if (element.Filter !== undefined && element.Filter !== null)
+      defaultFilters[element.key] = 'all';
+  });
+  TABLE_HEAD.push({ id: 'ss', label: '', width: 100 });
 
   const settings = useSettingsContext();
 
@@ -72,7 +78,7 @@ export default function UserListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState(customers);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -80,8 +86,8 @@ export default function UserListView() {
     inputData: tableData,
     comparator: getComparator(table.order, table.orderBy),
     filters,
+    columns,
   });
-
   const dataInPage = dataFiltered.slice(
     table.page * table.rowsPerPage,
     table.page * table.rowsPerPage + table.rowsPerPage
@@ -133,8 +139,8 @@ export default function UserListView() {
   );
 
   const handleFilterStatus = useCallback(
-    (event, newValue) => {
-      handleFilters('status', newValue);
+    (event, newValue, filterKey) => {
+      handleFilters(filterKey, newValue);
     },
     [handleFilters]
   );
@@ -163,48 +169,43 @@ export default function UserListView() {
         />
 
         <Card>
-          <Tabs
-            value={filters.status}
-            onChange={handleFilterStatus}
-            sx={{
-              px: 2.5,
-              boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
-            }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab
-                key={tab.value}
-                iconPosition="end"
-                value={tab.value}
-                label={tab.label}
-                icon={
-                  <Label
-                    variant={
-                      ((tab.value === 'all' || tab.value === filters.status) && 'filled') || 'soft'
-                    }
-                    color={
-                      (tab.value === 'active' && 'success') ||
-                      (tab.value === 'pending' && 'warning') ||
-                      (tab.value === 'banned' && 'error') ||
-                      'default'
-                    }
-                  >
-                    {tab.value === 'all' && _userList.length}
-                    {tab.value === 'active' &&
-                      _userList.filter((user) => user.status === 'active').length}
-
-                    {tab.value === 'pending' &&
-                      _userList.filter((user) => user.status === 'pending').length}
-                    {tab.value === 'banned' &&
-                      _userList.filter((user) => user.status === 'banned').length}
-                    {tab.value === 'rejected' &&
-                      _userList.filter((user) => user.status === 'rejected').length}
-                  </Label>
-                }
-              />
-            ))}
-          </Tabs>
-
+          {columns
+            .filter((column) => column.filter !== undefined && column.filter !== null)
+            .map((column) => {
+              return (
+                <Tabs
+                  value={filters[column.key]}
+                  onChange={(event, value) => {
+                    handleFilterStatus(event, value, column.key);
+                  }}
+                  sx={{
+                    px: 2.5,
+                    boxShadow: (theme) =>
+                      `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+                  }}
+                >
+                  {column.filter.isNullFilter === false &&
+                    column.filter.options.map((tab, index) => (
+                      <Tab
+                        key={column.key}
+                        iconPosition="end"
+                        value={tab.value}
+                        label={tab.label}
+                        icon={
+                          <Label
+                            variant={'filled' || 'filled'}
+                            color={colors[index % colors.length]}
+                          >
+                            {tab.value === 'all' && _userList.length}
+                            {tab.value !== 'all' &&
+                              customers.filter((user) => user[column['key']] === tab.value).length}
+                          </Label>
+                        }
+                      />
+                    ))}
+                </Tabs>
+              );
+            })}
           <UserTableToolbar
             filters={filters}
             onFilters={handleFilters}
@@ -271,6 +272,7 @@ export default function UserListView() {
                       )
                       .map((row) => (
                         <UserTableRow
+                          columns={columns}
                           key={row.id}
                           row={row}
                           selected={table.selected.includes(row.id)}
@@ -332,8 +334,9 @@ export default function UserListView() {
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, comparator, filters }) {
+function applyFilter({ inputData, comparator, filters, columns }) {
   const { name, status, role } = filters;
+  const columnFilters = [];
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -351,13 +354,32 @@ function applyFilter({ inputData, comparator, filters }) {
     );
   }
 
-  if (status !== 'all') {
-    inputData = inputData.filter((user) => user.status === status);
-  }
-
-  if (role.length) {
-    inputData = inputData.filter((user) => role.includes(user.role));
-  }
+  columns.forEach((column) => {
+    if (column.filter !== undefined && column.filter !== null) {
+      let filter = filters[column.key];
+      if (
+        filter !== null &&
+        filter !== undefined &&
+        filter !== 'all' &&
+        filter !== 'All' &&
+        filter !== 'Hepsi'
+      ) {
+        if (column.filter.isNullFilter === false) {
+          inputData = inputData.filter((user) => user[column.key] === filter);
+        } else {
+          if (filter === 'True') {
+            inputData = inputData.filter(
+              (user) => user[column['key']] !== undefined && user[column['key']] !== null
+            );
+          } else if (filter === 'False') {
+            inputData = inputData.filter(
+              (user) => user[column['key']] === undefined || user[column['key']] === null
+            );
+          }
+        }
+      }
+    }
+  });
 
   return inputData;
 }

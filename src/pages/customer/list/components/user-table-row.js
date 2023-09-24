@@ -20,57 +20,58 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import UserQuickEditForm from './user-quick-edit-form';
 
 // ----------------------------------------------------------------------
+const NEGATIVE_LABEL_TEXTS = ['Randevu Yok'];
 
-export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+export default function UserTableRow({
+  columns,
+  row,
+  selected,
+  onEditRow,
+  onSelectRow,
+  onDeleteRow,
+}) {
   const { name, avatarUrl, company, role, status, email, phoneNumber } = row;
 
+  if (columns === undefined) return;
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
 
   const popover = usePopover();
+  const labelColor = (column, value) => {
+    if (column.labelColor !== undefined && column.labelColor !== null) return column.labelColor;
+    if (NEGATIVE_LABEL_TEXTS.includes(value)) return 'error';
 
+    return 'success';
+  };
   return (
     <>
       <TableRow hover selected={selected}>
         <TableCell padding="checkbox">
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
+        {columns.map((column) => {
+          console.log(row);
 
-        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={name} src={avatarUrl} sx={{ mr: 2 }} />
-
-          <ListItemText
-            primary={name}
-            secondary={email}
-            primaryTypographyProps={{ typography: 'body2' }}
-            secondaryTypographyProps={{
-              component: 'span',
-              color: 'text.disabled',
-            }}
-          />
-        </TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{phoneNumber}</TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{company}</TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
-
-        <TableCell>
-          <Label
-            variant="soft"
-            color={
-              (status === 'active' && 'success') ||
-              (status === 'pending' && 'warning') ||
-              (status === 'banned' && 'error') ||
-              'default'
-            }
-          >
-            {status}
-          </Label>
-        </TableCell>
-
+          return (
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>
+              {column.isLabel === true && (
+                <Label color={labelColor(column, row[column['key']])}>{row[column['key']]}</Label>
+              )}
+              {column.isLabel !== true && (
+                <ListItemText
+                  primary={row[column['key']]}
+                  secondary={column['subKey'] !== undefined ? row[column['subKey']] : undefined}
+                  primaryTypographyProps={{ typography: 'body2' }}
+                  secondaryTypographyProps={{
+                    component: 'span',
+                    color: 'text.disabled',
+                  }}
+                />
+              )}
+            </TableCell>
+          );
+        })}
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Quick Edit" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
