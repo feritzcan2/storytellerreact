@@ -55,6 +55,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 const nullFilterOpions = ['all', 'True', 'False'];
 export default function UserListView(props) {
+  debugger;
   if (props.tableData === null) return <LoadingScreen />;
 
   const { columns, customers } = props.tableData;

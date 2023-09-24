@@ -1,27 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import UserListView from './userList/user-list-view';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import { useContext, useEffect, useState } from 'react';
 import CustomerService from 'src/api/CustomerService';
+import CreateCustomerView from './CreateCustomerView';
+import { Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-export default function CustomerPage() {
-  const { customerList } = useContext(GlobalContext);
-  const { getCustomers } = CustomerService();
-
-  useEffect(() => {
-    getCustomers();
-  }, []);
-
+export default function CreateCustomerPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard: Five</title>
+        <title> Müşteri Ekle</title>
       </Helmet>
-
-      <UserListView tableData={customerList} />
+      <Typography variant="h4">Yeni müşteri ekle</Typography>
+      <CreateCustomerView />
     </>
   );
 }
