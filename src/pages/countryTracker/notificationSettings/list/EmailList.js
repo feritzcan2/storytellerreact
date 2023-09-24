@@ -39,6 +39,9 @@ import UserTableRow from './components/user-table-row';
 import UserTableToolbar from './components/user-table-row';
 import CountryService from 'src/api/CountryService';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import EmptyContent from 'src/components/empty-content/empty-content';
+import { TableCell } from '@mui/material';
+import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +62,7 @@ const defaultFilters = {
 export default function EmailList() {
   const { addMail, deleteMail } = CountryService();
   const context = useContext(GlobalContext);
-
+  if (!context.userData || !context.userData.mailList) return <LoadingScreen />;
   const remove = (mail) => {
     deleteMail({ email: mail })
       .then((result) => {})
@@ -191,27 +194,33 @@ export default function EmailList() {
                 />
 
                 <TableBody>
-                  {context.userData &&
-                    context.userData.mailList &&
-                    context.userData.mailList
-                      .slice(
-                        table.page * table.rowsPerPage,
-                        table.page * table.rowsPerPage + table.rowsPerPage
-                      )
-                      .map((row) => (
-                        <UserTableRow
-                          key={row.id}
-                          row={row}
-                          selected={table.selected.includes(row.id)}
-                          onSelectRow={() => table.onSelectRow(row.id)}
-                          onDeleteRow={() => remove(row.mail)}
-                        />
-                      ))}
+                  {context.userData.mailList
+                    .slice(
+                      table.page * table.rowsPerPage,
+                      table.page * table.rowsPerPage + table.rowsPerPage
+                    )
+                    .map((row) => (
+                      <UserTableRow
+                        key={row.id}
+                        row={row}
+                        selected={table.selected.includes(row.id)}
+                        onSelectRow={() => table.onSelectRow(row.id)}
+                        onDeleteRow={() => remove(row.mail)}
+                      />
+                    ))}
+                  {context.userData.mailList.length === 0 && (
+                    <TableCell colSpan={12}>
+                      <EmptyContent
+                        filled
+                        title="Mail listesi boş"
+                        sx={{
+                          py: 10,
+                        }}
+                      />
+                    </TableCell>
+                  )}
 
-                  <TableEmptyRows
-                    height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
-                  />
+                  <TableEmptyRows height={denseHeight} />
                   <TableNoData notFound={notFound} />
                 </TableBody>
               </Table>

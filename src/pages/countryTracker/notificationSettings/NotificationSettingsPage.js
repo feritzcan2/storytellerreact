@@ -16,7 +16,7 @@ export default function NotificationSettingsPage(props) {
         <title> CountryTrackerPage: ss</title>
       </Helmet>
       <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Typography variant="h4"> Email Listesi</Typography>
+        <Typography variant="h4"> Mail Listesi</Typography>
 
         <EmailListView />
       </Container>
