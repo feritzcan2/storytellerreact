@@ -20,45 +20,22 @@ export default function UserTableFiltersResult({
   results,
   ...other
 }) {
-  const handleRemoveStatus = () => {
-    onFilters('status', 'all');
-  };
-
-  const handleRemoveRole = (inputValue) => {
-    const newValue = filters.role.filter((item) => item !== inputValue);
-    onFilters('role', newValue);
-  };
-
   return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          results found
+          sonuç bulundu.
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {filters.status !== 'all' && (
-          <Block label="Status:">
-            <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
-          </Block>
-        )}
-
-        {!!filters.role.length && (
-          <Block label="Role:">
-            {filters.role.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveRole(item)} />
-            ))}
-          </Block>
-        )}
-
         <Button
           color="error"
           onClick={onResetFilters}
           startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
         >
-          Clear
+          Filtreleri temizle.
         </Button>
       </Stack>
     </Stack>

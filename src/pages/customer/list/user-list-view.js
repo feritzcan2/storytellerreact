@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback, Fragment } from 'react';
+import { useState, useCallback, Fragment, useEffect } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
@@ -17,7 +17,6 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 // _mock
-import { _userList, _roles, USER_STATUS_OPTIONS } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
@@ -26,7 +25,6 @@ import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import {
   useTable,
   getComparator,
@@ -45,32 +43,28 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
-
-const defaultFilters = {
-  name: '',
-  role: [],
-  status: 'all',
-};
 const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 // ----------------------------------------------------------------------
 
 export default function UserListView(props) {
-  if (props.tableData === null) return <LoadingScreen />;
+  if (props.tableData === null || props.tableData === undefined) return <LoadingScreen />;
 
   const { columns, customers } = props.tableData;
+  const [TABLE_HEAD, setTableHead] = useState([]);
   const table = useTable();
-  const defaultFilters = {
-    name: '',
-    role: [],
-  };
-  const TABLE_HEAD = [];
-  columns.forEach((element) => {
-    TABLE_HEAD.push({ id: element.id, label: element.columnName, width: 100 });
-    if (element.Filter !== undefined && element.Filter !== null)
-      defaultFilters[element.key] = 'all';
-  });
-  TABLE_HEAD.push({ id: 'ss', label: '', width: 100 });
+  const defaultFilters = {};
+
+  useEffect(() => {
+    let head = [];
+    props.tableData.columns.forEach((element) => {
+      head.push({ id: element.id, label: element.columnName });
+      if (element.Filter !== undefined && element.Filter !== null)
+        defaultFilters[element.key] = 'all';
+    });
+    head.push({ id: 'ss', label: '', width: 45 });
+
+    setTableHead(head);
+  }, [props.tableData]);
 
   const settings = useSettingsContext();
 
@@ -184,6 +178,38 @@ export default function UserListView(props) {
                       `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
                   }}
                 >
+                  {column.filter.isNullFilter === true &&
+                    column.filter.options.map((filter, index) => {
+                      return (
+                        <Tab
+                          key={filter.value}
+                          iconPosition="end"
+                          value={filter.value}
+                          label={filter.label}
+                          icon={
+                            <Label
+                              variant={(filters[column.key] == filter.value && 'filled') || 'soft'}
+                              color={colors[index % colors.length]}
+                            >
+                              {filter.value === 'all' && customers.length}
+
+                              {filter.value === 'True' &&
+                                customers.filter(
+                                  (user) =>
+                                    user[column['key']] !== undefined &&
+                                    user[column['key']] !== null
+                                ).length}
+                              {filter.value === 'False' &&
+                                customers.filter(
+                                  (user) =>
+                                    user[column['key']] === undefined ||
+                                    user[column['key']] === null
+                                ).length}
+                            </Label>
+                          }
+                        />
+                      );
+                    })}
                   {column.filter.isNullFilter === false &&
                     column.filter.options.map((tab, index) => (
                       <Tab
@@ -193,12 +219,12 @@ export default function UserListView(props) {
                         label={tab.label}
                         icon={
                           <Label
-                            variant={'filled' || 'filled'}
+                            variant={(filters[column.key] == tab.value && 'filled') || 'soft'}
                             color={colors[index % colors.length]}
                           >
-                            {tab.value === 'all' && _userList.length}
+                            {tab.value === 'all' && customers.length}
                             {tab.value !== 'all' &&
-                              customers.filter((user) => user[column['key']] === tab.value).length}
+                              customers.filter((user) => user[column.key] === tab.value).length}
                           </Label>
                         }
                       />
@@ -210,7 +236,6 @@ export default function UserListView(props) {
             filters={filters}
             onFilters={handleFilters}
             //
-            roleOptions={_roles}
           />
 
           {canReset && (

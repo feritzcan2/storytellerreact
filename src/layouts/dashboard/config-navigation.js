@@ -60,7 +60,6 @@ export function useNavData() {
         items: [
           { title: 'Yeni Müşteri', path: paths.customer.newCustomer, icon: ICONS.dashboard },
           { title: 'Müşteri Listesi', path: paths.customer.customerList, icon: ICONS.ecommerce },
-          { title: 'Müşteri Listesi2', path: paths.customer.customerList2, icon: ICONS.ecommerce },
         ],
       },
 

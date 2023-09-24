@@ -38,11 +38,21 @@ export default function UserTableRow({
   const quickEdit = useBoolean();
 
   const popover = usePopover();
-  const labelColor = (column, value) => {
-    if (column.labelColor !== undefined && column.labelColor !== null) return column.labelColor;
-    if (NEGATIVE_LABEL_TEXTS.includes(value)) return 'error';
+  const labelColor = (column, value, key) => {
+    if (isNullFilter(column) === true) return 'error';
 
     return 'success';
+  };
+
+  const isNullFilter = (column) => {
+    if (
+      column.filter != null &&
+      column.filter.isNullFilter === true &&
+      (row[column['key']] === undefined || row[column['key']] === null)
+    )
+      return true;
+
+    return false;
   };
   return (
     <>
@@ -54,9 +64,20 @@ export default function UserTableRow({
           console.log(row);
 
           return (
-            <TableCell sx={{ whiteSpace: 'nowrap' }}>
+            <TableCell
+              sx={
+                column.isProfile
+                  ? { display: 'flex', alignItems: 'center' }
+                  : { whiteSpace: 'nowrap' }
+              }
+            >
+              {column.isProfile && <Avatar sizes="sm" alt={name} src={avatarUrl} sx={{ mr: 1 }} />}
               {column.isLabel === true && (
-                <Label color={labelColor(column, row[column['key']])}>{row[column['key']]}</Label>
+                <Label color={labelColor(column, row[column['key']])}>
+                  {column.filter != null && column.filter.isNullFilter === true
+                    ? column.filter.options[1].label
+                    : row[column['key']]}
+                </Label>
               )}
               {column.isLabel !== true && (
                 <ListItemText

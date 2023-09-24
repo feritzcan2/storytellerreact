@@ -3,7 +3,7 @@ import { useContext, useReducer } from 'react';
 import { GlobalContext } from '../context/GlobalProvider';
 
 export default function CustomerService() {
-  let { setCustomers } = useContext(GlobalContext);
+  let { setCustomers, customerList } = useContext(GlobalContext);
 
   const getCustomers = async (data, errorMsg) => {
     return api

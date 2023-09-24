@@ -6,8 +6,6 @@ import { AuthGuard } from 'src/auth/guard';
 import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
-import UserListView from 'src/pages/customer/userList/user-list-view';
-import CustomerListPage2 from 'src/pages/customer/CustomerListPage';
 import CustomerListPage from 'src/pages/customer/list/CustomerListPage';
 import CreateCustomerPage from 'src/pages/customer/create/CreateCustomerPage';
 
@@ -33,7 +31,6 @@ export const customerRoutes = [
       { element: <IndexPage />, index: true },
       { path: 'yeni', element: <CreateCustomerPage /> },
       { path: 'liste', element: <CustomerListPage /> },
-      { path: 'liste2', element: <CustomerListPage2 /> },
     ],
   },
 ];
