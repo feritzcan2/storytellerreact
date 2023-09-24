@@ -26,6 +26,7 @@ export const paths = {
   customer: {
     newCustomer: `${ROOTS.CUSTOMER}/yeni`,
     customerList: `${ROOTS.CUSTOMER}/liste`,
+    customerList2: `${ROOTS.CUSTOMER}/liste2`,
     detrails: `${ROOTS.CUSTOMER}/detay`,
   },
   countryTracking: {
