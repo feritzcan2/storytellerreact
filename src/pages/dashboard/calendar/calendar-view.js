@@ -34,7 +34,7 @@ import CalendarForm from './components/calendar-form';
 import CalendarToolbar from './components/calendar-toolbar';
 import CalendarFilters from './components/calendar-filters';
 import CalendarFiltersResult from './components/calendar-filters-result';
-
+import trLocale from '@fullcalendar/core/locales/tr';
 // ----------------------------------------------------------------------
 
 const defaultFilters = {
@@ -144,7 +144,7 @@ export default function CalendarView() {
             startIcon={<Iconify icon="mingcute:add-line" />}
             onClick={onOpenForm}
           >
-            New Event
+            Yeni Etkinlik
           </Button>
         </Stack>
 
@@ -158,12 +158,14 @@ export default function CalendarView() {
               loading={eventsLoading}
               onNextDate={onDateNext}
               onPrevDate={onDatePrev}
+              locale={trLocale}
               onToday={onDateToday}
               onChangeView={onChangeView}
               onOpenFilters={openFilters.onTrue}
             />
 
             <Calendar
+              locale={trLocale}
               weekends
               editable
               droppable

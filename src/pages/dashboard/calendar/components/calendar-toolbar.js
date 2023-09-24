@@ -19,14 +19,14 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 const VIEW_OPTIONS = [
   {
     value: 'dayGridMonth',
-    label: 'Month',
+    label: 'Ay',
     icon: 'mingcute:calendar-month-line',
   },
-  { value: 'timeGridWeek', label: 'Week', icon: 'mingcute:calendar-week-line' },
-  { value: 'timeGridDay', label: 'Day', icon: 'mingcute:calendar-day-line' },
+  { value: 'timeGridWeek', label: 'Hafta', icon: 'mingcute:calendar-week-line' },
+  { value: 'timeGridDay', label: 'Gün', icon: 'mingcute:calendar-day-line' },
   {
     value: 'listWeek',
-    label: 'Agenda',
+    label: 'Takvim',
     icon: 'fluent:calendar-agenda-24-regular',
   },
 ];
@@ -83,7 +83,7 @@ export default function CalendarToolbar({
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <Button size="small" color="error" variant="contained" onClick={onToday}>
-            Today
+            Bugün
           </Button>
 
           <IconButton onClick={onOpenFilters}>
