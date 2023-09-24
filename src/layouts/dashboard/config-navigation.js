@@ -50,7 +50,10 @@ export function useNavData() {
       // ----------------------------------------------------------------------
       {
         subheader: 'Genel',
-        items: [{ title: 'Anasayfa', path: paths.dashboard.root, icon: ICONS.dashboard }],
+        items: [
+          { title: 'Anasayfa', path: paths.dashboard.root, icon: ICONS.dashboard },
+          { title: 'Takvim', path: paths.dashboard.calendar, icon: ICONS.calendar },
+        ],
       },
       {
         subheader: 'Müşteri Yönetimi',

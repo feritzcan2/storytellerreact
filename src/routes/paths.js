@@ -21,6 +21,7 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
+    calendar: `${ROOTS.DASHBOARD}/takvim`,
   },
   customer: {
     newCustomer: `${ROOTS.CUSTOMER}/yeni`,

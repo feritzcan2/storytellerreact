@@ -6,6 +6,7 @@ import { AuthGuard } from 'src/auth/guard';
 import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
+import CalendarPage from 'src/pages/dashboard/calendar/CalendarPage';
 
 // ----------------------------------------------------------------------
 
@@ -27,10 +28,7 @@ export const dashboardRoutes = [
     ),
     children: [
       { element: <Dashboard />, index: true },
-      {
-        path: 'group',
-        children: [{ element: <Dashboard />, index: true }],
-      },
+      { path: 'takvim', element: <CalendarPage /> },
     ],
   },
 ];
