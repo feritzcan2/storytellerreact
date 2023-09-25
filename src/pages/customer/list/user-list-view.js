@@ -58,7 +58,7 @@ export default function UserListView(props) {
     let head = [];
     props.tableData.columns.forEach((element) => {
       head.push({ id: element.id, label: element.columnName });
-      if (element.Filter !== undefined && element.Filter !== null)
+      if (element.filter !== undefined && element.filter !== null)
         defaultFilters[element.key] = 'all';
     });
     head.push({ id: 'ss', label: '', width: 45 });
@@ -211,24 +211,27 @@ export default function UserListView(props) {
                       );
                     })}
                   {column.filter.isNullFilter === false &&
-                    column.filter.options.map((tab, index) => (
-                      <Tab
-                        key={column.key}
-                        iconPosition="end"
-                        value={tab.value}
-                        label={tab.label}
-                        icon={
-                          <Label
-                            variant={(filters[column.key] == tab.value && 'filled') || 'soft'}
-                            color={colors[index % colors.length]}
-                          >
-                            {tab.value === 'all' && customers.length}
-                            {tab.value !== 'all' &&
-                              customers.filter((user) => user[column.key] === tab.value).length}
-                          </Label>
-                        }
-                      />
-                    ))}
+                    column.filter.options.map((tab, index) => {
+                      debugger;
+                      return (
+                        <Tab
+                          key={column.key}
+                          iconPosition="end"
+                          value={tab.value}
+                          label={tab.label}
+                          icon={
+                            <Label
+                              variant={(filters[column.key] == tab.value && 'filled') || 'soft'}
+                              color={colors[index % colors.length]}
+                            >
+                              {tab.value === 'all' && customers.length}
+                              {tab.value !== 'all' &&
+                                customers.filter((user) => user[column.key] === tab.label).length}
+                            </Label>
+                          }
+                        />
+                      );
+                    })}
                 </Tabs>
               );
             })}
