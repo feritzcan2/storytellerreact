@@ -9,7 +9,6 @@ api.interceptors.request.use(async (config) => {
   const token = getToken();
   axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
   axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'DELETE, POST, GET, OPTIONS';
-
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

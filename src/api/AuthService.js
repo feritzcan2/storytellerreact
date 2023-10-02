@@ -8,7 +8,7 @@ export default function UserAuth() {
   let { setUserData } = useContext(GlobalContext);
 
   const setUserContext = async (result) => {
-    setToken(result.data.tokenData.jwtToken);
+    setToken(result.data.tokenData.jwtToken, result.data.tokenData.jwtToken.organisationId);
     setUserData(result.data.userData);
     return Navigate('/');
   };

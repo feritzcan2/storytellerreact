@@ -58,17 +58,27 @@ export const tokenExpired = (exp) => {
 
 // ----------------------------------------------------------------------
 
-export const setSession = (accessToken) => {
+export const setSession = (accessToken, orgId) => {
   if (accessToken) {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('organisationId', orgId);
     sessionStorage.setItem('accessToken', accessToken);
+    sessionStorage.setItem('organisationId', orgId);
 
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    axios.defaults.headers.common.OrganisationId = orgId;
+    axios.defaults.headers.OrganisationId = orgId;
+    axios.defaults.headers.post['OrganisationId'] = orgId;
+    axios.defaults.headers.get['OrganisationId'] = orgId;
+    axios.defaults.headers.delete['OrganisationId'] = orgId;
+    axios.defaults.headers.put['OrganisationId'] = orgId;
 
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
     tokenExpired(exp);
   } else {
     sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('accessToken');
 
     delete axios.defaults.headers.common.Authorization;
   }

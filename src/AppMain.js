@@ -23,16 +23,19 @@ import { Fragment, useEffect } from 'react';
 import CountryService from './api/CountryService';
 import AuthService from './api/AuthService';
 import { isAuthenticated } from './context/AuthContext';
+import ConfigService from './api/ConfigService';
 
 // ----------------------------------------------------------------------
 
 export default function AppMain() {
   const { getCountryData } = CountryService();
   const { getUserData } = AuthService();
+  const { getConfigs } = ConfigService();
 
   useEffect(() => {
     if (isAuthenticated()) {
       getUserData();
+      getConfigs();
       getCountryData();
     }
     setInterval(() => {

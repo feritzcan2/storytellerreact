@@ -6,6 +6,7 @@ const initialState = {
   countryAppointmentData: [],
   userData: null,
   customerList: null,
+  configs: null,
 };
 
 //const localState = JSON.parse(localStorage.getItem("cm"));
@@ -28,6 +29,13 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function setConfigs(data) {
+    dispatch({
+      type: 'SET_CONFIGS',
+      payload: data,
+    });
+  }
+
   function setUserData(data) {
     dispatch({
       type: 'SET_USER_DATA',
@@ -44,6 +52,8 @@ export const GlobalProvider = ({ children }) => {
         setUserData: setUserData,
         customerList: state.customerList,
         setCustomers: setCustomers,
+        setConfigs: setConfigs,
+        configs: state.configs,
       }}
     >
       {children}

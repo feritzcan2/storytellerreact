@@ -212,7 +212,6 @@ export default function UserListView(props) {
                     })}
                   {column.filter.isNullFilter === false &&
                     column.filter.options.map((tab, index) => {
-                      debugger;
                       return (
                         <Tab
                           key={column.key}

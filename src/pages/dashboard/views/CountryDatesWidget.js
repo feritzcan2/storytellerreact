@@ -16,7 +16,8 @@ import { LoadingScreen } from 'src/components/loading-screen';
 // ----------------------------------------------------------------------
 
 export default function CountryDatesWidget({ countryAppointmentData, subheader, list, ...other }) {
-  if (countryAppointmentData === undefined) return <LoadingScreen />;
+  if (countryAppointmentData === undefined || countryAppointmentData.length === 0)
+    return <LoadingScreen sx={{ minHeight: 200 }} />;
 
   return (
     <Card {...other}>
@@ -70,6 +71,7 @@ function findLowestDate(officeData) {
 }
 
 function CountryItem({ country }) {
+  const lowestDateData = findLowestDate(country.officeData);
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <Stack direction="row" alignItems="center" flexGrow={1} sx={{ minWidth: 120 }}>
@@ -82,6 +84,11 @@ function CountryItem({ country }) {
         </Typography>
       </Stack>
 
+      {lowestDateData.updated === false ? (
+        <span>Sistemden veri alınamadı</span>
+      ) : (
+        lowestDateData.updateMinute + 'dakika önce'
+      )}
       {GetDateLabel(country)}
     </Stack>
   );

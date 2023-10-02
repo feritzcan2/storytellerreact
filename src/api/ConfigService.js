@@ -2,19 +2,19 @@ import api from './api';
 import { useContext, useReducer } from 'react';
 import { GlobalContext } from '../context/GlobalProvider';
 
-export default function CustomerService() {
-  let { setCustomers, customerList } = useContext(GlobalContext);
+export default function ConfigService() {
+  let { setConfigs } = useContext(GlobalContext);
 
-  const getCustomers = async (data, errorMsg) => {
+  const getConfigs = async (data, errorMsg) => {
     return api
-      .get('customer/customer')
+      .get('config')
       .then(async (result) => {
         if (
           result !== undefined &&
           (result.data.error === null || result.data.error === undefined)
         ) {
           console.log(result.data);
-          setCustomers(result.data);
+          setConfigs(result.data);
         } else {
           if (errorMsg !== undefined) errorMsg(result.data.error.message);
         }
@@ -28,22 +28,7 @@ export default function CustomerService() {
       });
   };
 
-  const addCustomer = async (data, errorMsg) => {
-    return api
-
-      .post('customer', data)
-      .then(async (result) => {})
-      .catch((err) => {
-        if (errorMsg !== undefined)
-          errorMsg(
-            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
-            'danger'
-          );
-      });
-  };
-
   return {
-    getCustomers,
-    addCustomer,
+    getConfigs,
   };
 }

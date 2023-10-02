@@ -15,6 +15,11 @@ export default (state, action) => {
         ...state,
         customerList: action.payload,
       };
+    case 'SET_CONFIGS':
+      return {
+        ...state,
+        configs: action.payload,
+      };
     default:
       return state;
   }
