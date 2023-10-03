@@ -56,6 +56,9 @@ export const INVOICE_SERVICE_OPTIONS = [
 export default function CustomerEditForm({ currentUser, configs }) {
   const router = useRouter();
   const { addCustomer } = CustomerService();
+  if (configs === undefined) {
+    configs = useContext(GlobalContext).configs;
+  }
   const { enqueueSnackbar } = useSnackbar();
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('İsim gerekli'),

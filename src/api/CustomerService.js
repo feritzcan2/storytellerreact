@@ -32,7 +32,30 @@ export default function CustomerService() {
     return api
 
       .post('customer', data)
-      .then(async (result) => {})
+      .then(async (result) => {
+        let customers2 = [...customers];
+        if (data.id !== 0 && data.id !== undefined && data.id !== null)
+          customers2 = customers2.filter((customer) => customer.id !== data.id);
+        customers2.push(result.data);
+        setCustomers(customers2);
+      })
+      .catch((err) => {
+        if (errorMsg !== undefined)
+          errorMsg(
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
+          );
+      });
+  };
+
+  const deleteCustomer = async (id, errorMsg) => {
+    return api
+
+      .delete('customer?customerId=' + id)
+      .then(() => {
+        let customers = customerList.filter((customer) => customer.id !== id);
+        setCustomers(customers);
+      })
       .catch((err) => {
         if (errorMsg !== undefined)
           errorMsg(
@@ -45,5 +68,6 @@ export default function CustomerService() {
   return {
     getCustomers,
     addCustomer,
+    deleteCustomer,
   };
 }

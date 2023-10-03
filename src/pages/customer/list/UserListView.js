@@ -36,10 +36,11 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 //
-import UserTableRow from './components/user-table-row';
+import UserTableRow from './components/UserTableRow';
 import UserTableToolbar from './components/user-table-toolbar';
 import UserTableFiltersResult from './components/user-table-filters-result';
 import { LoadingScreen } from 'src/components/loading-screen';
+import CustomerService from 'src/api/CustomerService';
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +68,7 @@ export default function UserListView(props) {
   }, [props.tableData]);
 
   const settings = useSettingsContext();
-
+  const { deleteCustomer } = CustomerService();
   const router = useRouter();
 
   const confirm = useBoolean();
@@ -106,10 +107,12 @@ export default function UserListView(props) {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      const deleteRow = tableData.filter((row) => row.id !== id);
-      setTableData(deleteRow);
+      deleteCustomer(id).then(() => {
+        const deleteRow = tableData.filter((row) => row.id !== id);
+        setTableData(deleteRow);
 
-      table.onUpdatePageDeleteRow(dataInPage.length);
+        table.onUpdatePageDeleteRow(dataInPage.length);
+      });
     },
     [dataInPage.length, table, tableData]
   );

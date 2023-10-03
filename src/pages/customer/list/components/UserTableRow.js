@@ -6,7 +6,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
 import TableCell from '@mui/material/TableCell';
+import Paper from '@mui/material/Paper';
+
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 // hooks
@@ -17,7 +20,16 @@ import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 //
-import UserQuickEditForm from './user-quick-edit-form';
+import UserQuickEditForm from './UserQuickEditForm';
+import {
+  DateCalendar,
+  DatePicker,
+  DateTimePicker,
+  LocalizationProvider,
+} from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Fragment, useContext, useState } from 'react';
+import { GlobalContext } from 'src/context/GlobalProvider';
 
 // ----------------------------------------------------------------------
 const NEGATIVE_LABEL_TEXTS = ['Randevu Yok'];
@@ -30,9 +42,21 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }) {
-  const { name, avatarUrl, company, role, status, email, phoneNumber } = row;
+  const { name, avatarUrl, surname, role, status, email, phoneNumber, id } = row;
 
+  const [selectedDate, setSelectedDate] = useState(false);
   if (columns === undefined) return;
+
+  const { customerList, setCustomers } = useContext(GlobalContext);
+
+  const onSaveAppointmentDate = () => {
+    let customers = [...customerList.customers];
+    customerList.customers = customers;
+    let customer = customers.filter((customer) => customer.id == id)[0];
+    customer.appointmentDate = selectedDate;
+    debugger;
+    setCustomers(customerList);
+  };
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
@@ -122,7 +146,7 @@ export default function UserTableRow({
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          Sil
         </MenuItem>
 
         <MenuItem
@@ -132,7 +156,7 @@ export default function UserTableRow({
           }}
         >
           <Iconify icon="solar:pen-bold" />
-          Edit
+          Düzenle
         </MenuItem>
       </CustomPopover>
 
@@ -140,10 +164,10 @@ export default function UserTableRow({
         open={confirm.value}
         onClose={confirm.onFalse}
         title="Delete"
-        content="Are you sure want to delete?"
+        content="Silmek istediğine emin misin?"
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            Sil
           </Button>
         }
       />

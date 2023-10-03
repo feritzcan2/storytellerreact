@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import UserListView from './user-list-view';
+import UserListView from './UserListView';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import { useContext, useEffect, useState } from 'react';
 import CustomerService from 'src/api/CustomerService';
