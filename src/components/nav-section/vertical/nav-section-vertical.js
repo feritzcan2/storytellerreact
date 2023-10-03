@@ -1,21 +1,23 @@
+import { memo, useCallback, useState } from 'react';
+
 import PropTypes from 'prop-types';
-import { memo, useState, useCallback } from 'react';
+
+import Collapse from '@mui/material/Collapse';
 // @mui
 import List from '@mui/material/List';
 import Stack from '@mui/material/Stack';
-import Collapse from '@mui/material/Collapse';
+
 //
 import { navVerticalConfig } from '../config';
-import { StyledSubheader } from './styles';
-
 import NavList from './nav-list';
+import { StyledSubheader } from './styles';
 
 // ----------------------------------------------------------------------
 
 function NavSectionVertical({ data, config, sx, ...other }) {
   return (
     <Stack sx={sx} {...other}>
-      {data.map((group, index) => (
+      {data?.map((group, index) => (
         <Group
           key={group.subheader || index}
           subheader={group.subheader}

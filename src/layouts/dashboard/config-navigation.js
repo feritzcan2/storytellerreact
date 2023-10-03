@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
-// routes
-import { paths } from 'src/routes/paths';
+
 // components
 import SvgColor from 'src/components/svg-color';
+// routes
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ export function useNavData() {
         items: [
           { title: 'Yeni Müşteri', path: paths.customer.newCustomer, icon: ICONS.dashboard },
           { title: 'Müşteri Listesi', path: paths.customer.customerList, icon: ICONS.ecommerce },
+          { title: 'View a Customer', path: paths.customer.customer, icon: ICONS.user },
         ],
       },
 
@@ -84,6 +86,11 @@ export function useNavData() {
             title: 'Bildirim Ayarları',
             path: paths.countryTracking.notifications,
             icon: ICONS.ecommerce,
+          },
+          {
+            title: 'Client Page',
+            path: paths.client.clientPage,
+            icon: ICONS.booking,
           },
         ],
       },

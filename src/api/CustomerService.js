@@ -1,6 +1,7 @@
-import api from './api';
-import { useContext, useReducer } from 'react';
+import { useContext } from 'react';
+
 import { GlobalContext } from '../context/GlobalProvider';
+import api from './api';
 
 export default function CustomerService() {
   let { setCustomers, customerList } = useContext(GlobalContext);
@@ -15,6 +16,29 @@ export default function CustomerService() {
         ) {
           console.log(result.data);
           setCustomers(result.data);
+        } else {
+          if (errorMsg !== undefined) errorMsg(result.data.error.message);
+        }
+      })
+      .catch((err) => {
+        if (errorMsg !== undefined)
+          errorMsg(
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
+          );
+      });
+  };
+
+  const getCustomer = async (id, errorMsg) => {
+    return api
+      .get(`Customer/sessionByCustomer?id=${id}`)
+      .then(async (result) => {
+        if (
+          result !== undefined &&
+          (result.data.error === null || result.data.error === undefined)
+        ) {
+          console.log(result.data);
+          return result.data;
         } else {
           if (errorMsg !== undefined) errorMsg(result.data.error.message);
         }
@@ -69,5 +93,6 @@ export default function CustomerService() {
     getCustomers,
     addCustomer,
     deleteCustomer,
+    getCustomer,
   };
 }

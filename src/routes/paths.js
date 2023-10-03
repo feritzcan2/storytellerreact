@@ -5,6 +5,7 @@ const ROOTS = {
   DASHBOARD: '/anasayfa',
   CUSTOMER: '/musteri',
   TRACKING: '/randevuTakip',
+  CLIENT: '/client',
 };
 
 // ----------------------------------------------------------------------
@@ -28,6 +29,7 @@ export const paths = {
     customerList: `${ROOTS.CUSTOMER}/liste`,
     customerList2: `${ROOTS.CUSTOMER}/liste2`,
     detrails: `${ROOTS.CUSTOMER}/detay`,
+    customer: `${ROOTS.CUSTOMER}/5`,
   },
   countryTracking: {
     notifications: `${ROOTS.TRACKING}/bildirimAyarlari`,
@@ -39,5 +41,8 @@ export const paths = {
       yunanistan: `${ROOTS.TRACKING}/yunanistan`,
       italya: `${ROOTS.TRACKING}/italya`,
     },
+  },
+  client: {
+    clientPage: `${ROOTS.CLIENT}/3`,
   },
 };

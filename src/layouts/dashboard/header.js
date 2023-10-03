@@ -1,29 +1,30 @@
 import PropTypes from 'prop-types';
-// @mui
-import { useTheme } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-// theme
-import { bgBlur } from 'src/theme/css';
+// components
+import Logo from 'src/components/logo';
+import { useSettingsContext } from 'src/components/settings';
+import SvgColor from 'src/components/svg-color';
 // hooks
 import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
-// components
-import Logo from 'src/components/logo';
-import SvgColor from 'src/components/svg-color';
-import { useSettingsContext } from 'src/components/settings';
+// theme
+import { bgBlur } from 'src/theme/css';
+
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+// @mui
+import { useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+
+import {
+  AccountPopover,
+  ContactsPopover,
+  LanguagePopover,
+  NotificationsPopover,
+  SettingsButton,
+} from '../_common';
 //
 import { HEADER, NAV } from '../config-layout';
-import {
-  Searchbar,
-  AccountPopover,
-  SettingsButton,
-  LanguagePopover,
-  ContactsPopover,
-  NotificationsPopover,
-} from '../_common';
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +53,7 @@ export default function Header({ onOpenNav }) {
         </IconButton>
       )}
 
-      <Searchbar />
+      {/* <Searchbar /> */}
 
       <Stack
         flexGrow={1}

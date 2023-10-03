@@ -1,25 +1,21 @@
 // scrollbar
 import 'simplebar-react/dist/simplebar.min.css';
-
 // image
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-// ----------------------------------------------------------------------
-
-// routes
-import Router from 'src/routes/sections';
-// theme
-import ThemeProvider from 'src/theme';
-// hooks
-import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
+// auth
+import { AuthConsumer, AuthProvider } from 'src/auth/context/jwt';
+import { MotionLazy } from 'src/components/animate/motion-lazy';
 // components
 import ProgressBar from 'src/components/progress-bar';
-import { MotionLazy } from 'src/components/animate/motion-lazy';
-import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
-// auth
-import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
-import CombinedContextProviders from './context/CombinedContextProviders';
+import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
+// hooks
+import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
+// theme
+import ThemeProvider from 'src/theme';
+
 import AppMain from './AppMain';
+import CombinedContextProviders from './context/CombinedContextProviders';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +27,7 @@ export default function App() {
   ▒▒ ▒▒▒▒ ▒▒
   ▓▓  ▓▓  ▓▓
   ██      ██
-
+App
   `;
 
   console.info(`%c${charAt}`, 'color: #5BE49B');
