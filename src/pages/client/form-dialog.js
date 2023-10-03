@@ -31,8 +31,8 @@ import BasicPopover from './PopOver';
 
 // const sessionId = 'S-1231231211';
 // const customerId = 'C-1231222';
-const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
-const secretAccessKey = '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';
+const accessKeyId = process.env.ACCESS_KEY_ID;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 const S3_BUCKET = 'vizedefteridocs';
 const REGION = 'eu-central-1';
 
