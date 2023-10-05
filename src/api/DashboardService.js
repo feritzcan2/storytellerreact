@@ -3,7 +3,7 @@ import { GlobalContext } from '../context/GlobalProvider';
 import api from './api';
 
 export default function DashboardService() {
-  let { setNotifications } = useContext(GlobalContext);
+  let { setNotifications, setDashboardData } = useContext(GlobalContext);
 
   const getNotifications = async (data, errorMsg) => {
     return api
@@ -29,7 +29,31 @@ export default function DashboardService() {
       });
   };
 
+  const getDashboardData = async (data, errorMsg) => {
+    debugger;
+    return api
+      .get('dashboard')
+      .then(async (result) => {
+        if (
+          result !== undefined &&
+          (result.data.error === null || result.data.error === undefined)
+        ) {
+          setDashboardData(result.data);
+        } else {
+          if (errorMsg !== undefined) errorMsg(result.data.error.message);
+        }
+      })
+      .catch((err) => {
+        if (errorMsg !== undefined)
+          errorMsg(
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
+          );
+      });
+  };
+
   return {
     getNotifications,
+    getDashboardData,
   };
 }

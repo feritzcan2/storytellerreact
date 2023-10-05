@@ -1,29 +1,29 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 // utils
-import uuidv4 from 'src/utils/uuidv4';
 import { fTimestamp } from 'src/utils/format-time';
+import uuidv4 from 'src/utils/uuidv4';
 // api
-import { createEvent, updateEvent, deleteEvent } from 'src/api/calendar';
+import { createEvent, deleteEvent, updateEvent } from 'src/api/calendar';
 // components
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import { ColorPicker } from 'src/components/color-utils';
-import FormProvider, { RHFTextField, RHFSwitch } from 'src/components/hook-form';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { ColorPicker } from 'src/components/color-utils';
+import FormProvider, { RHFSwitch, RHFTextField } from 'src/components/hook-form';
+import Iconify from 'src/components/iconify';
+import { useSnackbar } from 'src/components/snackbar';
 // ----------------------------------------------------------------------
 import dayjs from 'dayjs';
 

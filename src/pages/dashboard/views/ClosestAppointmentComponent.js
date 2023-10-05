@@ -1,30 +1,31 @@
 import PropTypes from 'prop-types';
-import orderBy from 'lodash/orderBy';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 // utils
-import { fShortenNumber } from 'src/utils/format-number';
 // components
+import { orderBy } from 'lodash';
+import { _appInstalled } from 'src/_mock';
 import Iconify from 'src/components/iconify';
-import { _appFeatured, _appAuthors, _appInstalled, _appRelated, _appInvoices } from 'src/_mock';
 import Label from 'src/components/label/label';
+import { LoadingScreen } from 'src/components/loading-screen';
+import { fToNow } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
-export default function ClosestAppointmentComponent({ title, subheader, list, ...other }) {
+export default function ClosestAppointmentComponent({ title, subheader, list, data, ...other }) {
+  if ((data === null) | (data === undefined)) return <LoadingScreen />;
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {orderBy(list, ['totalFavorites'], ['desc']).map((author, index) => (
-          <AuthorItem key={author.id} author={author} index={index} />
+        {orderBy(data, ['date'], ['desc']).map((author, index) => (
+          <AuthorItem key={author.customerName} author={author} index={index} />
         ))}
       </Stack>
     </Card>
@@ -42,10 +43,10 @@ ClosestAppointmentComponent.propTypes = {
 function AuthorItem({ author, index }) {
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
-      <Avatar alt={author.name} src={author.avatarUrl} />
+      <Avatar alt={author.customerName} src={author.avatarUrl} />
 
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Ferit Özcan</Typography>
+        <Typography variant="subtitle2">{author.customerName}</Typography>
 
         <Typography
           variant="caption"
@@ -59,12 +60,12 @@ function AuthorItem({ author, index }) {
           <Iconify icon={_appInstalled[index].flag} sx={{ borderRadius: 0.65, width: 15, mr: 1 }} />
           {_appInstalled[index].name}
           <Iconify icon="fluent:location-12-filled" width={14} sx={{ ml: 1, mr: 0.5 }} />
-          Altunzade
+          {author.city}
         </Typography>
       </Box>
 
       <Label style={{ fontSize: '1rem' }} color="primary">
-        BUGÜN 14:30
+        {fToNow(author.date)}
       </Label>
     </Stack>
   );

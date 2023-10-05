@@ -1,30 +1,35 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
+import { useTheme } from '@mui/material/styles';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // _mock
-import { _appFeatured, _appAuthors, _appInstalled, _appRelated, _appInvoices } from 'src/_mock';
+import { _appInstalled } from 'src/_mock';
 // components
 import { useSettingsContext } from 'src/components/settings';
 // assets
 
-import InvoiceAnalytic from './invoice-analytic';
-import { Card, Divider, Typography, alpha } from '@mui/material';
-import CountryDatesWidget from './CountryDatesWidget';
+import { Card, Divider, Typography } from '@mui/material';
+import { useContext, useEffect } from 'react';
+import DashboardService from 'src/api/DashboardService';
 import { GlobalContext } from 'src/context/GlobalProvider';
-import { useContext } from 'react';
 import ClosestAppointmentComponent from './ClosestAppointmentComponent';
+import CountryDatesWidget from './CountryDatesWidget';
+import InvoiceAnalytic from './invoice-analytic';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardView() {
   const { user } = useMockedUser();
-  const { countryAppointmentData } = useContext(GlobalContext);
+  const { countryAppointmentData, dashboardData } = useContext(GlobalContext);
 
+  var { getDashboardData } = DashboardService();
+
+  useEffect(() => {
+    getDashboardData();
+  }, []);
   const theme = useTheme();
 
   const settings = useSettingsContext();
@@ -41,7 +46,11 @@ export default function DashboardView() {
           </Grid>
           <Divider sx={{ mt: 3, mb: 3 }}></Divider>
           <Grid xs={6} md={6} lg={6}>
-            <ClosestAppointmentComponent title="Bugünkü Randevular" list={_appInstalled} />
+            <ClosestAppointmentComponent
+              title="Yaklaşan Randevular"
+              data={dashboardData?.closestAppointments}
+              list={_appInstalled}
+            />
           </Grid>
         </Grid>
         <Divider sx={{ mt: 3, mb: 55 }}></Divider>

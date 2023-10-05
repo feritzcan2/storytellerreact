@@ -20,6 +20,11 @@ export default (state, action) => {
         ...state,
         customerList: action.payload,
       };
+    case 'SET_DASHBOARD_DATA':
+      return {
+        ...state,
+        dashboardData: action.payload,
+      };
     case 'SET_CONFIGS':
       return {
         ...state,
