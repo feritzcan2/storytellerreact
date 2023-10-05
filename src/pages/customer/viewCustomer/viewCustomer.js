@@ -8,10 +8,9 @@ import { useParams } from 'src/routes/hooks';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { UserProfileView } from './user/view';
+import UserProfileView from './user/view/user-profile-view';
 
 // ----------------------------------------------------------------------
-const getUrl = 'https://api.vizedefteri.com/Customer/sessionByCustomer?id=';
 
 export default function ViewCustomer() {
   const params = useParams();

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import AWS from 'aws-sdk';
-import axios from 'axios';
+import ClientService from 'src/api/clientService';
 import Iconify from 'src/components/iconify';
 import { UploadBox } from 'src/components/upload';
+import { GlobalContext } from 'src/context/GlobalProvider';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useParams } from 'src/routes/hooks';
@@ -50,7 +51,9 @@ export default function FormDialog({
   customerIndex,
   editButton,
 }) {
+  const { configs } = useContext(GlobalContext);
   const filesData = SelectedCustomerData.files;
+  const { setClients } = ClientService();
   const dialog = useBoolean();
   const [formData, setFormData] = useState(
     SelectedCustomerData || {
@@ -58,7 +61,7 @@ export default function FormDialog({
       email: '',
       surname: '',
       phone: '',
-      taxType: '',
+      taxType: configs.taxTypes[0].id,
       files: [], // Store an array of file objects
     }
   );
@@ -68,7 +71,6 @@ export default function FormDialog({
   const params = useParams();
 
   const { id } = params;
-  const postUrl = `https://api.vizedefteri.com/Customer/updateCustomerSession?id=${id}`;
   const uploadFile = async (sFile) => {
     AWS.config.update({
       accessKeyId,
@@ -100,76 +102,20 @@ export default function FormDialog({
     });
   };
 
-  const LabelView = ({ status }) => {
-    if (status === 3) {
-      return (
-        <>
-          <Typography color={'primary.main'}>Approved</Typography>
-          {uploadStatus}
-          <Iconify
-            icon="eva:checkmark-circle-2-outline"
-            sx={{
-              color: 'primary.main',
-              marginRight: 4,
-            }}
-          />
-        </>
-      );
-    } else if (status === 1) {
-      return (
-        <>
-          <Typography color={colors.orange[700]}>Waiting for approval</Typography>
-          {uploadStatus}
-          <Iconify
-            icon="eva:checkmark-circle-2-outline"
-            sx={{
-              color: colors.orange[700],
-              marginRight: 4,
-            }}
-          />
-        </>
-      );
-    } else if (status === 2) {
-      return (
-        <>
-          <Typography color={'red'}>Rejected</Typography>
-          {uploadStatus}
-          <Iconify
-            icon="eva:checkmark-circle-2-outline"
-            sx={{
-              marginRight: 4,
-              color: 'red',
-            }}
-          />
-        </>
-      );
-    } else
-      return (
-        <>
-          <Typography color={'text.disabled'}>File not uploaded</Typography>
-          {uploadStatus}
-          <Iconify
-            icon="eva:checkmark-circle-2-outline"
-            sx={{
-              marginRight: 4,
-              color: 'text.disabled',
-            }}
-          />
-        </>
-      );
-  };
   const onCancel = async () => {
     setFormData({
       name: '',
       email: '',
       surname: '',
       phone: '',
+      taxType: configs.taxTypes[0].id,
       files: [], // Store an array of file objects
     });
     dialog.onFalse();
   };
 
   const onClickSubmit = async () => {
+    console.log('formData >', formData);
     setLoading(true);
     if (!formData.name || !formData.surname || !formData.email || !formData.phone) {
       alert('Please fill in all required fields (Name, Surname, Email, Phone)');
@@ -183,6 +129,7 @@ export default function FormDialog({
       email: formData.email,
       surname: formData.surname,
       phone: formData.phone,
+      taxType: formData.taxType,
       files: [...formData.files],
     };
 
@@ -191,26 +138,12 @@ export default function FormDialog({
       ...userData,
       customers: updateCustomerrData,
     };
-    await axios
-      .post(postUrl, updatedUserData)
-      .then((response) => {
-        setUserData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(error);
-      });
+    const newData = await setClients(id, updatedUserData);
+    setUserData(newData);
     setLoading(false);
-    if (formData.files.length > 0) {
-      setFormData({
-        name: '',
-        email: '',
-        surname: '',
-        phone: '',
-        files: [], // Store an array of file objects
-      });
-      dialog.onFalse();
+    onCancel();
+    if (formData?.files?.length > 0) {
+      onCancel();
     }
   };
 
@@ -221,7 +154,6 @@ export default function FormDialog({
       [name]: value,
     });
   };
-
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
@@ -367,13 +299,13 @@ export default function FormDialog({
               sx: { textTransform: 'capitalize', background: 'white', padding: 2 },
             }}
           >
-            {customerTaxType.map((option, index) => (
-              <option key={`${index}_${option}`} value={option}>
-                {option}
+            {configs.taxTypes.map((option, index) => (
+              <option key={`${index}_${option.name}`} value={option.id}>
+                {option.name}
               </option>
             ))}
           </Select>
-          {formData.files.length === 0 && (
+          {formData?.files?.length === 0 && (
             <div style={{ display: 'flex', justifyContent: 'center', margin: 12 }}>
               <Button
                 variant={'contained'}
@@ -390,25 +322,6 @@ export default function FormDialog({
             .filter((file) => file.requiredFileDetails.uploadRequired)
             .map((selectedfile, index) => (
               <div key={`${index}_${selectedfile.name}12`}>
-                {/* <Stack
-                key={`${index}_111${selectedfile.name}12`}
-                spacing={0}
-                direction="row"
-                alignItems="center"
-                sx={{
-                  color: 'black',
-                  width: '100%',
-                  height: 45,
-                  padding: '0px 0px 0px 10px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  background: 'lightgray',
-                  borderRadius: '10px 10px 0px 0px',
-                  marginTop: '20px',
-                }}
-              >
-                <LabelView status={selectedfile.fileStatus} />
-              </Stack> */}
                 {uploadStatus}
                 <Card sx={{ marginTop: 2, padding: 0, borderRadius: '10px 10px 10px 10px' }}>
                   <CardContent sx={{ padding: 2 }}>

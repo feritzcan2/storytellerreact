@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
+import ClientService from 'src/api/clientService';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { useParams } from 'src/routes/hooks';
 import { bgGradient } from 'src/theme/css';
@@ -34,13 +34,13 @@ const sectionContact = {
 
 const getUrl = 'https://api.vizedefteri.com/Customer/session?id=';
 // const postUrl = 'https://api.vizedefteri.com/Customer/updateCustomerSession?id=3';
-// const urlTest = 'https://jsonplaceholder.typicode.com/posts';
 
 export default function ContactView() {
   const theme = useTheme();
   const params = useParams();
 
   const { id } = params;
+  const { getClients } = ClientService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -55,28 +55,31 @@ export default function ContactView() {
     // userData?.customers[0]?.files.map((file) => file),
   };
 
-  const getUserData = () => {
+  const getUserData = async () => {
     setIsLoading(true);
-    axios
-      .get(getUrl + id)
-      .then((response) => {
-        setUserData(response.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(error);
-      });
+    setUserData(await getClients(id));
+    setIsLoading(false);
   };
 
   useEffect(() => {
     getUserData();
   }, [shouldRefetch]);
 
+  // const getUserData = () => {
+  //   setIsLoading(true);
+  //   axios
+  //     .get(getUrl + id)
+  //     .then((response) => {
+  //       setUserData(response.data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setIsLoading(false);
+  //       setError(error);
+  //     });
+  // };
+
   console.log('dumyData', dumyData);
-  // console.log('newCustomerBase', newCustomerBase);
-  // console.log('userData', userData);
-  // console.log('userData2 =>>>> ', data2);
   if (isLoading) {
     return (
       <div

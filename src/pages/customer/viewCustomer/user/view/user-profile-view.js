@@ -1,8 +1,6 @@
 // _mock
-import { _userAbout, _userFeeds, _userFollowers, _userFriends, _userGallery } from 'src/_mock';
+import { _userAbout } from 'src/_mock';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-// components
-import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
@@ -16,50 +14,20 @@ import ProfileHome from '../profile-home';
 
 // ----------------------------------------------------------------------
 
-const TABS = [
-  {
-    value: 'profile',
-    label: 'Profile',
-    icon: <Iconify icon="solar:user-id-bold" width={24} />,
-  },
-  {
-    value: 'followers',
-    label: 'Followers',
-    icon: <Iconify icon="solar:heart-bold" width={24} />,
-  },
-  {
-    value: 'friends',
-    label: 'Friends',
-    icon: <Iconify icon="solar:users-group-rounded-bold" width={24} />,
-  },
-  {
-    value: 'gallery',
-    label: 'Gallery',
-    icon: <Iconify icon="solar:gallery-wide-bold" width={24} />,
-  },
-];
-
-// ----------------------------------------------------------------------
-
 export default function UserProfileView({ userData }) {
   const settings = useSettingsContext();
-
+  const customer = userData.customers[0];
   const { user } = useMockedUser();
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
         heading="Profile"
-        links={[
-          // { name: 'Dashboard', href: paths.dashboard.root },
-          // { name: 'User', href: paths.dashboard.user.root },
-          { name: user?.displayName },
-        ]}
+        links={[{ name: `${customer?.name} ${customer?.surname}` }]}
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       />
-      <div>{JSON.stringify(userData)}</div>
 
       <Card
         sx={{
@@ -68,13 +36,12 @@ export default function UserProfileView({ userData }) {
         }}
       >
         <ProfileCover
-          role={_userAbout.role}
-          name={user?.displayName}
+          name={`${customer?.name} ${customer?.surname}`}
           avatarUrl={user?.photoURL}
           coverUrl={_userAbout.coverUrl}
         />
       </Card>
-      <ProfileHome info={_userAbout} posts={_userFeeds} />
+      <ProfileHome userData={userData} />
     </Container>
   );
 }
