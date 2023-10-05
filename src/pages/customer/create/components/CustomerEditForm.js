@@ -1,41 +1,32 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useCallback, useContext, useMemo } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import PropTypes from 'prop-types';
+import { useCallback, useContext, useMemo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import * as Yup from 'yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
 // utils
-import { fData } from 'src/utils/format-number';
 // routes
-import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 // assets
-import { countries } from 'src/assets/data';
 // components
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, {
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  RHFAutocomplete,
-  RHFSelect,
-} from 'src/components/hook-form';
-import { Divider, MenuItem } from '@mui/material';
-import ConfigService from 'src/api/ConfigService';
-import { GlobalContext } from 'src/context/GlobalProvider';
-import { LoadingScreen } from 'src/components/loading-screen';
+import { MenuItem } from '@mui/material';
+import { DatePicker, DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CustomerService from 'src/api/CustomerService';
+import FormProvider, { RHFSelect, RHFSwitch, RHFTextField } from 'src/components/hook-form';
+import Iconify from 'src/components/iconify';
+import Label from 'src/components/label';
+import { useSnackbar } from 'src/components/snackbar';
+import { GlobalContext } from 'src/context/GlobalProvider';
 
 // ----------------------------------------------------------------------
 export const INVOICE_SERVICE_OPTIONS = [
@@ -62,24 +53,30 @@ export default function CustomerEditForm({ currentUser, configs }) {
   const { enqueueSnackbar } = useSnackbar();
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('İsim gerekli'),
-    city: Yup.string().required('Şehir gerekli'),
+    surname: Yup.string().required('İsim gerekli'),
+    city: Yup.number().required('Şehir gerekli'),
     email: Yup.string().email('Email  gerekli'),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    country: Yup.string().required('Country is required'),
-    visaType: Yup.string().required('Country is required'),
-    taxType: Yup.string().required('Country is required'),
-    isVerified: Yup.boolean(),
+    phoneNumber: Yup.string().required('Telefon numarası gerekli'),
+    country: Yup.number().required('Country is required'),
+    visaType: Yup.number().required('Vize türü gerekli'),
+    taxType: Yup.number().required('Vergi türü gerekli'),
+    plannedTravelDate: Yup.date().notRequired(),
+    appointmentDate: Yup.object().notRequired(),
   });
 
   const defaultValues = useMemo(
     () => ({
       name: currentUser?.name || '',
-      visaType: currentUser?.visaType || '',
+      surname: currentUser?.surname || '',
       email: currentUser?.email || '',
-      city: currentUser?.city || '',
-      country: currentUser?.country || '',
-      taxType: currentUser?.taxType || '',
-      phoneNumber: currentUser?.phoneNumber || '',
+      phoneNumber: currentUser?.phone || '',
+      country: currentUser?.country,
+      city: currentUser?.city,
+      taxType: currentUser?.taxType,
+      visaType: currentUser?.visaType,
+      status: currentUser?.status || 0,
+      appointmentDate: undefined,
+      plannedTravelDate: undefined,
     }),
     [currentUser]
   );
@@ -102,11 +99,15 @@ export default function CustomerEditForm({ currentUser, configs }) {
 
   const onSubmit = handleSubmit(async (data) => {
     var data2 = {
-      country: configs.countries.filter((country) => country.name === data.country)[0].id,
-      city: configs.cities.filter((city) => city.name === data.city)[0].id,
-      taxType: configs.taxTypes.filter((tax) => tax.name === data.taxType)[0].id,
-      visaType: configs.visaTypes.filter((tax) => tax.name === data.visaType)[0].id,
+      country: data.country,
+      city: data.city,
+      taxType: data.taxType,
+      visaType: data.visaType,
       name: data.name,
+      status: data.status,
+      surname: data.surname,
+      appointmentDate: data.appointmentDate,
+      plannedTravelDate: data.plannedTravelDate,
       phone: data.phoneNumber,
       email: data.email,
     };
@@ -152,29 +153,6 @@ export default function CustomerEditForm({ currentUser, configs }) {
                 {values.status}
               </Label>
             )}
-
-            <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar
-                name="avatarUrl"
-                maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 3,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.disabled',
-                    }}
-                  >
-                    Formatlar *.jpeg, *.jpg, *.png, *.gif
-                    <br /> En büyük {fData(3145728)}
-                  </Typography>
-                }
-              />
-            </Box>
 
             {currentUser && (
               <FormControlLabel
@@ -245,111 +223,110 @@ export default function CustomerEditForm({ currentUser, configs }) {
                 sm: 'repeat(2, 1fr)',
               }}
             >
+              <RHFSelect name="status" label="Durum">
+                {configs.customerStatuses.map((status) => (
+                  <MenuItem key={status.value} value={status.id}>
+                    {status.name}
+                  </MenuItem>
+                ))}
+              </RHFSelect>
+              <RHFSelect name="visaType" label="Vize Türü">
+                {configs.visaTypes.map((status) => (
+                  <MenuItem key={status.value} value={status.id}>
+                    {status.name}
+                  </MenuItem>
+                ))}
+              </RHFSelect>
               <RHFTextField name="name" label="İsim" />
+              <RHFTextField name="surname" label="Soyisim" />
               <RHFTextField name="email" label="Email adresi" />
               <RHFTextField name="phoneNumber" label="Telefon numarası" />
-              <RHFAutocomplete
-                name="city"
-                label="Başvuru şehri"
-                options={configs.cities.map((country) => {
-                  return country.name;
-                })}
-                getOptionLabel={(option) => option}
-                isOptionEqualToValue={(option, value) => option === value}
-                renderOption={(props, option) => {
-                  const { name, id } = configs.cities.filter(
-                    (country) => country.name === option
-                  )[0];
+              <RHFSelect name="city" label="Şehir">
+                {configs.cities.map((status) => (
+                  <MenuItem key={status.value} value={status.id}>
+                    {status.name}
+                  </MenuItem>
+                ))}
+              </RHFSelect>
 
-                  if (!name) {
-                    return null;
-                  }
+              <RHFSelect name="taxType" label="Vergi Türü">
+                {configs.taxTypes.map((status) => (
+                  <MenuItem key={status.value} value={status.id}>
+                    {status.name}
+                  </MenuItem>
+                ))}
+              </RHFSelect>
 
-                  return (
-                    <li {...props} key={id}>
-                      {name}
-                    </li>
-                  );
-                }}
-              />
-              <RHFAutocomplete
-                name="visaType"
-                label="Vize Türü"
-                options={configs.visaTypes.map((country) => {
-                  return country.name;
-                })}
-                getOptionLabel={(option) => option}
-                isOptionEqualToValue={(option, value) => option === value}
-                renderOption={(props, option) => {
-                  const { name, id } = configs.visaTypes.filter(
-                    (country) => country.name === option
-                  )[0];
-
-                  if (!name) {
-                    return null;
-                  }
-
-                  return (
-                    <li {...props} key={id}>
-                      {name}
-                    </li>
-                  );
-                }}
-              />
-              <RHFAutocomplete
-                name="taxType"
-                label="Vergi Türü"
-                options={configs.taxTypes.map((country) => {
-                  return country.name;
-                })}
-                getOptionLabel={(option) => option}
-                isOptionEqualToValue={(option, value) => option === value}
-                renderOption={(props, option) => {
-                  const { name, id } = configs.taxTypes.filter(
-                    (country) => country.name === option
-                  )[0];
-
-                  if (!name) {
-                    return null;
-                  }
-
-                  return (
-                    <li {...props} key={id}>
-                      {name}
-                    </li>
-                  );
-                }}
-              />
-              <RHFAutocomplete
-                name="country"
-                label="Başvuru yapılacak ülke"
-                options={configs.countries.map((country) => {
-                  return country.name;
-                })}
-                getOptionLabel={(option) => option}
-                isOptionEqualToValue={(option, value) => option === value}
-                renderOption={(props, option) => {
-                  const { code, name, id } = configs.countries.filter(
-                    (country) => country.name === option
-                  )[0];
-
-                  if (!name) {
-                    return null;
-                  }
-
-                  return (
-                    <li {...props} key={id}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
+                <Controller
+                  control={control}
+                  name="plannedTravelDate"
+                  defaultValue={undefined}
+                  render={({ field }) => (
+                    <DatePicker
+                      slotProps={{
+                        textField: {
+                          fullWidth: true,
+                          error: field.value === null,
+                          helperText: '',
+                        },
+                      }}
+                      value={field.value || null}
+                      label="Planlanan Gidiş Tarihi "
+                      ampm={false}
+                      onChange={(value, cont) => {
+                        if (cont.validationError === null) {
+                          field.onChange(value);
+                        } else {
+                          field.onChange(null);
+                        }
+                      }}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  defaultValue={undefined}
+                  name="appointmentDate"
+                  render={({ field }) => (
+                    <DateTimePicker
+                      slotProps={{
+                        textField: {
+                          fullWidth: true,
+                          error: field.value === null,
+                          helperText: '',
+                        },
+                      }}
+                      label="Vize Randevu Tarihi "
+                      value={field.value || null}
+                      ampm={false}
+                      onChange={(value, cont) => {
+                        if (cont.validationError === null) {
+                          field.onChange(value);
+                        } else {
+                          field.onChange(null);
+                        }
+                      }}
+                      onAccept={() => {}}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+              <RHFSelect name="country" label="Başvuru yapılacak ülke">
+                {configs.countries.map((status) => (
+                  <MenuItem key={status.value} value={status.id}>
+                    <li key={status.id}>
                       <Iconify
                         key={name}
-                        icon={`circle-flags:${code.toLowerCase()}`}
+                        icon={`circle-flags:${status.code.toLowerCase()}`}
                         width={28}
                         sx={{ mr: 1 }}
                       />
-                      {name} ({code})
+                      {status.name} ({status.code})
                     </li>
-                  );
-                }}
-              />
+                  </MenuItem>
+                ))}
+              </RHFSelect>
               {/* <RHFSelect name={`gfdgfd`} label="Service" sx={{}}>
                 {INVOICE_SERVICE_OPTIONS.map((service) => (
                   <MenuItem key={service.id} value={service.name}>

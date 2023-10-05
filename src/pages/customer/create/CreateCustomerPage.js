@@ -1,12 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import { GlobalContext } from 'src/context/GlobalProvider';
-import { useContext, useEffect, useState } from 'react';
-import CustomerService from 'src/api/CustomerService';
 import { Container, Typography } from '@mui/material';
-import { useSettingsContext } from 'src/components/settings';
-import CustomerEditForm from './components/CustomerEditForm';
+import { useContext } from 'react';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { useSettingsContext } from 'src/components/settings';
+import { GlobalContext } from 'src/context/GlobalProvider';
+import CustomerEditForm from './components/CustomerEditForm';
 
 // ----------------------------------------------------------------------
 

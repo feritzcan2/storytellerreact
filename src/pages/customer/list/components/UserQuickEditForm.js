@@ -30,7 +30,6 @@ import { GlobalContext } from 'src/context/GlobalProvider';
 export default function UserQuickEditForm({ currentUser, open, onClose }) {
   const { enqueueSnackbar } = useSnackbar();
   const { addCustomer } = CustomerService();
-  debugger;
   const { configs } = useContext(GlobalContext);
 
   const NewUserSchema = Yup.object().shape({
@@ -42,7 +41,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
     country: Yup.number().required('Country is required'),
     visaType: Yup.number().required('Country is required'),
     taxType: Yup.number().required('Country is required'),
-    plannedTravelDate: Yup.date().required(),
+    plannedTravelDate: Yup.object().notRequired(),
     appointmentDate: Yup.object().notRequired(),
   });
 
@@ -78,10 +77,19 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
     try {
       let user = { ...currentUser };
       Object.keys(data).forEach((key) => {
-        user[key] = data[key];
+        let val = data[key];
+        dayjs().isValid();
+        if (dayjs.isDayjs(val)) {
+          if (!Number.isNaN(new Date(val).getTime())) {
+            user[key] = val.toISOString();
+          } else {
+            user[key] = undefined;
+          }
+        } else {
+          user[key] = data[key];
+        }
       });
       addCustomer(user).then(() => {
-        reset();
         onClose();
         enqueueSnackbar('Update success!');
       });
@@ -158,12 +166,21 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
                 defaultValue={undefined}
                 render={({ field }) => (
                   <DatePicker
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        error: field.value === null,
+                        helperText: '',
+                      },
+                    }}
                     value={field.value || null}
                     label="Planlanan Gidiş Tarihi "
                     ampm={false}
                     onChange={(value, cont) => {
                       if (cont.validationError === null) {
                         field.onChange(value);
+                      } else {
+                        field.onChange(null);
                       }
                     }}
                   />

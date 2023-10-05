@@ -66,9 +66,9 @@ export default function UserListView(props) {
         defaultFilters[element.key] = 'all';
     });
     head.push({ id: 'ss', label: '', width: 35 });
-
+    setTableData(props.tableData.customers);
     setTableHead(head);
-  }, [props.tableData]);
+  }, [props.tableData, props.tableData.customers]);
 
   const settings = useSettingsContext();
   const { deleteCustomer } = CustomerService();
@@ -198,15 +198,15 @@ export default function UserListView(props) {
                               variant={(filters[column.key] == filter.value && 'filled') || 'soft'}
                               color={colors[index % colors.length]}
                             >
-                              {filter.value === 'all' && customers.length}
+                              {filter.value === -1 && customers.length}
 
-                              {filter.value === 'True' &&
+                              {filter.value === 1 &&
                                 customers.filter(
                                   (user) =>
                                     user[column['key']] !== undefined &&
                                     user[column['key']] !== null
                                 ).length}
-                              {filter.value === 'False' &&
+                              {filter.value === 0 &&
                                 customers.filter(
                                   (user) =>
                                     user[column['key']] === undefined ||
@@ -232,7 +232,7 @@ export default function UserListView(props) {
                             >
                               {tab.value === 'all' && customers.length}
                               {tab.value !== 'all' &&
-                                customers.filter((user) => user[column.key] === tab.label).length}
+                                customers.filter((user) => user[column.key] === tab.value).length}
                             </Label>
                           }
                         />
@@ -386,7 +386,9 @@ function applyFilter({ inputData, comparator, filters, columns }) {
 
   if (name) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+      (user) =>
+        user.name.toLowerCase().indexOf(name.toLowerCase()) !== -1 ||
+        user.surname.toLowerCase().indexOf(name.toLowerCase()) !== -1
     );
   }
 

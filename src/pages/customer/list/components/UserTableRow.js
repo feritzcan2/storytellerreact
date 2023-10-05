@@ -1,36 +1,26 @@
 import PropTypes from 'prop-types';
 // @mui
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
+import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
-import Paper from '@mui/material/Paper';
+import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
 
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
+import CustomPopover, { usePopover } from 'src/components/custom-popover';
+import Iconify from 'src/components/iconify';
+import Label from 'src/components/label';
 //
-import UserQuickEditForm from './UserQuickEditForm';
-import {
-  DateCalendar,
-  DatePicker,
-  DateTimePicker,
-  LocalizationProvider,
-} from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Fragment, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { GlobalContext } from 'src/context/GlobalProvider';
-import dayjs from 'dayjs';
+import UserQuickEditForm from './UserQuickEditForm';
 
 // ----------------------------------------------------------------------
 const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
@@ -56,7 +46,6 @@ export default function UserTableRow({
     customerList.customers = customers;
     let customer = customers.filter((customer) => customer.id == id)[0];
     customer.appointmentDate = selectedDate;
-    debugger;
     setCustomers(customerList);
   };
   const confirm = useBoolean();
@@ -90,7 +79,6 @@ export default function UserTableRow({
     let color = colors[0];
     let isNameMasked = column.filter != null && column.filter.isNullFilter === true;
     if (isNameMasked) {
-      debugger;
     }
 
     let text =
@@ -100,6 +88,8 @@ export default function UserTableRow({
         ? new Date(row[column['key']]).toLocaleDateString()
         : row[column['key']];
     if (column.dataKey !== undefined && column.dataKey !== null && isNameMasked !== true) {
+      let data = configs[column.dataKey].filter((country) => country.id === row[column['key']])[0];
+
       text = configs[column.dataKey].filter((country) => country.id === row[column['key']])[0].name;
     }
     return (
