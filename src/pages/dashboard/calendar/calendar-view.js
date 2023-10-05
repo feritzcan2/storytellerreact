@@ -1,20 +1,20 @@
-import Calendar from '@fullcalendar/react'; // => request placed at the top
+import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import dayGridPlugin from '@fullcalendar/daygrid';
+import Calendar from '@fullcalendar/react'; // => request placed at the top
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 //
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 // utils
 import { fTimestamp } from 'src/utils/format-time';
 // hooks
@@ -23,18 +23,18 @@ import { useResponsive } from 'src/hooks/use-responsive';
 // _mock
 import { CALENDAR_COLOR_OPTIONS } from 'src/_mock/_calendar';
 // api
-import { useGetEvents, updateEvent } from 'src/api/calendar';
+import { updateEvent, useGetEvents } from 'src/api/calendar';
 // components
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 //
-import { useCalendar, useEvent } from './hooks';
-import { StyledCalendar } from './components/styles';
-import CalendarForm from './components/calendar-form';
-import CalendarToolbar from './components/calendar-toolbar';
+import trLocale from '@fullcalendar/core/locales/tr';
 import CalendarFilters from './components/calendar-filters';
 import CalendarFiltersResult from './components/calendar-filters-result';
-import trLocale from '@fullcalendar/core/locales/tr';
+import CalendarForm from './components/calendar-form';
+import CalendarToolbar from './components/calendar-toolbar';
+import { StyledCalendar } from './components/styles';
+import { useCalendar, useEvent } from './hooks';
 // ----------------------------------------------------------------------
 
 const defaultFilters = {

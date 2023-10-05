@@ -8,6 +8,7 @@ const initialState = {
   configs: null,
   notifications: [],
   dashboardData: null,
+  calendarData: null,
 };
 
 //const localState = JSON.parse(localStorage.getItem("cm"));
@@ -20,6 +21,12 @@ export const GlobalProvider = ({ children }) => {
   function setCountryAppointmentData(data) {
     dispatch({
       type: 'SET_COUNTRY_APPOINTMENT_DATA',
+      payload: data,
+    });
+  }
+  function setCalendarData(data) {
+    dispatch({
+      type: 'SET_CALENDAR_DATA',
       payload: data,
     });
   }
@@ -71,6 +78,8 @@ export const GlobalProvider = ({ children }) => {
         setNotifications: setNotifications,
         dashboardData: state.dashboardData,
         setDashboardData: setDashboardData,
+        setCalendarData: setCalendarData,
+        calendarData: state.calendarData,
       }}
     >
       {children}

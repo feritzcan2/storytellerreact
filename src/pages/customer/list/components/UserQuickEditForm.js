@@ -78,7 +78,6 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
       let user = { ...currentUser };
       Object.keys(data).forEach((key) => {
         let val = data[key];
-        dayjs().isValid();
         if (dayjs.isDayjs(val)) {
           if (!Number.isNaN(new Date(val).getTime())) {
             user[key] = val.toISOString();

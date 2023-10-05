@@ -13,33 +13,33 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 // utils
-import { fTimestamp } from 'src/utils/format-time';
-import uuidv4 from 'src/utils/uuidv4';
+import { fDateTime } from 'src/utils/format-time';
 // api
-import { createEvent, deleteEvent, updateEvent } from 'src/api/calendar';
+import { deleteEvent } from 'src/api/calendar';
 // components
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ColorPicker } from 'src/components/color-utils';
-import FormProvider, { RHFSwitch, RHFTextField } from 'src/components/hook-form';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 // ----------------------------------------------------------------------
 import dayjs from 'dayjs';
+import CalendarService from 'src/api/CalendarService';
 
 export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
   const { enqueueSnackbar } = useSnackbar();
 
+  const { addCalendarEntry } = CalendarService();
+
   const EventSchema = Yup.object().shape({
-    title: Yup.string().max(255).required('Title is required'),
-    description: Yup.string().max(5000, 'Description must be at most 5000 characters'),
+    title: Yup.string().max(255).required('Başlık gerekli'),
+    description: Yup.string().max(5000, 'Açıklama en fazla 5000 harf olabilir'),
     // not required
     color: Yup.string(),
-    allDay: Yup.boolean(),
     start: Yup.mixed(),
-    end: Yup.mixed(),
   });
-
+  debugger;
   const methods = useForm({
     resolver: yupResolver(EventSchema),
     defaultValues: currentEvent,
@@ -55,30 +55,27 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
 
   const values = watch();
 
-  const dateError = values.start && values.end ? values.start > values.end : false;
+  const dateError = false;
 
   const onSubmit = handleSubmit(async (data) => {
     const eventData = {
-      id: currentEvent?.id ? currentEvent?.id : uuidv4(),
+      id: currentEvent?.id === '' ? undefined : currentEvent?.id,
       color: data?.color,
       title: data?.title,
-      allDay: data?.allDay,
       description: data?.description,
-      end: data?.end,
-      start: data?.start,
+      date: data?.start,
     };
-
+    if (dayjs.isDayjs(eventData.date)) {
+      if (!Number.isNaN(new Date(eventData.date).getTime())) {
+        eventData.date = eventData.date.toISOString();
+      } else {
+        eventData.date = undefined;
+      }
+    }
+    debugger;
     try {
       if (!dateError) {
-        if (currentEvent?.id) {
-          await updateEvent(eventData);
-          enqueueSnackbar('Update success!');
-        } else {
-          await createEvent(eventData);
-          enqueueSnackbar('Create success!');
-        }
-        onClose();
-        reset();
+        await addCalendarEntry(eventData);
       }
     } catch (error) {
       console.error(error);
@@ -98,11 +95,9 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={3} sx={{ px: 3 }}>
-        <RHFTextField name="title" label="Title" />
+        <RHFTextField name="title" label="Başlık" />
 
-        <RHFTextField name="description" label="Description" multiline rows={3} />
-
-        <RHFSwitch name="allDay" label="All day" />
+        <RHFTextField name="description" label="Not açıklaması" multiline rows={3} />
 
         <Controller
           name="start"
@@ -114,41 +109,14 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
                 value={dayjs(field.value)}
                 onChange={(newValue) => {
                   if (newValue) {
-                    field.onChange(fTimestamp(newValue));
+                    field.onChange(fDateTime(newValue));
                   }
                 }}
-                label="Start date"
+                label="Gün"
                 format="dd/MM/yyyy hh:mm a"
                 slotProps={{
                   textField: {
                     fullWidth: true,
-                  },
-                }}
-              />
-            </LocalizationProvider>
-          )}
-        />
-
-        <Controller
-          name="end"
-          control={control}
-          render={({ field }) => (
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="tr">
-              <MobileDateTimePicker
-                {...field}
-                value={dayjs(field.value)}
-                onChange={(newValue) => {
-                  if (newValue) {
-                    field.onChange(fTimestamp(newValue));
-                  }
-                }}
-                label="End date"
-                format="dd/MM/yyyy hh:mm a"
-                slotProps={{
-                  textField: {
-                    fullWidth: true,
-                    error: dateError,
-                    helperText: dateError && 'End date must be later than start date',
                   },
                 }}
               />

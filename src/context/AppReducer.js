@@ -30,6 +30,11 @@ export default (state, action) => {
         ...state,
         configs: action.payload,
       };
+    case 'SET_CALENDAR_DATA':
+      return {
+        ...state,
+        calendarData: action.payload,
+      };
     default:
       return state;
   }
