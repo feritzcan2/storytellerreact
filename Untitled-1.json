@@ -1,0 +1,207 @@
+{
+  "organizationId": 1,
+  "country": 0,
+  "visaType": 0,
+  "plannedTravelDate": "0001-01-01T00:00:00",
+  "adminMessage": null,
+  "adminMessageDate": "0001-01-01T00:00:00",
+  "adminName": null,
+  "customers": [
+    {
+      "name": "feritss22",
+      "email": "feritzcan93@gmail.com",
+      "surname": "ozcan",
+      "phone": "+905325596676",
+      "appointmentDate": null,
+      "appointmentOffice": null,
+      "taxType": "None",
+      "status": "Yeni",
+      "country": 0,
+      "city": "İstanbul",
+      "dateStr": "Randevu Yok",
+      "files": [
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Şengen Vize Başvuru Formu",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "Lütfen shengen vize başvuıru formunu doldurduktan sonra indiriniz.\\n sadasdsadsadsaasd",
+            "uploadRequired": true,
+            "id": 1
+          },
+          "s3NamePrefix": "3_4_1_",
+          "id": 43
+        },
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Uçak Biletleri",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "DSAADSDASDSADSAAAADSASDSDA",
+            "uploadRequired": true,
+            "id": 2
+          },
+          "s3NamePrefix": "3_4_2_",
+          "id": 44
+        },
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Otel Biletleri",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "Lütfen shengen vize başvuıru formunu doldurduktan sonra indiriniz.\\n sadasdsadsadsaasd",
+            "uploadRequired": true,
+            "id": 3
+          },
+          "s3NamePrefix": "3_4_3_",
+          "id": 45
+        }
+      ],
+      "visaType": 0,
+      "id": 4
+    },
+    {
+      "name": "feritss",
+      "email": "feritzcan93@gmail.com",
+      "surname": "ozcan",
+      "phone": "+905325596676",
+      "appointmentDate": null,
+      "appointmentOffice": null,
+      "taxType": "None",
+      "status": "Yeni",
+      "country": 0,
+      "city": "İstanbul",
+      "dateStr": "Randevu Yok",
+      "files": [
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Şengen Vize Başvuru Formu",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "Lütfen shengen vize başvuıru formunu doldurduktan sonra indiriniz.\\n sadasdsadsadsaasd",
+            "uploadRequired": true,
+            "id": 1
+          },
+          "s3NamePrefix": "3_2_1_",
+          "id": 40
+        },
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Uçak Biletleri",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "DSAADSDASDSADSAAAADSASDSDA",
+            "uploadRequired": true,
+            "id": 2
+          },
+          "s3NamePrefix": "3_2_2_",
+          "id": 41
+        },
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Otel Biletleri",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "Lütfen shengen vize başvuıru formunu doldurduktan sonra indiriniz.\\n sadasdsadsadsaasd",
+            "uploadRequired": true,
+            "id": 3
+          },
+          "s3NamePrefix": "3_2_3_",
+          "id": 42
+        }
+      ],
+      "visaType": 0,
+      "id": 2
+    },
+    {
+      "name": "Awais",
+      "email": "awaisahmedshahid@gmail.com",
+      "surname": "Shahid",
+      "phone": "321444999",
+      "appointmentDate": null,
+      "appointmentOffice": null,
+      "taxType": "None",
+      "status": "Yeni",
+      "country": 0,
+      "city": "İstanbul",
+      "dateStr": "Randevu Yok",
+      "files": [
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Şengen Vize Başvuru Formu",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "Lütfen shengen vize başvuıru formunu doldurduktan sonra indiriniz.\\n sadasdsadsadsaasd",
+            "uploadRequired": true,
+            "id": 1
+          },
+          "s3NamePrefix": "3_12_1_",
+          "id": 46
+        },
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Uçak Biletleri",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "DSAADSDASDSADSAAAADSASDSDA",
+            "uploadRequired": true,
+            "id": 2
+          },
+          "s3NamePrefix": "3_12_2_",
+          "id": 47
+        },
+        {
+          "fileName": null,
+          "fileUrl": null,
+          "fileStatus": 0,
+          "requiredFileDetails": {
+            "index": 0,
+            "fileName": "Otel Biletleri",
+            "helpLink": "https://www.google.com",
+            "exampleDocumentLink": null,
+            "description": "Lütfen shengen vize başvuıru formunu doldurduktan sonra indiriniz.\\n sadasdsadsadsaasd",
+            "uploadRequired": true,
+            "id": 3
+          },
+          "s3NamePrefix": "3_12_3_",
+          "id": 48
+        }
+      ],
+      "visaType": 0,
+      "id": 12
+    }
+  ],
+  "id": 3
+}

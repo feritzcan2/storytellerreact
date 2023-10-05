@@ -8,6 +8,7 @@ import { authRoutes } from './auth';
 import { dashboardRoutes } from './dashboard';
 import { customerRoutes } from './customerRoutes';
 import { countryTrackerRoutes } from './countryTrackerRoutes';
+import { clientRoutes } from './clientRoutes';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ export default function Router() {
     ...countryTrackerRoutes,
     // Dashboard routes
     ...dashboardRoutes,
+    ...clientRoutes,
 
     // Main routes
     ...mainRoutes,
