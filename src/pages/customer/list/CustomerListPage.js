@@ -1,12 +1,18 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import UserListView from './UserListView';
-import { GlobalContext } from 'src/context/GlobalProvider';
-import { useContext, useEffect, useState } from 'react';
-import CustomerService from 'src/api/CustomerService';
-import { Route, Routes } from 'react-router';
-import { Switch } from '@mui/material';
 import { Typography } from '@mui/material';
+import { useContext, useEffect } from 'react';
+import CustomerService from 'src/api/CustomerService';
+import { GlobalContext } from 'src/context/GlobalProvider';
+import UserListView from './UserListView';
+// @mui
+// routes
+// _mock
+// hooks
+// components
+//
+
+// -------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
 

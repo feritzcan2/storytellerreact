@@ -1,46 +1,47 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback, Fragment, useEffect } from 'react';
+import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import Tab from '@mui/material/Tab';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
+import Tabs from '@mui/material/Tabs';
+import Tooltip from '@mui/material/Tooltip';
+import { alpha } from '@mui/material/styles';
 // routes
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+import { useRouter } from 'src/routes/hooks';
+import { paths } from 'src/routes/paths';
 // _mock
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
+import Iconify from 'src/components/iconify';
+import Label from 'src/components/label';
+import Scrollbar from 'src/components/scrollbar';
 import { useSettingsContext } from 'src/components/settings';
 import {
-  useTable,
-  getComparator,
-  emptyRows,
-  TableNoData,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
+  TableNoData,
   TablePaginationCustom,
+  TableSelectedAction,
+  emptyRows,
+  getComparator,
+  useTable,
 } from 'src/components/table';
 //
-import UserTableRow from './components/UserTableRow';
-import UserTableToolbar from './components/user-table-toolbar';
-import UserTableFiltersResult from './components/user-table-filters-result';
-import { LoadingScreen } from 'src/components/loading-screen';
 import CustomerService from 'src/api/CustomerService';
+import { LoadingScreen } from 'src/components/loading-screen';
+import { GlobalContext } from 'src/context/GlobalProvider';
+import UserTableFiltersResult from './components/UserTableFiltersResult';
+import UserTableRow from './components/UserTableRow';
+import UserTableToolbar from './components/UserTableToolbar';
 
 // ----------------------------------------------------------------------
 
@@ -48,13 +49,15 @@ const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 // ----------------------------------------------------------------------
 
 export default function UserListView(props) {
-  if (props.tableData === null || props.tableData === undefined) return <LoadingScreen />;
+  const { configs } = useContext(GlobalContext);
+
+  if (props.tableData === null || props.tableData === undefined || configs === null)
+    return <LoadingScreen />;
 
   const { columns, customers } = props.tableData;
   const [TABLE_HEAD, setTableHead] = useState([]);
   const table = useTable();
   const defaultFilters = {};
-
   useEffect(() => {
     let head = [];
     props.tableData.columns.forEach((element) => {
@@ -62,7 +65,7 @@ export default function UserListView(props) {
       if (element.filter !== undefined && element.filter !== null)
         defaultFilters[element.key] = 'all';
     });
-    head.push({ id: 'ss', label: '', width: 45 });
+    head.push({ id: 'ss', label: '', width: 35 });
 
     setTableHead(head);
   }, [props.tableData]);
@@ -171,6 +174,7 @@ export default function UserListView(props) {
             .map((column) => {
               return (
                 <Tabs
+                  key={column.key}
                   value={filters[column.key]}
                   onChange={(event, value) => {
                     handleFilterStatus(event, value, column.key);
@@ -185,7 +189,7 @@ export default function UserListView(props) {
                     column.filter.options.map((filter, index) => {
                       return (
                         <Tab
-                          key={filter.value}
+                          key={filter.value + index}
                           iconPosition="end"
                           value={filter.value}
                           label={filter.label}
@@ -237,6 +241,7 @@ export default function UserListView(props) {
                 </Tabs>
               );
             })}
+
           <UserTableToolbar
             filters={filters}
             onFilters={handleFilters}
@@ -302,6 +307,7 @@ export default function UserListView(props) {
                       )
                       .map((row) => (
                         <UserTableRow
+                          configs={configs}
                           columns={columns}
                           key={row.id}
                           row={row}

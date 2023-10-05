@@ -30,13 +30,15 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Fragment, useContext, useState } from 'react';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import dayjs from 'dayjs';
 
 // ----------------------------------------------------------------------
-const NEGATIVE_LABEL_TEXTS = ['Randevu Yok'];
+const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 
 export default function UserTableRow({
   columns,
   row,
+  configs,
   selected,
   onEditRow,
   onSelectRow,
@@ -63,6 +65,9 @@ export default function UserTableRow({
 
   const popover = usePopover();
   const labelColor = (column, value, key) => {
+    if (column.dataKey !== undefined && column.dataKey !== null) {
+      return colors[row[column['key']] % colors.length];
+    }
     if (isNullFilter(column) === true) return 'error';
 
     return 'success';
@@ -78,44 +83,58 @@ export default function UserTableRow({
 
     return false;
   };
+  function isDateValid(dateStr) {
+    return !isNaN(new Date(dateStr));
+  }
+  const getCell = (column) => {
+    let color = colors[0];
+    let isNameMasked = column.filter != null && column.filter.isNullFilter === true;
+    if (isNameMasked) {
+      debugger;
+    }
+
+    let text =
+      isNameMasked && (row[column['key']] === null || row[column['key']] === undefined)
+        ? column.filter.options[1].label
+        : isDateValid(row[column['key']])
+        ? new Date(row[column['key']]).toLocaleDateString()
+        : row[column['key']];
+    if (column.dataKey !== undefined && column.dataKey !== null && isNameMasked !== true) {
+      text = configs[column.dataKey].filter((country) => country.id === row[column['key']])[0].name;
+    }
+    return (
+      <TableCell
+        key={column['key']}
+        sx={column.isProfile ? { display: 'flex', alignItems: 'center' } : { whiteSpace: 'nowrap' }}
+      >
+        {column.isProfile && <Avatar sizes="sm" src={avatarUrl} sx={{ mr: 1 }} />}
+        {column.isLabel === true && (
+          <Label color={labelColor(column, row[column['key']])}>{text}</Label>
+        )}
+        {column.isLabel !== true && (
+          <ListItemText
+            primary={text}
+            secondary={column['subKey'] !== undefined ? row[column['subKey']] : undefined}
+            primaryTypographyProps={{ typography: 'body2' }}
+            secondaryTypographyProps={{
+              component: 'span',
+              color: 'text.disabled',
+            }}
+          />
+        )}
+      </TableCell>
+    );
+  };
   return (
     <>
-      <TableRow hover selected={selected}>
+      <TableRow key={row.id} hover selected={selected}>
         <TableCell padding="checkbox">
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
         {columns.map((column) => {
           console.log(row);
 
-          return (
-            <TableCell
-              sx={
-                column.isProfile
-                  ? { display: 'flex', alignItems: 'center' }
-                  : { whiteSpace: 'nowrap' }
-              }
-            >
-              {column.isProfile && <Avatar sizes="sm" alt={name} src={avatarUrl} sx={{ mr: 1 }} />}
-              {column.isLabel === true && (
-                <Label color={labelColor(column, row[column['key']])}>
-                  {column.filter != null && column.filter.isNullFilter === true
-                    ? column.filter.options[1].label
-                    : row[column['key']]}
-                </Label>
-              )}
-              {column.isLabel !== true && (
-                <ListItemText
-                  primary={row[column['key']]}
-                  secondary={column['subKey'] !== undefined ? row[column['subKey']] : undefined}
-                  primaryTypographyProps={{ typography: 'body2' }}
-                  secondaryTypographyProps={{
-                    component: 'span',
-                    color: 'text.disabled',
-                  }}
-                />
-              )}
-            </TableCell>
-          );
+          return getCell(column);
         })}
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Quick Edit" placement="top" arrow>
