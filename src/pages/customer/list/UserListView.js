@@ -62,8 +62,7 @@ export default function UserListView(props) {
     let head = [];
     props.tableData.columns.forEach((element) => {
       head.push({ id: element.id, label: element.columnName });
-      if (element.filter !== undefined && element.filter !== null)
-        defaultFilters[element.key] = 'all';
+      if (element.filter !== undefined && element.filter !== null) defaultFilters[element.key] = -1;
     });
     head.push({ id: 'ss', label: '', width: 35 });
     setTableData(props.tableData.customers);
@@ -230,8 +229,8 @@ export default function UserListView(props) {
                               variant={(filters[column.key] == tab.value && 'filled') || 'soft'}
                               color={colors[index % colors.length]}
                             >
-                              {tab.value === 'all' && customers.length}
-                              {tab.value !== 'all' &&
+                              {tab.value === -1 && customers.length}
+                              {tab.value !== -1 &&
                                 customers.filter((user) => user[column.key] === tab.value).length}
                             </Label>
                           }
@@ -395,21 +394,15 @@ function applyFilter({ inputData, comparator, filters, columns }) {
   columns.forEach((column) => {
     if (column.filter !== undefined && column.filter !== null) {
       let filter = filters[column.key];
-      if (
-        filter !== null &&
-        filter !== undefined &&
-        filter !== 'all' &&
-        filter !== 'All' &&
-        filter !== 'Hepsi'
-      ) {
+      if (filter !== null && filter !== undefined && filter !== -1) {
         if (column.filter.isNullFilter === false) {
           inputData = inputData.filter((user) => user[column.key] === filter);
         } else {
-          if (filter === 'True') {
+          if (filter === 1) {
             inputData = inputData.filter(
               (user) => user[column['key']] !== undefined && user[column['key']] !== null
             );
-          } else if (filter === 'False') {
+          } else if (filter === 0) {
             inputData = inputData.filter(
               (user) => user[column['key']] === undefined || user[column['key']] === null
             );
