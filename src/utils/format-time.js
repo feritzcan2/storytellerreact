@@ -1,4 +1,4 @@
-import { format, getTime, formatDistanceToNow } from 'date-fns';
+import { format, formatDistanceToNow, getTime } from 'date-fns';
 import { tr } from 'date-fns/esm/locale';
 
 // ----------------------------------------------------------------------
@@ -23,6 +23,7 @@ export function fToNow(date) {
   return date
     ? formatDistanceToNow(new Date(date), {
         addSuffix: true,
+        locale: tr,
       })
     : '';
 }

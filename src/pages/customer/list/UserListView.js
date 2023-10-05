@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import { Fragment, useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 // @mui
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -13,7 +13,6 @@ import Tabs from '@mui/material/Tabs';
 import Tooltip from '@mui/material/Tooltip';
 import { alpha } from '@mui/material/styles';
 // routes
-import { RouterLink } from 'src/routes/components';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 // _mock
@@ -57,14 +56,17 @@ export default function UserListView(props) {
   const { columns, customers } = props.tableData;
   const [TABLE_HEAD, setTableHead] = useState([]);
   const table = useTable();
+  const [filters, setFilters] = useState({});
+
   const defaultFilters = {};
   useEffect(() => {
     let head = [];
-    props.tableData.columns.forEach((element) => {
-      head.push({ id: element.id, label: element.columnName });
+    props.tableData.columns.forEach((element, index) => {
+      head.push({ id: element.id, label: element.columnName, width: 33322 });
       if (element.filter !== undefined && element.filter !== null) defaultFilters[element.key] = -1;
     });
     head.push({ id: 'ss', label: '', width: 35 });
+    setFilters(defaultFilters);
     setTableData(props.tableData.customers);
     setTableHead(head);
   }, [props.tableData, props.tableData.customers]);
@@ -75,9 +77,7 @@ export default function UserListView(props) {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(customers);
-
-  const [filters, setFilters] = useState(defaultFilters);
+  const [tableData, setTableData] = useState([]);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -151,25 +151,14 @@ export default function UserListView(props) {
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        <Fragment
-          action={
-            <Button
-              component={RouterLink}
-              href={paths.customer.newCustomer}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
-            >
-              New User
-            </Button>
-          }
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        />
-
         <Card>
           {columns
-            .filter((column) => column.filter !== undefined && column.filter !== null)
+            .filter(
+              (column) =>
+                column.filter !== undefined &&
+                column.filter !== null &&
+                filters[column.key] !== undefined
+            )
             .map((column) => {
               return (
                 <Tabs
@@ -188,7 +177,7 @@ export default function UserListView(props) {
                     column.filter.options.map((filter, index) => {
                       return (
                         <Tab
-                          key={filter.value + index}
+                          key={filter.label + index}
                           iconPosition="end"
                           value={filter.value}
                           label={filter.label}
@@ -220,7 +209,7 @@ export default function UserListView(props) {
                     column.filter.options.map((tab, index) => {
                       return (
                         <Tab
-                          key={column.key}
+                          key={column.filter.label + column.key + 'isNullFilter' + index}
                           iconPosition="end"
                           value={tab.value}
                           label={tab.label}

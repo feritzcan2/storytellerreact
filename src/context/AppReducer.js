@@ -5,6 +5,11 @@ export default (state, action) => {
         ...state,
         countryAppointmentData: action.payload,
       };
+    case 'SET_NOTIFICATIONS':
+      return {
+        ...state,
+        notifications: action.payload,
+      };
     case 'SET_USER_DATA':
       return {
         ...state,

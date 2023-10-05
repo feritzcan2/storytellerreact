@@ -127,14 +127,14 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
           >
             <RHFSelect name="status" label="Durum">
               {configs.customerStatuses.map((status) => (
-                <MenuItem key={status.value} value={status.id}>
+                <MenuItem key={status.id} value={status.id}>
                   {status.name}
                 </MenuItem>
               ))}
             </RHFSelect>
             <RHFSelect name="visaType" label="Vize Türü">
               {configs.visaTypes.map((status) => (
-                <MenuItem key={status.value} value={status.id}>
+                <MenuItem key={status.id} value={status.id}>
                   {status.name}
                 </MenuItem>
               ))}
@@ -145,7 +145,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
             <RHFTextField name="phoneNumber" label="Telefon numarası" />
             <RHFSelect name="city" label="Şehir">
               {configs.cities.map((status) => (
-                <MenuItem key={status.value} value={status.id}>
+                <MenuItem key={status.id} value={status.id}>
                   {status.name}
                 </MenuItem>
               ))}
@@ -153,7 +153,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
 
             <RHFSelect name="taxType" label="Vergi Türü">
               {configs.taxTypes.map((status) => (
-                <MenuItem key={status.value} value={status.id}>
+                <MenuItem key={status.id} value={status.id}>
                   {status.name}
                 </MenuItem>
               ))}
@@ -216,7 +216,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
             </LocalizationProvider>
             <RHFSelect name="country" label="Başvuru yapılacak ülke">
               {configs.countries.map((status) => (
-                <MenuItem key={status.value} value={status.id}>
+                <MenuItem key={status.id} value={status.id}>
                   <li key={status.id}>
                     <Iconify
                       key={name}

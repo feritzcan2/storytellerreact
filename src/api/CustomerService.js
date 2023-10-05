@@ -57,7 +57,6 @@ export default function CustomerService() {
 
       .post('customer', data)
       .then(async (result) => {
-        debugger;
         let customerData = { ...customerList };
         let customers2 = [...customerList.customers];
         if (data.id !== 0 && data.id !== undefined && data.id !== null)
@@ -68,8 +67,6 @@ export default function CustomerService() {
         setCustomers(customerData);
       })
       .catch((err) => {
-        debugger;
-
         if (errorMsg !== undefined)
           errorMsg(
             'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',

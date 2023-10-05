@@ -1,17 +1,17 @@
 import { m } from 'framer-motion';
-import { useState, useCallback } from 'react';
+import { useCallback, useContext, useState } from 'react';
 // @mui
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import List from '@mui/material/List';
-import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
-import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
+import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import Stack from '@mui/material/Stack';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
@@ -19,11 +19,13 @@ import { useResponsive } from 'src/hooks/use-responsive';
 // _mock
 import { _notifications } from 'src/_mock';
 // components
-import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
 import { varHover } from 'src/components/animate';
+import Iconify from 'src/components/iconify';
+import Label from 'src/components/label';
+import Scrollbar from 'src/components/scrollbar';
 //
+import { GlobalContext } from 'src/context/GlobalProvider';
+import NotificationRow from './NotificationRow';
 import NotificationItem from './notification-item';
 
 // ----------------------------------------------------------------------
@@ -50,6 +52,8 @@ const TABS = [
 
 export default function NotificationsPopover() {
   const drawer = useBoolean();
+
+  const cont = useContext(GlobalContext);
 
   const smUp = useResponsive('up', 'sm');
 
@@ -127,6 +131,9 @@ export default function NotificationsPopover() {
   const renderList = (
     <Scrollbar>
       <List disablePadding>
+        {cont.notifications.map((notification) => (
+          <NotificationRow key={notification.id} notification={notification} />
+        ))}
         {notifications.map((notification) => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}

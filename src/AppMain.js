@@ -12,9 +12,10 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 import Router from 'src/routes/sections';
 
 import AuthService from './api/AuthService';
-import CountryService from './api/CountryService';
-import { isAuthenticated } from './context/AuthContext';
 import ConfigService from './api/ConfigService';
+import CountryService from './api/CountryService';
+import DashboardService from './api/DashboardService';
+import { isAuthenticated } from './context/AuthContext';
 
 // ----------------------------------------------------------------------
 
@@ -22,12 +23,14 @@ export default function AppMain() {
   const { getCountryData } = CountryService();
   const { getUserData } = AuthService();
   const { getConfigs } = ConfigService();
+  const { getNotifications } = DashboardService();
 
   useEffect(() => {
     if (isAuthenticated()) {
       getUserData();
       getConfigs();
       getCountryData();
+      getNotifications();
     }
     setInterval(() => {
       if (isAuthenticated()) {

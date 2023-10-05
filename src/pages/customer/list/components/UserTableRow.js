@@ -73,7 +73,7 @@ export default function UserTableRow({
     return false;
   };
   function isDateValid(dateStr) {
-    return !isNaN(new Date(dateStr));
+    return dateStr !== 0 && !isNaN(new Date(dateStr));
   }
   const getCell = (column) => {
     let color = colors[0];
