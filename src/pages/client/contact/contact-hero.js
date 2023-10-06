@@ -16,25 +16,6 @@ import Logo from '../../../components/logo';
 
 const imageBg = require('src/assets/Images/backgroud-red.jpg');
 // ----------------------------------------------------------------------
-// ----------------------------------------------------------------------
-const sectionText = [
-  {
-    title: 'Country',
-    details: 'Spain',
-  },
-  {
-    title: 'Visa Type',
-    details: 'Tourist',
-  },
-  {
-    title: 'Status',
-    details: 'Pending',
-  },
-  {
-    title: 'Appointment Date',
-    details: '12-2-2024',
-  },
-];
 export default function ContactHero({ sectionText }) {
   const theme = useTheme();
 
@@ -64,14 +45,6 @@ export default function ContactHero({ sectionText }) {
             textAlign: { xs: 'center', md: 'center' },
           }}
         >
-          {/* <TextAnimate text="Your" sx={{ color: 'primary.main' }} variants={varFade().inRight} /> */}
-          <br />
-          {/* 
-          <Stack spacing={2} display="inline-flex" direction="row" sx={{ color: 'common.white' }}>
-            <TextAnimate text="Visa" />
-            <TextAnimate text="Application" />
-          </Stack> */}
-
           <Stack
             spacing={{ xs: 2, md: 66 }}
             alignItems={{ xs: 'start', md: 'end' }}

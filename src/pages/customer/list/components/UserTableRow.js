@@ -1,25 +1,28 @@
-import PropTypes from 'prop-types';
-// @mui
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import MenuItem from '@mui/material/MenuItem';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Tooltip from '@mui/material/Tooltip';
+//
+import { useContext, useState } from 'react';
 
-import IconButton from '@mui/material/IconButton';
-import ListItemText from '@mui/material/ListItemText';
-// hooks
-import { useBoolean } from 'src/hooks/use-boolean';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router';
 // components
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import Iconify from 'src/components/iconify';
 import Label from 'src/components/label';
-//
-import { useContext, useState } from 'react';
 import { GlobalContext } from 'src/context/GlobalProvider';
+// hooks
+import { useBoolean } from 'src/hooks/use-boolean';
+
+// @mui
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
+
 import UserQuickEditForm from './UserQuickEditForm';
 
 // ----------------------------------------------------------------------
@@ -35,7 +38,7 @@ export default function UserTableRow({
   onDeleteRow,
 }) {
   const { name, avatarUrl, surname, role, status, email, phoneNumber, id } = row;
-
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(false);
   if (columns === undefined) return;
 
@@ -132,6 +135,12 @@ export default function UserTableRow({
               <Iconify icon="solar:pen-bold" />
             </IconButton>
           </Tooltip>
+          <IconButton
+            color={popover.open ? 'inherit' : 'default'}
+            onClick={() => navigate(`/musteri/${row.id}`)}
+          >
+            <Iconify icon="lucide:view" />
+          </IconButton>
 
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />

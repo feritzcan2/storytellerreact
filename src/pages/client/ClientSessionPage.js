@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 import ClientService from 'src/api/clientService';
@@ -20,9 +20,9 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 import AdminMessage from './adminMessage';
 import ContactHero from './contact/contact-hero';
-import dumyData from './DATA';
 import FormDialog from './form-dialog';
 import SideCard from './SideCard';
+import { GlobalContext } from 'src/context/GlobalProvider';
 
 // ----------------------------------------------------------------------
 
@@ -32,13 +32,10 @@ const sectionContact = {
   name: 'Super Company Name',
 };
 
-const getUrl = 'https://api.vizedefteri.com/Customer/session?id=';
-// const postUrl = 'https://api.vizedefteri.com/Customer/updateCustomerSession?id=3';
-
 export default function ContactView() {
   const theme = useTheme();
   const params = useParams();
-
+  const { configs } = useContext(GlobalContext);
   const { id } = params;
   const { getClients } = ClientService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
@@ -51,10 +48,10 @@ export default function ContactView() {
     surname: '',
     phone: '',
     surname: '',
+    taxTypes: configs.taxTypes[0].id,
     files: [],
     // userData?.customers[0]?.files.map((file) => file),
   };
-
   const getUserData = async () => {
     setIsLoading(true);
     setUserData(await getClients(id));
@@ -65,21 +62,6 @@ export default function ContactView() {
     getUserData();
   }, [shouldRefetch]);
 
-  // const getUserData = () => {
-  //   setIsLoading(true);
-  //   axios
-  //     .get(getUrl + id)
-  //     .then((response) => {
-  //       setUserData(response.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setIsLoading(false);
-  //       setError(error);
-  //     });
-  // };
-
-  console.log('dumyData', dumyData);
   if (isLoading) {
     return (
       <div
@@ -142,7 +124,6 @@ export default function ContactView() {
           // component={MotionViewport}
           sx={{ position: 'relative', height: 1, maxWidth: '99% !important' }}
         >
-          import {useParams} from '../../routes/hooks/use-params';
           <Grid
             container
             spacing={3}
@@ -194,12 +175,6 @@ export default function ContactView() {
                   description={userData.adminMessage}
                   postedAt={userData.adminMessageTime}
                 />
-                {/* <Typography variant="h4" sx={{ color: theme.palette.primary.light, margin: 1 }}>
-                  Message:
-                </Typography>
-                <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {userData.message}
-                </Typography> */}
               </Stack>
             </Grid>
 

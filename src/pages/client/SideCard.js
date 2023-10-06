@@ -10,10 +10,6 @@ import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-
-// const icon = <Box component="img" src="/assets/icons/files/ic_pdf.svg" />;
-// import LinearAlternativeLabel from './linear-alternative-label-stepper';
-// import VerticalLinearStepper from './vertical-linear-stepper-small';
 import AnalyticsTasks from './analytics-tasks';
 import FormDialog from './form-dialog';
 import BasicPopover from './PopOver';
@@ -66,26 +62,6 @@ export default function SideCard({
             uploadUserData={uploadUserData}
             editButton
           />
-          {/* <ListItemText
-            primary={'Email'}
-            secondary={customer?.email}
-            secondaryTypographyProps={{
-              mt: 0.5,
-              component: 'span',
-              typography: 'caption',
-              color: 'text.disabled',
-            }}
-          />
-          <ListItemText
-            primary={'Phone'}
-            secondary={customer?.phone}
-            secondaryTypographyProps={{
-              mt: 0.5,
-              component: 'span',
-              typography: 'caption',
-              color: 'text.disabled',
-            }}
-          /> */}
         </Stack>
         {/* Side by Side */}
         <Stack
@@ -118,7 +94,6 @@ export default function SideCard({
       <Label color={'warning'} variant="soft" sx={{ mt: 1, mx: 1 }}>
         Files to be deliver by hand
       </Label>
-      {/* <Stack spacing={2} direction="row" sx={{ p: 2, ml: 3, typography: 'caption' }}> */}
       <Stack spacing={1} sx={{ pt: 1, px: 1, pb: 2 }}>
         {customer?.files
           .filter((file) => !file?.requiredFileDetails?.uploadRequired)
