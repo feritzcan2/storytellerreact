@@ -99,7 +99,7 @@ export default function ContactView() {
       </div>
     );
   }
-  if (configs === null) return <LoadingScreen />;
+  // if (configs === null) return <LoadingScreen />;
   return (
     <div>
       <Helmet>

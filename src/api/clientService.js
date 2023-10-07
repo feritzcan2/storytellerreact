@@ -3,7 +3,7 @@ import api from './api';
 
 export default function ClientService() {
   const getClients = async (id, errorMsg) => {
-    return axios
+    return api
       .get(`Customer/sessionByCustomer?id=${id}`)
       .then(async (result) => {
         if (
@@ -26,7 +26,7 @@ export default function ClientService() {
   };
 
   const setClients = async (id, data, errorMsg) => {
-    return axios
+    return api
       .post(`Customer/updateCustomerSession?id=${id}`, data)
       .then(async (result) => {
         if (

@@ -35,6 +35,15 @@ const secretAccessKey = 'P6Pp042nr1YEmYVKwlbwB3H8uYSD4iepDbYzBepm';
 const S3_BUCKET = 'vizedefteridocs';
 const REGION = 'eu-central-1';
 
+AWS.config.update({
+  accessKeyId,
+  secretAccessKey,
+});
+const s3 = new AWS.S3({
+  params: { Bucket: S3_BUCKET },
+  region: REGION,
+});
+
 export default function FormDialog({
   SelectedCustomerData,
   userData,
@@ -64,34 +73,16 @@ export default function FormDialog({
 
   const { id } = params;
   const uploadFile = async (sFile) => {
-    AWS.config.update({
-      accessKeyId,
-      secretAccessKey,
-    });
-    const s3 = new AWS.S3({
-      params: { Bucket: S3_BUCKET },
-      region: REGION,
-    });
-
+    setUploadStatus(true);
     const params = {
       Bucket: S3_BUCKET,
       Key: `${SelectedCustomerData.id}_${id}_${sFile.name}`,
       Body: sFile,
     };
-    console.log('upload Params', params);
-    var upload = s3
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        console.log('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
-        setUploadStatus('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
-      })
-      .promise();
-
-    await upload.then((err, data) => {
-      setUploadStatus(null);
-      console.log(err);
-      console.log('upload file data', data);
-    });
+    const uploadedImage = await s3.upload(params).promise();
+    console.log('S3 Uploaded Image');
+    setUploadStatus(false);
+    return uploadedImage.Location;
   };
 
   const onCancel = async () => {
@@ -107,7 +98,6 @@ export default function FormDialog({
   };
 
   const onClickSubmit = async () => {
-    console.log('formData >', formData);
     setLoading(true);
     if (!formData.name || !formData.surname || !formData.email || !formData.phone) {
       alert('Please fill in all required fields (Name, Surname, Email, Phone)');
@@ -116,20 +106,20 @@ export default function FormDialog({
     }
     const updateCustomerrData = [...userData.customers];
     updateCustomerrData[customerIndex] = {
-      ...userData.customers[customerIndex],
+      ...updateCustomerrData[customerIndex],
       name: formData.name,
       email: formData.email,
       surname: formData.surname,
       phone: formData.phone,
       taxType: formData.taxType,
-      files: [...formData.files],
+      files: formData.files,
     };
-
     let updatedUserData = userData;
     updatedUserData = {
       ...userData,
       customers: updateCustomerrData,
     };
+    console.log('updatedUserData >', updatedUserData);
     const newData = await setClients(id, updatedUserData);
     setUserData(newData);
     setShouldRefetch(true);
@@ -153,7 +143,6 @@ export default function FormDialog({
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
-    console.log(fileUrl);
     const updatedFiles = [...formData.files];
     updatedFiles[index] = {
       ...updatedFiles[index],
@@ -163,7 +152,6 @@ export default function FormDialog({
       fileStatus: 1,
       fileUrl: fileUrl,
     };
-    console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFormData({
       ...formData,
@@ -171,7 +159,7 @@ export default function FormDialog({
     });
   };
   if (!SelectedCustomerData) return <></>;
-  if (configs === null) return <LoadingScreen />;
+  if (configs === null) return <></>;
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {editButton ? (

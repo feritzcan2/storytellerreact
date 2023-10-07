@@ -26,6 +26,7 @@ export default function ViewCustomer(id) {
 
   useEffect(() => {
     getUserData();
+    setShouldRefetch(false);
   }, [shouldRefetch]);
 
   console.log('userData', userData);
@@ -77,7 +78,7 @@ export default function ViewCustomer(id) {
         height={'100%'}
         justifyContent={'space-between'}
       >
-        <UserProfileView userData={userData} />
+        <UserProfileView userData={userData} setShouldRefetch={setShouldRefetch} />
       </Grid>
     </>
   );

@@ -24,6 +24,7 @@ import OtherUsers from './otherUsers';
 import UserQuickEditForm from '../../list/components/UserQuickEditForm';
 import { useBoolean } from 'src/hooks/use-boolean';
 import Label from 'src/components/label';
+import ClientService from 'src/api/clientService';
 // ----------------------------------------------------------------------
 const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
 const secretAccessKey = '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';
@@ -37,56 +38,46 @@ const s3 = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
 });
-export default function ProfileHome({ userData }) {
-  const customer = userData.customers[0];
+export default function ProfileHome({ userData, setShouldRefetch }) {
   const quickEdit = useBoolean();
   const params = useParams();
   const { id } = params;
-  const [uploadStatus, setUploadStatus] = useState(null);
+  const customer = userData.customers.find((customer) => customer.id == id);
+  const customerIndex = userData.customers.findIndex((customer) => customer.id === id);
+  const { setClients } = ClientService();
+  const [uploadStatus, setUploadStatus] = useState(false);
   const [filesData, setFilesData] = useState(customer?.files);
 
   const uploadFile = async (sFile) => {
+    setUploadStatus(true);
     const params = {
       Bucket: S3_BUCKET,
       Key: `${customer.id}_${id}_${sFile.name}`,
       Body: sFile,
     };
-    console.log('upload Params', params);
-    var upload = s3
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        console.log('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
-        setUploadStatus('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
-      })
-      .promise();
-
-    const cje = await upload.then((err, data) => {
-      setUploadStatus(null);
-      console.log(err);
-      console.log('upload file data', data);
-    });
-    console.log('upload file cje', cje);
+    const uploadedImage = await s3.upload(params).promise();
+    console.log('S3 Uploaded Image', uploadedImage);
+    setUploadStatus(false);
+    return uploadedImage.Location;
   };
 
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
-    console.log(fileUrl);
+    console.log('upload fileUrl data', fileUrl);
     const updatedFiles = [...filesData];
-    console.log('updatedFiles', updatedFiles);
     updatedFiles[index] = {
       ...updatedFiles[index],
       fileName: newFile.name,
       fileSize: newFile.size,
       fileType: newFile.type,
       fileStatus: 1,
-      fileUrl:
-        'https://file-examples.com/storage/feaade38c1651bd01984236/2017/10/file-sample_150kB.pdf',
-      // newFile.fileUrl,
+      fileUrl: fileUrl,
     };
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
+    onSubmit();
   };
 
   const handleAcceptReject = async (acceptReject, index) => {
@@ -98,34 +89,25 @@ export default function ProfileHome({ userData }) {
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
+    onSubmit();
   };
 
-  //   const onSubmit = async () => {
-  //   console.log('filesData >', filesData);
-  //   const updateCustomerrData = [...userData.customers];
-  //   updateCustomerrData[customerIndex] = {
-  //     ...userData.customers[customerIndex],
-  //     name: formData.name,
-  //     email: formData.email,
-  //     surname: formData.surname,
-  //     phone: formData.phone,
-  //     taxType: formData.taxType,
-  //     files: [...formData.files],
-  //   };
+  const onSubmit = async () => {
+    console.log('filesData >', filesData);
+    const updateCustomerrData = [...userData.customers];
+    updateCustomerrData[customerIndex] = {
+      ...userData.customers[customerIndex],
+      files: filesData,
+    };
 
-  //   let updatedUserData = userData;
-  //   updatedUserData = {
-  //     ...userData,
-  //     customers: updateCustomerrData,
-  //   };
-  //   const newData = await setClients(id, updatedUserData);
-  //   setUserData(newData);
-  //   setShouldRefetch(true);
-  //   onCancel();
-  //   if (formData?.files?.length > 0) {
-  //     onCancel();
-  //   }
-  // };
+    let updatedUserData = userData;
+    updatedUserData = {
+      ...userData,
+      customers: updateCustomerrData,
+    };
+    await setClients(id, updatedUserData);
+    setShouldRefetch(true);
+  };
 
   const renderEdit = (
     <Stack spacing={0} alignItems="center" sx={{ p: 1 }}>
@@ -239,7 +221,6 @@ export default function ProfileHome({ userData }) {
             <Label key={'info'} color={'info'} variant="soft" sx={{ mt: 1, mx: 1 }}>
               Files to upload
             </Label>
-            {uploadStatus}
             {filesData?.map((selectedfile, index) => (
               <div key={`${index}_${selectedfile.name}12`}>
                 <Stack
@@ -341,7 +322,7 @@ export default function ProfileHome({ userData }) {
                         disabled={
                           selectedfile.fileStatus === 1 ||
                           selectedfile.fileStatus === 3 ||
-                          !!uploadStatus
+                          uploadStatus
                         }
                       />
                       <a
