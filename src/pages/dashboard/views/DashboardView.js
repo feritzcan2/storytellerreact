@@ -23,7 +23,7 @@ import InvoiceAnalytic from './invoice-analytic';
 
 export default function DashboardView() {
   const { user } = useMockedUser();
-  const { countryAppointmentData, dashboardData } = useContext(GlobalContext);
+  const { countryAppointmentData, dashboardData, configs } = useContext(GlobalContext);
 
   var { getDashboardData } = DashboardService();
 
@@ -40,6 +40,7 @@ export default function DashboardView() {
         <Grid spacing={5} xs={12} md={12} lg={12}>
           <Grid xs={6} md={6} lg={6}>
             <CountryDatesWidget
+              configs={configs}
               countryAppointmentData={countryAppointmentData}
               list={_appInstalled}
             />
@@ -47,6 +48,7 @@ export default function DashboardView() {
           <Divider sx={{ mt: 3, mb: 3 }}></Divider>
           <Grid xs={6} md={6} lg={6}>
             <ClosestAppointmentComponent
+              configs={configs}
               title="Yaklaşan Randevular"
               data={dashboardData?.closestAppointments}
               list={_appInstalled}

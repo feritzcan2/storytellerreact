@@ -30,14 +30,37 @@ export default function CustomerService() {
   };
 
   const getCustomer = async (id, errorMsg) => {
+    debugger;
     return api
-      .get(`Customer/sessionByCustomer?id=${id}`)
+      .get(`customer/sessionByCustomer?id=` + id.id)
       .then(async (result) => {
         if (
           result !== undefined &&
           (result.data.error === null || result.data.error === undefined)
         ) {
           console.log(result.data);
+          return result.data;
+        } else {
+          if (errorMsg !== undefined) errorMsg(result.data.error.message);
+        }
+      })
+      .catch((err) => {
+        if (errorMsg !== undefined)
+          errorMsg(
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
+          );
+      });
+  };
+
+  const getCustomerNames = async (id, errorMsg) => {
+    return api
+      .get(`Customer/names`)
+      .then(async (result) => {
+        if (
+          result !== undefined &&
+          (result.data.error === null || result.data.error === undefined)
+        ) {
           return result.data;
         } else {
           if (errorMsg !== undefined) errorMsg(result.data.error.message);
@@ -97,5 +120,6 @@ export default function CustomerService() {
     addCustomer,
     deleteCustomer,
     getCustomer,
+    getCustomerNames,
   };
 }

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Helmet } from 'react-helmet-async';
 import CustomerService from 'src/api/CustomerService';
 import { LoadingScreen } from 'src/components/loading-screen';
-import { useParams } from 'src/routes/hooks';
 
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -12,10 +10,8 @@ import UserProfileView from './user/view/user-profile-view';
 
 // ----------------------------------------------------------------------
 
-export default function ViewCustomer() {
-  const params = useParams();
-  const { id } = params;
-
+export default function ViewCustomer(id) {
+  debugger;
   const { getCustomer } = CustomerService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +49,7 @@ export default function ViewCustomer() {
   }
 
   if (!userData || error) {
+    debugger;
     return (
       <div
         style={{
@@ -74,9 +71,6 @@ export default function ViewCustomer() {
 
   return (
     <>
-      <Helmet>
-        <title> ViewCustomer: ss</title>
-      </Helmet>
       <Grid
         flexDirection={'column'}
         display={'flex'}

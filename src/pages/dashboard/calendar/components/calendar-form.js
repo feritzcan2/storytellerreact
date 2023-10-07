@@ -39,7 +39,6 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
     color: Yup.string(),
     start: Yup.mixed(),
   });
-  debugger;
   const methods = useForm({
     resolver: yupResolver(EventSchema),
     defaultValues: currentEvent,
@@ -63,16 +62,8 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
       color: data?.color,
       title: data?.title,
       description: data?.description,
-      date: data?.start,
+      date: data?.start.toISOString(),
     };
-    if (dayjs.isDayjs(eventData.date)) {
-      if (!Number.isNaN(new Date(eventData.date).getTime())) {
-        eventData.date = eventData.date.toISOString();
-      } else {
-        eventData.date = undefined;
-      }
-    }
-    debugger;
     try {
       if (!dateError) {
         await addCalendarEntry(eventData);
@@ -109,7 +100,8 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
                 value={dayjs(field.value)}
                 onChange={(newValue) => {
                   if (newValue) {
-                    field.onChange(fDateTime(newValue));
+                    console.log(fDateTime(newValue));
+                    field.onChange(newValue);
                   }
                 }}
                 label="Gün"
@@ -149,7 +141,7 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
         <Box sx={{ flexGrow: 1 }} />
 
         <Button variant="outlined" color="inherit" onClick={onClose}>
-          Cancel
+          İptal
         </Button>
 
         <LoadingButton
@@ -158,7 +150,7 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
           loading={isSubmitting}
           disabled={dateError}
         >
-          Save Changes
+          Kaydet
         </LoadingButton>
       </DialogActions>
     </FormProvider>

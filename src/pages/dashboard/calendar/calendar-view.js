@@ -23,7 +23,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 // _mock
 import { CALENDAR_COLOR_OPTIONS } from 'src/_mock/_calendar';
 // api
-import { updateEvent, useGetEvents } from 'src/api/calendar';
+import { updateEvent } from 'src/api/calendar';
 // components
 import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
@@ -45,8 +45,41 @@ const defaultFilters = {
 
 // ----------------------------------------------------------------------
 
-export default function CalendarView() {
+const getEvents = (calendarData) => {
+  let events = [];
+  calendarData.appointments.forEach((element) => {
+    events.push({
+      id: '' + element.id,
+      eventColor: '#8E33FF',
+      description: element.description,
+      date: element.date,
+      allDay: true,
+      title: element.title,
+      editable: false,
+    });
+  });
+  calendarData.entries.forEach((element) => {
+    events.push({
+      id: '' + element.id,
+      eventColor: element.color,
+      description: element.description,
+      date: element.date,
+      allDay: true,
+      title: element.title,
+      editable: false,
+    });
+  });
+
+  return {
+    events: events || [],
+    eventsLoading: false,
+    eventsValidating: false,
+    eventsEmpty: events.length,
+  };
+};
+export default function CalendarView({ calendarData }) {
   const theme = useTheme();
+  console.log(calendarData);
 
   const settings = useSettingsContext();
 
@@ -56,8 +89,7 @@ export default function CalendarView() {
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const { events, eventsLoading } = useGetEvents();
-
+  const { events, eventsLoading } = getEvents(calendarData);
   const dateError =
     filters.startDate && filters.endDate
       ? filters.startDate.getTime() > filters.endDate.getTime()
@@ -90,7 +122,6 @@ export default function CalendarView() {
   } = useCalendar();
 
   const currentEvent = useEvent(events, selectEventId, selectedRange, openForm);
-
   useEffect(() => {
     onInitialView();
   }, [onInitialView]);

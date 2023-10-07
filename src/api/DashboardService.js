@@ -30,7 +30,6 @@ export default function DashboardService() {
   };
 
   const getDashboardData = async (data, errorMsg) => {
-    debugger;
     return api
       .get('dashboard')
       .then(async (result) => {

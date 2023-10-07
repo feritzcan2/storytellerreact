@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 // utils
 // components
 import { orderBy } from 'lodash';
-import { _appInstalled } from 'src/_mock';
 import Iconify from 'src/components/iconify';
 import Label from 'src/components/label/label';
 import { LoadingScreen } from 'src/components/loading-screen';
@@ -17,15 +16,28 @@ import { fToNow } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
-export default function ClosestAppointmentComponent({ title, subheader, list, data, ...other }) {
-  if ((data === null) | (data === undefined)) return <LoadingScreen />;
+export default function ClosestAppointmentComponent({
+  configs,
+  title,
+  subheader,
+  list,
+  data,
+  ...other
+}) {
+  if ((data === null) | (data === undefined) || configs === null) return <LoadingScreen />;
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {orderBy(data, ['date'], ['desc']).map((author, index) => (
-          <AuthorItem key={author.customerName} author={author} index={index} />
+        {orderBy(data, ['date'], ['asc']).map((author, index) => (
+          <AuthorItem
+            cities={configs.cities}
+            countries={configs.countries}
+            key={author.customerName}
+            author={author}
+            index={index}
+          />
         ))}
       </Stack>
     </Card>
@@ -40,7 +52,10 @@ ClosestAppointmentComponent.propTypes = {
 
 // ----------------------------------------------------------------------
 
-function AuthorItem({ author, index }) {
+function AuthorItem({ author, index, countries, cities }) {
+  var c = countries.filter((value) => value.id === author.country)[0];
+  var city = cities.filter((value) => value.id === author.city)[0];
+  debugger;
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <Avatar alt={author.customerName} src={author.avatarUrl} />
@@ -57,10 +72,13 @@ function AuthorItem({ author, index }) {
             color: 'text.secondary',
           }}
         >
-          <Iconify icon={_appInstalled[index].flag} sx={{ borderRadius: 0.65, width: 15, mr: 1 }} />
-          {_appInstalled[index].name}
+          <Iconify
+            icon={'flagpack:' + c.code.toLowerCase()}
+            sx={{ borderRadius: 0.65, width: 15, mr: 1 }}
+          />
+          {c.name}
           <Iconify icon="fluent:location-12-filled" width={14} sx={{ ml: 1, mr: 0.5 }} />
-          {author.city}
+          {city.name}
         </Typography>
       </Box>
 

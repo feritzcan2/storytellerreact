@@ -37,6 +37,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }) {
+  console.log(configs);
   const { name, avatarUrl, surname, role, status, email, phoneNumber, id } = row;
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(false);

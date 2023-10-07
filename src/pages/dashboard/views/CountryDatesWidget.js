@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types';
 // @mui
-import Stack from '@mui/material/Stack';
-import CardHeader from '@mui/material/CardHeader';
-import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 // utils
-import { fShortenNumber } from 'src/utils/format-number';
 // components
 import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
 import Label from 'src/components/label/label';
-import { Alert } from '@mui/material';
 import { LoadingScreen } from 'src/components/loading-screen';
+import Scrollbar from 'src/components/scrollbar';
+import { fToNow } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +20,7 @@ export default function CountryDatesWidget({ countryAppointmentData, subheader, 
 
   return (
     <Card {...other}>
-      <CardHeader title="En Yakın Randevu" subheader={''} />
+      <CardHeader title="Şu anda müsait olan randevu tarihleri" subheader={''} />
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3 }}>
@@ -102,9 +101,14 @@ function GetDateLabel(countryData) {
     );
     if (lowestDateData.lowestDate !== null) {
       return (
-        <Label style={{ fontSize: '1rem' }} color="primary">
-          {formattedDate}
-        </Label>
+        <>
+          <Label style={{ fontSize: '1rem' }} color="primary">
+            {formattedDate}
+          </Label>
+          <Label style={{ fontSize: '1rem' }} color="primary">
+            {fToNow(lowestDateData.lowestDate)}
+          </Label>
+        </>
       );
     } else {
       return (

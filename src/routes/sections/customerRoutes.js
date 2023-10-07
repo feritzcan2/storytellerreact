@@ -8,6 +8,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import DashboardLayout from 'src/layouts/dashboard';
 import CreateCustomerPage from 'src/pages/customer/create/CreateCustomerPage';
 import CustomerListPage from 'src/pages/customer/list/CustomerListPage';
+import CustomerDetailsPage from 'src/pages/customer/viewCustomer/CustomerDetailsPage';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +33,7 @@ export const customerRoutes = [
       { element: <IndexPage />, index: true },
       { path: 'yeni', element: <CreateCustomerPage /> },
       { path: 'liste', element: <CustomerListPage /> },
-      { path: ':id', element: <ViewCustomer /> },
+      { path: ':id', element: <CustomerDetailsPage /> },
     ],
   },
 ];

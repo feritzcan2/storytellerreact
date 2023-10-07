@@ -31,11 +31,11 @@ export default function CalendarService() {
       .post('calendar', data)
       .then(async (result) => {
         let newData = { ...calendarData };
-        let newEntries = [...calendarData.Entries];
+        let newEntries = [...calendarData.entries];
         if (data.id !== 0 && data.id !== undefined && data.id !== null)
           newEntries = newEntries.filter((customer) => customer.id !== data.id);
         newEntries.push(result.data);
-        newData.Entries = newEntries;
+        newData.entries = newEntries;
 
         setCalendarData(newData);
       })
