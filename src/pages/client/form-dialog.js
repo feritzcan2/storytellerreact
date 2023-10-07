@@ -14,7 +14,6 @@ import { Box, ListItemText, colors } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 // import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -27,7 +26,6 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { _descriptions } from '../../_mock/assets';
 import BasicPopover from './PopOver';
 
 const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
@@ -393,12 +391,12 @@ export default function FormDialog({
                         }
                       >
                         {selectedfile.fileStatus === 3
-                          ? 'Approved'
+                          ? 'Onaylandı..'
                           : selectedfile.fileStatus === 1
-                          ? 'Wating for Approval'
+                          ? 'Onay bekliyor..'
                           : selectedfile.fileStatus === 2
-                          ? 'Rejected'
-                          : 'File not uploaded'}
+                          ? 'Reddedildi..'
+                          : 'Dosya yüklenmedi..'}
                       </Typography>
                     }
                     primaryTypographyProps={{
@@ -449,8 +447,10 @@ export default function FormDialog({
                       }}
                     ></div>
                     <Typography variant="caption" overflow={'clip'} maxWidth={200} maxHeight={40}>
-                      {'File Uploaded: '}
-                      {formData?.files[index]?.fileName || selectedfile?.fileName || 'None'}
+                      {'Dosya adı:  '}
+                      {formData?.files[index]?.fileName ||
+                        selectedfile?.fileName ||
+                        'Henüz dosya seçilmedi'}
                     </Typography>
                   </div>
                 </Stack>

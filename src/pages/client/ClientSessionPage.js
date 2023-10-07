@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
-import ClientService from 'src/api/clientService';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { useParams } from 'src/routes/hooks';
 import { bgGradient } from 'src/theme/css';
@@ -17,11 +16,12 @@ import Typography from '@mui/material/Typography';
 // sections
 import Grid from '@mui/material/Unstable_Grid2';
 
+import CustomerService from 'src/api/CustomerService';
+import { GlobalContext } from 'src/context/GlobalProvider';
 import AdminMessage from './adminMessage';
 import ContactHero from './contact/contact-hero';
 import FormDialog from './form-dialog';
 import SideCard from './SideCard';
-import { GlobalContext } from 'src/context/GlobalProvider';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ export default function ContactView() {
   const params = useParams();
   const { configs } = useContext(GlobalContext);
   const { id } = params;
-  const { getClients } = ClientService();
+  const { getCustomer } = CustomerService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -53,7 +53,7 @@ export default function ContactView() {
 
   const getUserData = async () => {
     setIsLoading(true);
-    setUserData(await getClients(id));
+    setUserData(await getCustomer(id));
     setIsLoading(false);
   };
 

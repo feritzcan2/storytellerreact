@@ -32,7 +32,7 @@ export default function CustomerService() {
   const getCustomer = async (id, errorMsg) => {
     debugger;
     return api
-      .get(`customer/sessionByCustomer?id=` + id.id)
+      .get(`customer/sessionByCustomer?id=${id.id === undefined ? parseInt(id) : id.id}`)
       .then(async (result) => {
         if (
           result !== undefined &&
@@ -41,6 +41,7 @@ export default function CustomerService() {
           console.log(result.data);
           return result.data;
         } else {
+          console.C;
           if (errorMsg !== undefined) errorMsg(result.data.error.message);
         }
       })

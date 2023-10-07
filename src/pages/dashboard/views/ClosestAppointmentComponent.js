@@ -55,7 +55,6 @@ ClosestAppointmentComponent.propTypes = {
 function AuthorItem({ author, index, countries, cities }) {
   var c = countries.filter((value) => value.id === author.country)[0];
   var city = cities.filter((value) => value.id === author.city)[0];
-  debugger;
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <Avatar alt={author.customerName} src={author.avatarUrl} />

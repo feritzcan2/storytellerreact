@@ -11,7 +11,6 @@ import UserProfileView from './user/view/user-profile-view';
 // ----------------------------------------------------------------------
 
 export default function ViewCustomer(id) {
-  debugger;
   const { getCustomer } = CustomerService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +49,6 @@ export default function ViewCustomer(id) {
   }
 
   if (!userData || error) {
-    debugger;
     return (
       <div
         style={{

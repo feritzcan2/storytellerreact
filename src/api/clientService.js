@@ -1,9 +1,9 @@
 import axios from 'axios';
-import api from './api';
 
 export default function ClientService() {
   const getClients = async (id, errorMsg) => {
-    return api
+    debugger;
+    return axios
       .get(`Customer/sessionByCustomer?id=${id}`)
       .then(async (result) => {
         if (
@@ -26,7 +26,7 @@ export default function ClientService() {
   };
 
   const setClients = async (id, data, errorMsg) => {
-    return api
+    return axios
       .post(`Customer/updateCustomerSession?id=${id}`, data)
       .then(async (result) => {
         if (

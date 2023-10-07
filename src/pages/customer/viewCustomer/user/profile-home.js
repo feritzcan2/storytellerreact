@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import AWS from 'aws-sdk';
 import PropTypes from 'prop-types';
 // _mock
-import { _socials } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 import { UploadBox } from 'src/components/upload';
@@ -20,11 +19,12 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import OtherUsers from './otherUsers';
-import UserQuickEditForm from '../../list/components/UserQuickEditForm';
-import { useBoolean } from 'src/hooks/use-boolean';
 import Label from 'src/components/label';
-import ClientService from 'src/api/clientService';
+import { GlobalContext } from 'src/context/GlobalProvider';
+import { useBoolean } from 'src/hooks/use-boolean';
+import { useConfigs } from 'src/hooks/use-configs';
+import UserQuickEditForm from '../../list/components/UserQuickEditForm';
+import OtherUsers from './otherUsers';
 // ----------------------------------------------------------------------
 const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
 const secretAccessKey = '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';
@@ -38,46 +38,58 @@ const s3 = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
 });
-export default function ProfileHome({ userData, setShouldRefetch }) {
+export default function ProfileHome({ userData }) {
+  const customer = userData.customers[0];
   const quickEdit = useBoolean();
   const params = useParams();
   const { id } = params;
-  const customer = userData.customers.find((customer) => customer.id == id);
-  const customerIndex = userData.customers.findIndex((customer) => customer.id === id);
-  const { setClients } = ClientService();
-  const [uploadStatus, setUploadStatus] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(null);
+  const { configs } = useContext(GlobalContext);
   const [filesData, setFilesData] = useState(customer?.files);
 
+  const configData = useConfigs(customer);
   const uploadFile = async (sFile) => {
-    setUploadStatus(true);
     const params = {
       Bucket: S3_BUCKET,
       Key: `${customer.id}_${id}_${sFile.name}`,
       Body: sFile,
     };
-    const uploadedImage = await s3.upload(params).promise();
-    console.log('S3 Uploaded Image', uploadedImage);
-    setUploadStatus(false);
-    return uploadedImage.Location;
+    console.log('upload Params', params);
+    var upload = s3
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        console.log('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
+        setUploadStatus('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
+      })
+      .promise();
+
+    const cje = await upload.then((err, data) => {
+      setUploadStatus(null);
+      console.log(err);
+      console.log('upload file data', data);
+    });
+    console.log('upload file cje', cje);
   };
 
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
-    console.log('upload fileUrl data', fileUrl);
+    console.log(fileUrl);
     const updatedFiles = [...filesData];
+    console.log('updatedFiles', updatedFiles);
     updatedFiles[index] = {
       ...updatedFiles[index],
       fileName: newFile.name,
       fileSize: newFile.size,
       fileType: newFile.type,
       fileStatus: 1,
-      fileUrl: fileUrl,
+      fileUrl:
+        'https://file-examples.com/storage/feaade38c1651bd01984236/2017/10/file-sample_150kB.pdf',
+      // newFile.fileUrl,
     };
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
-    onSubmit();
   };
 
   const handleAcceptReject = async (acceptReject, index) => {
@@ -89,30 +101,56 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
-    onSubmit();
   };
 
-  const onSubmit = async () => {
-    console.log('filesData >', filesData);
-    const updateCustomerrData = [...userData.customers];
-    updateCustomerrData[customerIndex] = {
-      ...userData.customers[customerIndex],
-      files: filesData,
-    };
+  //   const onSubmit = async () => {
+  //   console.log('filesData >', filesData);
+  //   const updateCustomerrData = [...userData.customers];
+  //   updateCustomerrData[customerIndex] = {
+  //     ...userData.customers[customerIndex],
+  //     name: formData.name,
+  //     email: formData.email,
+  //     surname: formData.surname,
+  //     phone: formData.phone,
+  //     taxType: formData.taxType,
+  //     files: [...formData.files],
+  //   };
 
-    let updatedUserData = userData;
-    updatedUserData = {
-      ...userData,
-      customers: updateCustomerrData,
-    };
-    await setClients(id, updatedUserData);
-    setShouldRefetch(true);
-  };
+  //   let updatedUserData = userData;
+  //   updatedUserData = {
+  //     ...userData,
+  //     customers: updateCustomerrData,
+  //   };
+  //   const newData = await setClients(id, updatedUserData);
+  //   setUserData(newData);
+  //   setShouldRefetch(true);
+  //   onCancel();
+  //   if (formData?.files?.length > 0) {
+  //     onCancel();
+  //   }
+  // };
 
   const renderEdit = (
-    <Stack spacing={0} alignItems="center" sx={{ p: 1 }}>
-      <Button fullWidth color="inherit" variant="contained" onClick={quickEdit.onTrue}>
-        Edit User
+    <Stack alignItems="center" sx={{ p: 0 }}>
+      <Stack
+        direction="row"
+        alignItems="space-between"
+        sx={{ justifyContent: 'space-between', width: '100%', p: 1 }}
+      >
+        <Button
+          fullWidth
+          variant="soft"
+          color="error"
+          endIcon={<Iconify icon="mdi:export-variant" />}
+        >
+          Müşteri ile paylaş
+        </Button>
+        <Button fullWidth color="success" variant="soft" onClick={quickEdit.onTrue}>
+          Gözünden gör
+        </Button>
+      </Stack>
+      <Button fullWidth color="inherit" variant="soft" onClick={quickEdit.onTrue}>
+        Düzenle
       </Button>
     </Stack>
   );
@@ -125,16 +163,15 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
       >
         <Stack width={1}>
           {/* {fNumber(info.totalFollowers)} */}
-          {userData?.plannedTravelDate ? fDate(userData.plannedTravelDate) : 'No Date'}
+          {userData?.plannedTravelDate ? fDate(userData.plannedTravelDate) : 'Yok'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            Planned Travel Date
+            Planlanan gidiş tarihi
           </Box>
         </Stack>
-
         <Stack width={1}>
-          {userData?.appointmentDate ? fDate(userData.appointmentDate) : 'No Date'}
+          {userData?.AmountCredit || 0}TL
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            Appointment Date
+            Alınan ödeme
           </Box>
         </Stack>
       </Stack>
@@ -143,21 +180,21 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
 
   const renderAmountLocation = (
     <Card sx={{ py: 3, textAlign: 'center', typography: 'h5' }}>
+      <Label>Vize Görüşmesi</Label>
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
       >
         <Stack width={1}>
-          {userData?.AmountCredit || 0}
+          {userData?.appointmentDate ? fDate(userData.appointmentDate) : 'Yok'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            Amount Credited
+            Randevu Tarihi
           </Box>
         </Stack>
-
         <Stack width={1}>
           {customer?.appointmentOffice || 'No Office'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            Appointment Office
+            Ofis
           </Box>
         </Stack>
       </Stack>
@@ -166,15 +203,17 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
 
   const renderAbout = (
     <Card>
-      <CardHeader title="About" />
+      <CardHeader title="Hakkında" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Stack direction="row" spacing={2}>
-          <Iconify icon="mingcute:location-fill" width={24} />
-
+          <Iconify
+            icon={'flagpack:' + configData.country.code.toLowerCase()}
+            sx={{ borderRadius: 0.65, width: 24, mr: 1 }}
+          />
           <Box sx={{ typography: 'body2' }}>
             <Link variant="subtitle2" color="inherit">
-              {userData.country || 'No Country'}
+              {configData.country.name || 'No Country'}
             </Link>
           </Box>
         </Stack>
@@ -182,7 +221,7 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
         <Stack direction="row" spacing={2}>
           <Iconify icon="ic:round-business-center" width={24} />
 
-          <Box sx={{ typography: 'body2' }}>{userData.visaType || 'Any'}</Box>
+          <Box sx={{ typography: 'body2' }}>{configData.visaType.name || 'Any'}</Box>
         </Stack>
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
@@ -196,7 +235,7 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
     </Card>
   );
 
-  const renderOtherCustomers = <OtherUsers title="Users" list={userData} />;
+  const renderOtherCustomers = <OtherUsers title="Grubundaki kişiler" list={userData} />;
 
   return (
     <>
@@ -218,9 +257,15 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
 
         <Grid xs={12} md={8}>
           <Stack spacing={3}>
-            <Label key={'info'} color={'info'} variant="soft" sx={{ mt: 1, mx: 1 }}>
-              Files to upload
+            <Label
+              key={'infso'}
+              color={'error'}
+              variant="filled"
+              sx={{ mt: 1, mx: 1, fontSize: '1rem', height: 30 }}
+            >
+              YÜKLENEN DOSYALAR
             </Label>
+            {uploadStatus}
             {filesData?.map((selectedfile, index) => (
               <div key={`${index}_${selectedfile.name}12`}>
                 <Stack
@@ -284,12 +329,12 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
                           }
                         >
                           {selectedfile.fileStatus === 3
-                            ? 'Approved'
+                            ? 'Onaylandı..'
                             : selectedfile.fileStatus === 1
-                            ? 'Wating for Approval'
+                            ? 'Onay bekliyor..'
                             : selectedfile.fileStatus === 2
-                            ? 'Rejected'
-                            : 'File not uploaded'}
+                            ? 'Reddedildi..'
+                            : 'Dosya yüklenmedi..'}
                         </Typography>
                       </>
                     }
@@ -322,7 +367,7 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
                         disabled={
                           selectedfile.fileStatus === 1 ||
                           selectedfile.fileStatus === 3 ||
-                          uploadStatus
+                          !!uploadStatus
                         }
                       />
                       <a
@@ -353,8 +398,10 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
                       }}
                     ></div>
                     <Typography variant="caption" overflow={'clip'} maxWidth={200} maxHeight={40}>
-                      {'File Uploaded: '}
-                      {filesData[index]?.fileName || selectedfile?.fileName || 'None'}
+                      {'Dosya adı: '}
+                      {filesData[index]?.fileName ||
+                        selectedfile?.fileName ||
+                        'Henüz dosya seçilmedi'}
                     </Typography>
                   </div>
                   <Stack spacing={1} direction="row" alignItems="center" sx={{ p: 1 }}>
@@ -364,7 +411,7 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
                       disabled={filesData[index]?.fileStatus === 2}
                       onClick={() => handleAcceptReject(2, index)}
                     >
-                      Reject
+                      Reddet
                     </Button>
 
                     <Button
@@ -373,7 +420,7 @@ export default function ProfileHome({ userData, setShouldRefetch }) {
                       disabled={filesData[index]?.fileStatus === 3}
                       onClick={() => handleAcceptReject(3, index)}
                     >
-                      Accept
+                      Kabul et
                     </Button>
                   </Stack>
                 </Stack>
