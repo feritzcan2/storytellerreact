@@ -19,6 +19,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
+import { useNavigate } from 'react-router';
 import Label from 'src/components/label';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import { useBoolean } from 'src/hooks/use-boolean';
@@ -41,6 +42,7 @@ const s3 = new AWS.S3({
 export default function ProfileHome({ customer }) {
   const quickEdit = useBoolean();
   const params = useParams();
+  const nav = useNavigate();
   const [uploadStatus, setUploadStatus] = useState(null);
   const { configs } = useContext(GlobalContext);
   const [filesData, setFilesData] = useState(customer?.files);
@@ -143,7 +145,12 @@ export default function ProfileHome({ customer }) {
         >
           Müşteri ile paylaş
         </Button>
-        <Button fullWidth color="success" variant="soft" onClick={quickEdit.onTrue}>
+        <Button
+          fullWidth
+          color="success"
+          variant="soft"
+          onClick={() => nav('/client/' + customer.id)}
+        >
           Gözünden gör
         </Button>
       </Stack>

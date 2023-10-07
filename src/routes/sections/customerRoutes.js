@@ -9,6 +9,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 import CreateCustomerPage from 'src/pages/customer/create/CreateCustomerPage';
 import CustomerListPage from 'src/pages/customer/list/CustomerListPage';
 import CustomerDetailsPage from 'src/pages/customer/viewCustomer/CustomerDetailsPage';
+import CustomerSearchPage from 'src/pages/customer/viewCustomer/CustomerSearchPage';
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,7 @@ export const customerRoutes = [
       { path: 'yeni', element: <CreateCustomerPage /> },
       { path: 'liste', element: <CustomerListPage /> },
       { path: ':id', element: <CustomerDetailsPage /> },
+      { path: 'detay', element: <CustomerSearchPage /> },
     ],
   },
 ];
