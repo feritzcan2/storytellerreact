@@ -35,6 +35,21 @@ const secretAccessKey = 'P6Pp042nr1YEmYVKwlbwB3H8uYSD4iepDbYzBepm';
 const S3_BUCKET = 'vizedefteridocs';
 const REGION = 'eu-central-1';
 
+const taxTypes = [
+  {
+    name: 'Öğrenci',
+    id: 1,
+  },
+  {
+    name: 'Emekli',
+    id: 2,
+  },
+  {
+    name: 'Çalışan',
+    id: 3,
+  },
+];
+
 AWS.config.update({
   accessKeyId,
   secretAccessKey,
@@ -91,7 +106,7 @@ export default function FormDialog({
       email: '',
       surname: '',
       phone: '',
-      taxType: configs.taxTypes[0].id,
+      taxType: configs?.taxTypes[0]?.id || 1,
       files: [], // Store an array of file objects
     });
     dialog.onFalse();
@@ -159,7 +174,6 @@ export default function FormDialog({
     });
   };
   if (!SelectedCustomerData) return <></>;
-  if (configs === null) return <></>;
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {editButton ? (
@@ -285,11 +299,17 @@ export default function FormDialog({
               sx: { textTransform: 'capitalize', background: 'white', padding: 2 },
             }}
           >
-            {configs.taxTypes.map((option, index) => (
-              <option key={`${index}_${option.name}`} value={option.id}>
-                {option.name}
-              </option>
-            ))}
+            {configs
+              ? configs.taxTypes.map((option, index) => (
+                  <option key={`${index}_${option.name}`} value={option.id}>
+                    {option.name}
+                  </option>
+                ))
+              : taxTypes.map((option, index) => (
+                  <option key={`${index}_${option.name}`} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
           </Select>
           {formData?.files?.length === 0 && (
             <div style={{ display: 'flex', justifyContent: 'center', margin: 12 }}>
