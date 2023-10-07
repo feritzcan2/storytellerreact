@@ -4,7 +4,6 @@
   "private": true,
   "description": "Vize Defteri",
   "author": "vize-defteri",
-  "homepage": ".",
   "repository": {
     "type": "git",
     "url": "https://github.com/feritzcan2/storytellerreact"
