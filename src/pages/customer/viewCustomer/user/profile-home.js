@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import AWS from 'aws-sdk';
 import PropTypes from 'prop-types';
@@ -10,10 +10,9 @@ import { UploadBox } from 'src/components/upload';
 import { useParams } from 'src/routes/hooks';
 import { fDate } from 'src/utils/format-time';
 
-import { Button, colors } from '@mui/material';
+import { Button, ListItemText, colors } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -24,9 +23,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import OtherUsers from './otherUsers';
 import UserQuickEditForm from '../../list/components/UserQuickEditForm';
 import { useBoolean } from 'src/hooks/use-boolean';
+import Label from 'src/components/label';
 // ----------------------------------------------------------------------
-const accessKeyId = process.env.ACCESS_KEY_ID;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
+const secretAccessKey = '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';
 const S3_BUCKET = 'vizedefteridocs';
 const REGION = 'eu-central-1';
 AWS.config.update({
@@ -60,11 +60,12 @@ export default function ProfileHome({ userData }) {
       })
       .promise();
 
-    await upload.then((err, data) => {
+    const cje = await upload.then((err, data) => {
       setUploadStatus(null);
       console.log(err);
       console.log('upload file data', data);
     });
+    console.log('upload file cje', cje);
   };
 
   const handleFileChange = async (e, index) => {
@@ -72,6 +73,7 @@ export default function ProfileHome({ userData }) {
     const fileUrl = await uploadFile(newFile);
     console.log(fileUrl);
     const updatedFiles = [...filesData];
+    console.log('updatedFiles', updatedFiles);
     updatedFiles[index] = {
       ...updatedFiles[index],
       fileName: newFile.name,
@@ -84,31 +86,47 @@ export default function ProfileHome({ userData }) {
     };
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
-    setFilesData({
-      ...filesData,
-      updatedFiles,
-    });
+    setFilesData(updatedFiles);
   };
 
-  const onclickDownload = (index) => {
-    console.log('download file', filesData[index]?.fileUrl);
+  const handleAcceptReject = async (acceptReject, index) => {
+    const updatedFiles = [...filesData];
+    updatedFiles[index] = {
+      ...updatedFiles[index],
+      fileStatus: acceptReject,
+    };
+    console.log('updatedFiles', updatedFiles[index]);
+    // Update the files at the specified index
+    setFilesData(updatedFiles);
   };
 
-  const renderAcceptReject = (
-    <Stack spacing={1} direction="row" alignItems="center" sx={{ p: 1 }}>
-      <Button color="error" variant="soft" onClick={() => console.info('Reject Customer Id: ', id)}>
-        Reject
-      </Button>
+  //   const onSubmit = async () => {
+  //   console.log('filesData >', filesData);
+  //   const updateCustomerrData = [...userData.customers];
+  //   updateCustomerrData[customerIndex] = {
+  //     ...userData.customers[customerIndex],
+  //     name: formData.name,
+  //     email: formData.email,
+  //     surname: formData.surname,
+  //     phone: formData.phone,
+  //     taxType: formData.taxType,
+  //     files: [...formData.files],
+  //   };
 
-      <Button
-        color="inherit"
-        variant="contained"
-        onClick={() => console.info('Accept Customer Id: ', id)}
-      >
-        Accept
-      </Button>
-    </Stack>
-  );
+  //   let updatedUserData = userData;
+  //   updatedUserData = {
+  //     ...userData,
+  //     customers: updateCustomerrData,
+  //   };
+  //   const newData = await setClients(id, updatedUserData);
+  //   setUserData(newData);
+  //   setShouldRefetch(true);
+  //   onCancel();
+  //   if (formData?.files?.length > 0) {
+  //     onCancel();
+  //   }
+  // };
+
   const renderEdit = (
     <Stack spacing={0} alignItems="center" sx={{ p: 1 }}>
       <Button fullWidth color="inherit" variant="contained" onClick={quickEdit.onTrue}>
@@ -125,14 +143,14 @@ export default function ProfileHome({ userData }) {
       >
         <Stack width={1}>
           {/* {fNumber(info.totalFollowers)} */}
-          {fDate(userData.plannedTravelDate)}
+          {userData?.plannedTravelDate ? fDate(userData.plannedTravelDate) : 'No Date'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Planned Travel Date
           </Box>
         </Stack>
 
         <Stack width={1}>
-          {fDate(customer.appointmentDate)}
+          {userData?.appointmentDate ? fDate(userData.appointmentDate) : 'No Date'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Appointment Date
           </Box>
@@ -155,7 +173,7 @@ export default function ProfileHome({ userData }) {
         </Stack>
 
         <Stack width={1}>
-          {customer.appointmentOffice || 'No Office'}
+          {customer?.appointmentOffice || 'No Office'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Appointment Office
           </Box>
@@ -186,11 +204,11 @@ export default function ProfileHome({ userData }) {
         </Stack>
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {customer.email}
+          {customer?.email ? customer?.email : 'No email'}
         </Stack>
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:phone-24-filled" width={24} sx={{ mr: 2 }} />
-          {customer.phone}
+          {customer?.phone ? customer?.phone : 'No phone'}
         </Stack>
       </Stack>
     </Card>
@@ -218,156 +236,166 @@ export default function ProfileHome({ userData }) {
 
         <Grid xs={12} md={8}>
           <Stack spacing={3}>
+            <Label key={'info'} color={'info'} variant="soft" sx={{ mt: 1, mx: 1 }}>
+              Files to upload
+            </Label>
             {uploadStatus}
             {filesData?.map((selectedfile, index) => (
               <div key={`${index}_${selectedfile.name}12`}>
-                <Card sx={{ marginTop: 0, padding: 0, borderRadius: '10px 10px 10px 10px' }}>
-                  <CardContent sx={{ padding: 2 }}>
-                    <Stack
-                      direction="row"
-                      spacing={0}
-                      justifyContent={'space-between'}
-                      alignItems={'start'}
-                      alignContent={'start'}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'start',
-                          alignItems: 'start',
-                          alignContent: 'start',
-                          textAlign: 'start',
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'start',
-                            alignItems: 'start',
-                            alignContent: 'start',
-                            textAlign: 'end',
-                          }}
+                <Stack
+                  component={Card}
+                  variant="outlined"
+                  spacing={1}
+                  direction={{ xs: 'column', sm: 'row' }}
+                  alignItems={{ xs: 'unset', sm: 'center' }}
+                  sx={{
+                    borderRadius: 2,
+                    bgcolor: 'unset',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    p: { xs: 1.5, sm: 1 },
+                    marginBottom: 1,
+                    background: 'white',
+                  }}
+                >
+                  <IconButton
+                    aria-label="settings"
+                    sx={{
+                      width: 50,
+                      height: 50,
+                      background: 'rgba(145, 158, 171, 0.08);',
+                    }}
+                  >
+                    <Iconify
+                      icon="eva:checkmark-circle-2-outline"
+                      width={30}
+                      height={30}
+                      sx={{
+                        color:
+                          selectedfile.fileStatus === 3
+                            ? 'primary.main'
+                            : selectedfile.fileStatus === 1
+                            ? colors.orange[700]
+                            : selectedfile.fileStatus === 2
+                            ? 'red'
+                            : 'text.disabled',
+                        justifyContent: 'end',
+                        alignItems: 'end',
+                        alignContent: 'end',
+                        textAlign: 'end',
+                      }}
+                    />
+                  </IconButton>
+                  <ListItemText
+                    primary={selectedfile?.requiredFileDetails?.fileName}
+                    secondary={
+                      <>
+                        <Typography
+                          typography={'caption'}
+                          color={
+                            selectedfile.fileStatus === 3
+                              ? 'primary.main'
+                              : selectedfile.fileStatus === 1
+                              ? colors.orange[700]
+                              : selectedfile.fileStatus === 2
+                              ? 'red'
+                              : 'text.disabled'
+                          }
                         >
-                          <IconButton
-                            aria-label="settings"
-                            sx={{
-                              width: 50,
-                              height: 50,
-                              background: 'rgba(145, 158, 171, 0.08);',
-                              marginRight: 2,
-                            }}
-                          >
-                            <Iconify
-                              icon="eva:checkmark-circle-2-outline"
-                              width={30}
-                              height={30}
-                              sx={{
-                                color:
-                                  selectedfile.fileStatus === 3
-                                    ? 'primary.main'
-                                    : selectedfile.fileStatus === 1
-                                    ? colors.orange[700]
-                                    : selectedfile.fileStatus === 2
-                                    ? 'red'
-                                    : 'text.disabled',
-                                justifyContent: 'start',
-                              }}
-                            />
-                          </IconButton>
-                          <div>
-                            {selectedfile?.requiredFileDetails?.fileName}
-                            <Typography
-                              color={
-                                selectedfile.fileStatus === 3
-                                  ? 'primary.main'
-                                  : selectedfile.fileStatus === 1
-                                  ? colors.orange[700]
-                                  : selectedfile.fileStatus === 2
-                                  ? 'red'
-                                  : 'text.disabled'
-                              }
-                              sx={{ ml: 8 }}
-                            >
-                              {selectedfile.fileStatus === 3
-                                ? 'Approved'
-                                : selectedfile.fileStatus === 1
-                                ? 'Wating for Approval'
-                                : selectedfile.fileStatus === 2
-                                ? 'Rejected'
-                                : 'File not uploaded'}
-                            </Typography>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'start',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <UploadBox
-                            file={filesData[index]}
-                            onDrop={(e) => handleFileChange(e, index)}
-                            id={index}
-                            name={`file_${index}`}
-                          />
-                          <IconButton
-                            aria-label="settings"
-                            onClick={() => onclickDownload(index)}
-                            sx={{
-                              width: 60,
-                              height: 60,
-                              background: 'rgba(145, 158, 171, 0.08);',
-                              marginLeft: 3,
-                            }}
-                          >
-                            <Iconify icon={'material-symbols:download'} width={30} height={30} />
-                          </IconButton>
-                        </div>
-                      </div>
-                    </Stack>
+                          {selectedfile.fileStatus === 3
+                            ? 'Approved'
+                            : selectedfile.fileStatus === 1
+                            ? 'Wating for Approval'
+                            : selectedfile.fileStatus === 2
+                            ? 'Rejected'
+                            : 'File not uploaded'}
+                        </Typography>
+                      </>
+                    }
+                    primaryTypographyProps={{
+                      noWrap: true,
+                      typography: 'body2',
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'start',
+                      alignItems: 'center',
+                    }}
+                  >
                     <div
                       style={{
                         display: 'flex',
-                        textAlign: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'start',
                         alignItems: 'center',
-                        alignContent: 'center',
-                        justifyContent: 'space-between',
-                        marginRight: 15,
                       }}
                     >
-                      <span>{renderAcceptReject}</span>
-                      <Typography variant="caption">
-                        {'File Uploaded: '}
-                        {filesData[index]?.fileName || 'None'}
-                      </Typography>
+                      <UploadBox
+                        file={filesData[index]}
+                        onDrop={(e) => handleFileChange(e, index)}
+                        id={index}
+                        name={`file_${index}`}
+                        disabled={
+                          selectedfile.fileStatus === 1 ||
+                          selectedfile.fileStatus === 3 ||
+                          !!uploadStatus
+                        }
+                      />
+                      <a
+                        href={filesData[index]?.fileUrl}
+                        download="proposed_file_name"
+                        target="_blank"
+                      >
+                        <IconButton
+                          aria-label="settings"
+                          sx={{
+                            width: 60,
+                            height: 60,
+                            background: 'rgba(145, 158, 171, 0.08);',
+                            marginLeft: 3,
+                          }}
+                        >
+                          <Iconify icon={'material-symbols:download'} width={30} height={30} />
+                        </IconButton>
+                      </a>
                     </div>
-                    {/* <div
+                    <div
                       style={{
                         display: 'flex',
                         textAlign: 'end',
                         alignItems: 'end',
                         alignContent: 'end',
                         justifyContent: 'end',
-                        marginRight: 15,
                       }}
+                    ></div>
+                    <Typography variant="caption" overflow={'clip'} maxWidth={200} maxHeight={40}>
+                      {'File Uploaded: '}
+                      {filesData[index]?.fileName || selectedfile?.fileName || 'None'}
+                    </Typography>
+                  </div>
+                  <Stack spacing={1} direction="row" alignItems="center" sx={{ p: 1 }}>
+                    <Button
+                      color="error"
+                      variant="soft"
+                      disabled={filesData[index]?.fileStatus === 2}
+                      onClick={() => handleAcceptReject(2, index)}
                     >
-                      {renderAcceptReject}
-                    </div> */}
-                  </CardContent>
-                </Card>
+                      Reject
+                    </Button>
+
+                    <Button
+                      color="inherit"
+                      variant="contained"
+                      disabled={filesData[index]?.fileStatus === 3}
+                      onClick={() => handleAcceptReject(3, index)}
+                    >
+                      Accept
+                    </Button>
+                  </Stack>
+                </Stack>
               </div>
             ))}
           </Stack>

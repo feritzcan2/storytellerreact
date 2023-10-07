@@ -53,11 +53,13 @@ export default function BasicPopover({
         }}
       >
         <Typography sx={{ p: 2 }}>{popoverText || 'No description provided'}</Typography>
-        <a href={helpLink} style={{ cursor: 'pointer' }}>
-          <Typography color={colors.blue[600]} sx={{ p: 2 }}>
-            {'Example Link'}
-          </Typography>{' '}
-        </a>
+        {helpLink && (
+          <a href={helpLink} target="_blank" style={{ cursor: 'pointer' }}>
+            <Typography color={colors.blue[600]} sx={{ p: 2 }}>
+              {'Example Link'}
+            </Typography>{' '}
+          </a>
+        )}
       </Popover>
     </div>
   );

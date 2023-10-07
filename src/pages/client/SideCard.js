@@ -25,6 +25,7 @@ export default function SideCard({
   setUserData,
   customerIndex,
   uploadUserData,
+  setShouldRefetch,
 }) {
   const renderCustomer = (
     <>
@@ -60,6 +61,7 @@ export default function SideCard({
             setUserData={setUserData}
             customerIndex={customerIndex}
             uploadUserData={uploadUserData}
+            setShouldRefetch={setShouldRefetch}
             editButton
           />
         </Stack>
@@ -73,7 +75,7 @@ export default function SideCard({
         >
           <Stack direction="row" alignItems="center" sx={{ color: 'text.primary', ml: 2 }}>
             <Iconify icon="solar:calendar-date-bold" width={16} sx={{ mr: 0.5 }} />
-            {customer.date ? fDateTime(customer.date) : ' No Appointent'}
+            {customer.appointmentDate ? fDateTime(customer.appointmentDate) : ' No Appointent'}
           </Stack>
 
           <Stack
@@ -126,7 +128,7 @@ export default function SideCard({
   const renderStatusList = (
     <>
       {/* <CardHeader title="Status" /> */}
-      <AnalyticsTasks title="Status" list={customer?.applicationStatus} />
+      <AnalyticsTasks title="Status" list={customer?.statusData} />
     </>
   );
 

@@ -9,7 +9,7 @@ import { GlobalContext } from 'src/context/GlobalProvider';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useParams } from 'src/routes/hooks';
 
-import { Box, colors } from '@mui/material';
+import { Box, ListItemText, colors } from '@mui/material';
 // @mui
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -30,26 +30,18 @@ import Typography from '@mui/material/Typography';
 import { _descriptions } from '../../_mock/assets';
 import BasicPopover from './PopOver';
 
-// const sessionId = 'S-1231231211';
-// const customerId = 'C-1231222';
-const accessKeyId = process.env.ACCESS_KEY_ID;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
+const secretAccessKey = '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';
 const S3_BUCKET = 'vizedefteridocs';
 const REGION = 'eu-central-1';
 
-// ----------------------------------------------------------------------
-// const customerTaxType = [
-//   { option: 'Student', value: 'Student' },
-//   { option: 'Retired', value: 'Retired' },
-// ];
-
-const customerTaxType = ['Student', 'Retired'];
 export default function FormDialog({
   SelectedCustomerData,
   userData,
   setUserData,
   customerIndex,
   editButton,
+  setShouldRefetch,
 }) {
   const { configs } = useContext(GlobalContext);
   const filesData = SelectedCustomerData.files;
@@ -61,7 +53,7 @@ export default function FormDialog({
       email: '',
       surname: '',
       phone: '',
-      taxType: configs.taxTypes[0].id,
+      taxType: configs?.taxTypes[0]?.id || 1,
       files: [], // Store an array of file objects
     }
   );
@@ -140,6 +132,7 @@ export default function FormDialog({
     };
     const newData = await setClients(id, updatedUserData);
     setUserData(newData);
+    setShouldRefetch(true);
     setLoading(false);
     onCancel();
     if (formData?.files?.length > 0) {
@@ -153,6 +146,9 @@ export default function FormDialog({
       ...formData,
       [name]: value,
     });
+    if (name === 'taxType') {
+      onClickSubmit();
+    }
   };
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
@@ -165,7 +161,7 @@ export default function FormDialog({
       fileSize: newFile.size,
       fileType: newFile.type,
       fileStatus: 1,
-      fileUrl: newFile.fileUrl,
+      fileUrl: fileUrl,
     };
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
@@ -175,7 +171,7 @@ export default function FormDialog({
     });
   };
   if (!SelectedCustomerData) return <></>;
-
+  if (configs === null) return <LoadingScreen />;
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {editButton ? (
@@ -286,7 +282,9 @@ export default function FormDialog({
             value={formData.phone}
             onChange={handleChange}
           />
-          <Typography variant="caption"> TAX TYPE</Typography>
+          <div style={{ marginTop: 1, marginLeft: 8, marginBottom: 1 }}>
+            <Typography variant="caption">Tax Type</Typography>
+          </div>
           <Select
             id="taxType"
             name="taxType"
@@ -294,7 +292,7 @@ export default function FormDialog({
             fullWidth
             value={formData.taxType}
             onChange={handleChange}
-            input={<InputBase sx={{ pl: 2 }} />}
+            input={<InputBase sx={{ pl: 1 }} />}
             inputProps={{
               sx: { textTransform: 'capitalize', background: 'white', padding: 2 },
             }}
@@ -318,130 +316,121 @@ export default function FormDialog({
               </Button>
             </div>
           )}
+          <div style={{ marginTop: 14, marginLeft: 5 }}>
+            <Typography variant="caption">Files to upload</Typography>
+          </div>
+          {uploadStatus}
           {filesData
             .filter((file) => file.requiredFileDetails.uploadRequired)
             .map((selectedfile, index) => (
               <div key={`${index}_${selectedfile.name}12`}>
-                {uploadStatus}
-                <Card sx={{ marginTop: 2, padding: 0, borderRadius: '10px 10px 10px 10px' }}>
-                  <CardContent sx={{ padding: 2 }}>
-                    <Stack
-                      direction="row"
-                      spacing={0}
-                      justifyContent={'space-between'}
-                      alignItems={'start'}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'start',
-                          alignItems: 'start',
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignContent: 'center',
-                          }}
-                        >
-                          <IconButton
-                            aria-label="settings"
-                            sx={{
-                              width: 50,
-                              height: 50,
-                              background: 'rgba(145, 158, 171, 0.08);',
-                              marginRight: 2,
-                            }}
-                          >
-                            {/* <Iconify
-                            icon="mdi:file-outline"
-                            width={30}
-                            height={30}
-                            sx={{ color: 'grey' }}
-                          /> */}
-                            <Iconify
-                              icon="eva:checkmark-circle-2-outline"
-                              width={30}
-                              height={30}
-                              sx={{
-                                color:
-                                  selectedfile.fileStatus === 3
-                                    ? 'primary.main'
-                                    : selectedfile.fileStatus === 1
-                                    ? colors.orange[700]
-                                    : selectedfile.fileStatus === 2
-                                    ? 'red'
-                                    : 'text.disabled',
-                                justifyContent: 'end',
-                                alignItems: 'end',
-                                alignContent: 'end',
-                                textAlign: 'end',
-                              }}
-                            />
-                          </IconButton>
-
-                          {selectedfile?.requiredFileDetails?.fileName}
-                        </div>
-                        <Typography
-                          color={
-                            selectedfile.fileStatus === 3
-                              ? 'primary.main'
-                              : selectedfile.fileStatus === 1
-                              ? colors.orange[700]
-                              : selectedfile.fileStatus === 2
-                              ? 'red'
-                              : 'text.disabled'
-                          }
-                          sx={{ ml: 8 }}
-                        >
-                          {selectedfile.fileStatus === 3
-                            ? 'Approved'
+                <Stack
+                  component={Card}
+                  variant="outlined"
+                  spacing={1}
+                  direction={{ xs: 'column', sm: 'row' }}
+                  alignItems={{ xs: 'unset', sm: 'center' }}
+                  sx={{
+                    borderRadius: 2,
+                    bgcolor: 'unset',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    p: { xs: 1.5, sm: 1 },
+                    marginBottom: 1,
+                    background: 'white',
+                  }}
+                >
+                  <IconButton
+                    aria-label="settings"
+                    sx={{
+                      width: 50,
+                      height: 50,
+                      background: 'rgba(145, 158, 171, 0.08);',
+                    }}
+                  >
+                    <Iconify
+                      icon="eva:checkmark-circle-2-outline"
+                      width={30}
+                      height={30}
+                      sx={{
+                        color:
+                          selectedfile.fileStatus === 3
+                            ? 'primary.main'
                             : selectedfile.fileStatus === 1
-                            ? 'Wating for Approval'
+                            ? colors.orange[700]
                             : selectedfile.fileStatus === 2
-                            ? 'Rejected'
-                            : 'File not uploaded'}
-                        </Typography>
-                      </div>
+                            ? 'red'
+                            : 'text.disabled',
+                        justifyContent: 'end',
+                        alignItems: 'end',
+                        alignContent: 'end',
+                        textAlign: 'end',
+                      }}
+                    />
+                  </IconButton>
 
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'start',
-                          alignItems: 'center',
-                        }}
+                  <ListItemText
+                    primary={selectedfile?.requiredFileDetails?.fileName}
+                    secondary={
+                      <Typography
+                        typography={'caption'}
+                        color={
+                          selectedfile.fileStatus === 3
+                            ? 'primary.main'
+                            : selectedfile.fileStatus === 1
+                            ? colors.orange[700]
+                            : selectedfile.fileStatus === 2
+                            ? 'red'
+                            : 'text.disabled'
+                        }
                       >
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'start',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <UploadBox
-                            file={formData.files[index]}
-                            onDrop={(e) => handleFileChange(e, index)}
-                            id={index}
-                            name={`file_${index}`}
-                            disabled={
-                              selectedfile.fileStatus === 1 ||
-                              selectedfile.fileStatus === 3 ||
-                              uploadStatus
-                            }
-                          />
-                          <BasicPopover
-                            popoverText={selectedfile.requiredFileDetails.description}
-                            helpLink={selectedfile.requiredFileDetails.helpLink}
-                          />
-                        </div>
-                      </div>
-                    </Stack>
+                        {selectedfile.fileStatus === 3
+                          ? 'Approved'
+                          : selectedfile.fileStatus === 1
+                          ? 'Wating for Approval'
+                          : selectedfile.fileStatus === 2
+                          ? 'Rejected'
+                          : 'File not uploaded'}
+                      </Typography>
+                    }
+                    primaryTypographyProps={{
+                      noWrap: true,
+                      typography: 'body2',
+                    }}
+                  />
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'start',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'start',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <UploadBox
+                        file={formData.files[index]}
+                        onDrop={(e) => handleFileChange(e, index)}
+                        id={index}
+                        name={`file_${index}`}
+                        disabled={
+                          selectedfile.fileStatus === 1 ||
+                          selectedfile.fileStatus === 3 ||
+                          uploadStatus
+                        }
+                      />
+                      <BasicPopover
+                        popoverText={selectedfile.requiredFileDetails.description}
+                        helpLink={selectedfile.requiredFileDetails.helpLink}
+                      />
+                    </div>
                     <div
                       style={{
                         display: 'flex',
@@ -450,14 +439,13 @@ export default function FormDialog({
                         alignContent: 'end',
                         justifyContent: 'end',
                       }}
-                    >
-                      <Typography variant="caption">
-                        {'File Uploaded: '}
-                        {formData?.files[index]?.fileName || selectedfile?.fileName || 'None'}
-                      </Typography>
-                    </div>
-                  </CardContent>
-                </Card>
+                    ></div>
+                    <Typography variant="caption" overflow={'clip'} maxWidth={200} maxHeight={40}>
+                      {'File Uploaded: '}
+                      {formData?.files[index]?.fileName || selectedfile?.fileName || 'None'}
+                    </Typography>
+                  </div>
+                </Stack>
               </div>
             ))}
         </DialogContent>

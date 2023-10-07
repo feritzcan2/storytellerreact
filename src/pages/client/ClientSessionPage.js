@@ -5,7 +5,6 @@ import ClientService from 'src/api/clientService';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { useParams } from 'src/routes/hooks';
 import { bgGradient } from 'src/theme/css';
-// import axios from 'src/utils/axios';
 import { fDate } from 'src/utils/format-time';
 
 import Masonry from '@mui/lab/Masonry';
@@ -48,10 +47,10 @@ export default function ContactView() {
     surname: '',
     phone: '',
     surname: '',
-    taxTypes: configs.taxTypes[0].id,
+    taxType: configs?.taxTypes[0]?.id || 1,
     files: [],
-    // userData?.customers[0]?.files.map((file) => file),
   };
+
   const getUserData = async () => {
     setIsLoading(true);
     setUserData(await getClients(id));
@@ -60,6 +59,7 @@ export default function ContactView() {
 
   useEffect(() => {
     getUserData();
+    setShouldRefetch(false);
   }, [shouldRefetch]);
 
   if (isLoading) {
@@ -80,7 +80,7 @@ export default function ContactView() {
       </div>
     );
   }
-  if (!userData || error) {
+  if (!userData) {
     return (
       <div
         style={{
@@ -99,6 +99,7 @@ export default function ContactView() {
       </div>
     );
   }
+  if (configs === null) return <LoadingScreen />;
   return (
     <div>
       <Helmet>
@@ -184,6 +185,7 @@ export default function ContactView() {
                 userData={userData}
                 setUserData={setUserData}
                 newCustomerBase={newCustomerBase}
+                setShouldRefetch={setShouldRefetch}
               />
               {/* </Scrollbar> */}
             </Grid>
@@ -194,7 +196,7 @@ export default function ContactView() {
   );
 }
 
-function UsersCard({ userData, setUserData, newCustomerBase }) {
+function UsersCard({ userData, setUserData, newCustomerBase, setShouldRefetch }) {
   return (
     <Box
       sx={{
@@ -211,6 +213,7 @@ function UsersCard({ userData, setUserData, newCustomerBase }) {
           userData={userData}
           setUserData={setUserData}
           customerIndex={userData?.customers?.length || 0}
+          setShouldRefetch={setShouldRefetch}
         />
 
         {userData?.customers &&
@@ -221,6 +224,7 @@ function UsersCard({ userData, setUserData, newCustomerBase }) {
               userData={userData}
               setUserData={setUserData}
               customerIndex={index}
+              setShouldRefetch={setShouldRefetch}
             />
           ))}
       </Masonry>
