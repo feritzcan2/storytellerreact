@@ -67,7 +67,7 @@ export default function ViewCustomer(id) {
       </div>
     );
   }
-
+  debugger;
   return (
     <>
       <Grid
@@ -76,7 +76,10 @@ export default function ViewCustomer(id) {
         height={'100%'}
         justifyContent={'space-between'}
       >
-        <UserProfileView userData={userData} setShouldRefetch={setShouldRefetch} />
+        <UserProfileView
+          customer={userData.customers.find((customer) => customer.id === id.id)}
+          setShouldRefetch={setShouldRefetch}
+        />
       </Grid>
     </>
   );

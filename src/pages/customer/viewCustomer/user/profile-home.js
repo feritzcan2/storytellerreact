@@ -38,15 +38,14 @@ const s3 = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
 });
-export default function ProfileHome({ userData }) {
-  const customer = userData.customers[0];
+export default function ProfileHome({ customer }) {
   const quickEdit = useBoolean();
   const params = useParams();
   const { id } = params;
   const [uploadStatus, setUploadStatus] = useState(null);
   const { configs } = useContext(GlobalContext);
   const [filesData, setFilesData] = useState(customer?.files);
-
+  debugger;
   const configData = useConfigs(customer);
   const uploadFile = async (sFile) => {
     const params = {
@@ -105,9 +104,9 @@ export default function ProfileHome({ userData }) {
 
   //   const onSubmit = async () => {
   //   console.log('filesData >', filesData);
-  //   const updateCustomerrData = [...userData.customers];
+  //   const updateCustomerrData = [...customer.customers];
   //   updateCustomerrData[customerIndex] = {
-  //     ...userData.customers[customerIndex],
+  //     ...customer.customers[customerIndex],
   //     name: formData.name,
   //     email: formData.email,
   //     surname: formData.surname,
@@ -116,9 +115,9 @@ export default function ProfileHome({ userData }) {
   //     files: [...formData.files],
   //   };
 
-  //   let updatedUserData = userData;
+  //   let updatedUserData = customer;
   //   updatedUserData = {
-  //     ...userData,
+  //     ...customer,
   //     customers: updateCustomerrData,
   //   };
   //   const newData = await setClients(id, updatedUserData);
@@ -163,13 +162,13 @@ export default function ProfileHome({ userData }) {
       >
         <Stack width={1}>
           {/* {fNumber(info.totalFollowers)} */}
-          {userData?.plannedTravelDate ? fDate(userData.plannedTravelDate) : 'Yok'}
+          {customer?.plannedTravelDate ? fDate(customer.plannedTravelDate) : 'Yok'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Planlanan gidiş tarihi
           </Box>
         </Stack>
         <Stack width={1}>
-          {userData?.AmountCredit || 0}TL
+          {customer?.AmountCredit || 0}TL
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Alınan ödeme
           </Box>
@@ -186,7 +185,7 @@ export default function ProfileHome({ userData }) {
         divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
       >
         <Stack width={1}>
-          {userData?.appointmentDate ? fDate(userData.appointmentDate) : 'Yok'}
+          {customer?.appointmentDate ? fDate(customer.appointmentDate) : 'Yok'}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
             Randevu Tarihi
           </Box>
@@ -235,7 +234,7 @@ export default function ProfileHome({ userData }) {
     </Card>
   );
 
-  const renderOtherCustomers = <OtherUsers title="Grubundaki kişiler" list={userData} />;
+  const renderOtherCustomers = <OtherUsers title="Grubundaki kişiler" list={customer} />;
 
   return (
     <>

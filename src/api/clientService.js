@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export default function ClientService() {
   const getClients = async (id, errorMsg) => {
-    debugger;
     return axios
       .get(`Customer/sessionByCustomer?id=${id}`)
       .then(async (result) => {

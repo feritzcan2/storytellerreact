@@ -10,18 +10,16 @@ import Container from '@mui/material/Container';
 
 import ProfileCover from '../profile-cover';
 //
-import ProfileHome from '../profile-home';
 import { useParams } from 'src/routes/hooks';
+import ProfileHome from '../profile-home';
 
 // ----------------------------------------------------------------------
 
-export default function UserProfileView({ userData, setShouldRefetch }) {
+export default function UserProfileView({ customer, setShouldRefetch }) {
   const params = useParams();
   const { id } = params;
   const settings = useSettingsContext();
-  const customer = userData.customers.find((customer) => customer.id == id);
   const { user } = useMockedUser();
-  console.log(userData.customers);
   if (customer) {
     // Found the customer with ID 111
     console.log(customer);
@@ -29,6 +27,7 @@ export default function UserProfileView({ userData, setShouldRefetch }) {
     // Customer with ID 111 not found
     console.log('Customer not found');
   }
+  debugger;
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
@@ -52,7 +51,7 @@ export default function UserProfileView({ userData, setShouldRefetch }) {
           coverUrl={_userAbout.coverUrl}
         />
       </Card>
-      <ProfileHome userData={userData} setShouldRefetch={setShouldRefetch} />
+      <ProfileHome customer={customer} setShouldRefetch={setShouldRefetch} />
     </Container>
   );
 }

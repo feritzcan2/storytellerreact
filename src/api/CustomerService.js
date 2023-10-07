@@ -30,7 +30,6 @@ export default function CustomerService() {
   };
 
   const getCustomer = async (id, errorMsg) => {
-    debugger;
     return api
       .get(`customer/sessionByCustomer?id=${id.id === undefined ? parseInt(id) : id.id}`)
       .then(async (result) => {
