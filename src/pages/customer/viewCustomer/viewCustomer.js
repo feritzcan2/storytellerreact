@@ -67,7 +67,6 @@ export default function ViewCustomer(id) {
       </div>
     );
   }
-  debugger;
   return (
     <>
       <Grid

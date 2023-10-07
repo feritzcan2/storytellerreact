@@ -27,7 +27,6 @@ export default function UserProfileView({ customer, setShouldRefetch }) {
     // Customer with ID 111 not found
     console.log('Customer not found');
   }
-  debugger;
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

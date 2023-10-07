@@ -41,16 +41,15 @@ const s3 = new AWS.S3({
 export default function ProfileHome({ customer }) {
   const quickEdit = useBoolean();
   const params = useParams();
-  const { id } = params;
   const [uploadStatus, setUploadStatus] = useState(null);
   const { configs } = useContext(GlobalContext);
   const [filesData, setFilesData] = useState(customer?.files);
-  debugger;
+  console.log(customer);
   const configData = useConfigs(customer);
   const uploadFile = async (sFile) => {
     const params = {
       Bucket: S3_BUCKET,
-      Key: `${customer.id}_${id}_${sFile.name}`,
+      Key: `${customer.id}__${sFile.name}`,
       Body: sFile,
     };
     console.log('upload Params', params);
@@ -200,6 +199,9 @@ export default function ProfileHome({ customer }) {
     </Card>
   );
 
+  if (configData.visaType === undefined) {
+    debugger;
+  }
   const renderAbout = (
     <Card>
       <CardHeader title="Hakkında" />
