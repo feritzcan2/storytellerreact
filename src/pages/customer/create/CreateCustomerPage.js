@@ -20,7 +20,7 @@ export default function CreateCustomerPage() {
         <title> Müşteri Ekle</title>
       </Helmet>
       <Typography variant="h4">Yeni müşteri ekle</Typography>
-      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+      <Container sx={{ marginLeft: 0 }} maxWidth={settings.themeStretch ? false : 'lg'}>
         <CustomerEditForm configs={configs} />
       </Container>
     </>

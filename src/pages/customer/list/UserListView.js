@@ -62,7 +62,7 @@ export default function UserListView(props) {
   useEffect(() => {
     let head = [];
     props.tableData.columns.forEach((element, index) => {
-      head.push({ id: element.id, label: element.columnName, width: 33322 });
+      head.push({ id: element.id, label: element.columnName, width: index < 3 ? 140 : 80 });
       if (element.filter !== undefined && element.filter !== null) defaultFilters[element.key] = -1;
     });
     head.push({ id: 'ss', label: '', width: 35 });
@@ -150,7 +150,10 @@ export default function UserListView(props) {
 
   return (
     <>
-      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+      <Container
+        sx={{ minWidth: '100%', padding: 0, margin: 0 }}
+        maxWidth={settings.themeStretch ? false : 'lg'}
+      >
         <Card>
           {columns
             .filter(

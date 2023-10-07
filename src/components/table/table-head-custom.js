@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 // @mui
 import Box from '@mui/material/Box';
-import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
 // ----------------------------------------------------------------------
@@ -51,7 +51,7 @@ export default function TableHeadCustom({
             key={headCell.id}
             align={headCell.align || 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ width: headCell.width, minWidth: headCell.minWidth }}
+            sx={{ minWidth: headCell.width, width: headCell.width }}
           >
             {onSort ? (
               <TableSortLabel
