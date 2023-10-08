@@ -17,7 +17,9 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import CustomerService from 'src/api/CustomerService';
+import Iconify from 'src/components/iconify';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import { useConfigs } from 'src/hooks/use-configs';
 import AdminMessage from './adminMessage';
 import ContactHero from './contact/contact-hero';
 import FormDialog from './form-dialog';
@@ -40,7 +42,9 @@ export default function ContactView() {
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [userData, setUserData] = useState();
+  const [customerData, setCustomerData] = useState();
+  const { userData } = useContext(GlobalContext);
+
   const newCustomerBase = {
     name: '',
     email: '',
@@ -53,7 +57,7 @@ export default function ContactView() {
 
   const getUserData = async () => {
     setIsLoading(true);
-    setUserData(await getCustomer(id));
+    setCustomerData(await getCustomer(id));
     setIsLoading(false);
   };
 
@@ -80,7 +84,7 @@ export default function ContactView() {
       </div>
     );
   }
-  if (!userData) {
+  if (!customerData) {
     return (
       <div
         style={{
@@ -99,6 +103,7 @@ export default function ContactView() {
       </div>
     );
   }
+  var configData = useConfigs(customerData);
   // if (configs === null) return <LoadingScreen />;
   return (
     <div>
@@ -135,26 +140,30 @@ export default function ContactView() {
             <Grid xs={10} md={5} marginTop={{ xs: 10, md: 15 }}>
               <Stack direction="row" alignItems="center" marginBottom={{ xs: 5, md: 15 }}>
                 <Typography variant="h2" sx={{ margin: 1, color: 'common.white' }}>
-                  Easy
+                  Kolay
                 </Typography>
                 <Typography variant="h2" sx={{ margin: 1, color: 'common.white' }}>
-                  Application
+                  Başvuru
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" sx={{ color: 'text.primary', mb: 5 }}>
                 <Typography variant="h4" sx={{ color: 'text.disabled', margin: 1 }}>
-                  Country:
+                  Ülke:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {userData.country}
+                  {configData.country.name || 'No Country'}
                 </Typography>
+                <Iconify
+                  icon={'flagpack:' + configData.country.code.toLowerCase()}
+                  sx={{ borderRadius: 0.65, width: 40, height: 40, mr: 1 }}
+                />
               </Stack>
               <Stack direction="row" alignItems="center" sx={{ color: 'text.primary', mb: 5 }}>
                 <Typography variant="h4" sx={{ color: 'text.disabled', margin: 1 }}>
-                  VISA:
+                  Vize türü:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {userData.visaType}
+                  {configData.visaType.name}
                 </Typography>
               </Stack>
               <Stack
@@ -164,17 +173,17 @@ export default function ContactView() {
                 sx={{ color: 'text.primary' }}
               >
                 <Typography variant="h4" sx={{ color: 'text.disabled', margin: 1 }}>
-                  Planned Travel Date:
+                  Planlanan seyehat tarihi:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {fDate(userData.plannedTravelDate)}
+                  {fDate(customerData.plannedTravelDate)}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="start" sx={{ color: 'text.primary', mb: 2 }}>
                 <AdminMessage
-                  name={userData.adminName}
-                  description={userData.adminMessage}
-                  postedAt={userData.adminMessageTime}
+                  name={customerData.adminName}
+                  description={customerData.adminMessage}
+                  postedAt={customerData.adminMessageTime}
                 />
               </Stack>
             </Grid>
@@ -182,8 +191,8 @@ export default function ContactView() {
             <Grid xs={12} md={7} lg={7} marginTop={{ xs: 5, md: 10 }} alignItems="center">
               {/* <Scrollbar sx={{ height: '90vh' }}> */}
               <UsersCard
-                userData={userData}
-                setUserData={setUserData}
+                customerData={customerData}
+                setCustomerData={setCustomerData}
                 newCustomerBase={newCustomerBase}
                 setShouldRefetch={setShouldRefetch}
               />
@@ -196,7 +205,7 @@ export default function ContactView() {
   );
 }
 
-function UsersCard({ userData, setUserData, newCustomerBase, setShouldRefetch }) {
+function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRefetch }) {
   return (
     <Box
       sx={{
@@ -210,19 +219,19 @@ function UsersCard({ userData, setUserData, newCustomerBase, setShouldRefetch })
       <Masonry spacing={{ xs: 1, md: 3 }} columns={{ xs: 1, md: 2 }}>
         <FormDialog
           SelectedCustomerData={newCustomerBase}
-          userData={userData}
-          setUserData={setUserData}
-          customerIndex={userData?.customers?.length || 0}
+          customerData={customerData}
+          setCustomerData={setCustomerData}
+          customerIndex={customerData?.customers?.length || 0}
           setShouldRefetch={setShouldRefetch}
         />
 
-        {userData?.customers &&
-          userData?.customers?.map((customer, index) => (
+        {customerData?.customers &&
+          customerData?.customers?.map((customer, index) => (
             <SideCard
               key={`${index}_${customer}`}
               customer={customer}
-              userData={userData}
-              setUserData={setUserData}
+              customerData={customerData}
+              setCustomerData={setCustomerData}
               customerIndex={index}
               setShouldRefetch={setShouldRefetch}
             />

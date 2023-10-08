@@ -16,7 +16,7 @@ const pageStyle = {
 
 export const clientRoutes = [
   {
-    path: 'client/:id',
+    path: 'kolayBasvuru/:id',
     element: (
       <div>
         <Suspense fallback={<LoadingScreen />}>

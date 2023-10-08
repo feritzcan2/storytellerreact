@@ -15,19 +15,11 @@ import ProfileHome from '../profile-home';
 
 // ----------------------------------------------------------------------
 
-export default function UserProfileView({ customer, setShouldRefetch }) {
+export default function UserProfileView({ customerId, session, setShouldRefetch }) {
   const params = useParams();
-  const { id } = params;
   const settings = useSettingsContext();
   const { user } = useMockedUser();
-  if (customer) {
-    // Found the customer with ID 111
-    console.log(customer);
-  } else {
-    // Customer with ID 111 not found
-    console.log('Customer not found');
-  }
-
+  let customer = session.customers.find((customer) => customer.id === customerId);
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
@@ -50,7 +42,7 @@ export default function UserProfileView({ customer, setShouldRefetch }) {
           coverUrl={_userAbout.coverUrl}
         />
       </Card>
-      <ProfileHome customer={customer} setShouldRefetch={setShouldRefetch} />
+      <ProfileHome session={session} customer={customer} setShouldRefetch={setShouldRefetch} />
     </Container>
   );
 }

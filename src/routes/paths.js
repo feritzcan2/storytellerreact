@@ -28,6 +28,7 @@ export const paths = {
     newCustomer: `${ROOTS.CUSTOMER}/yeni`,
     customerList: `${ROOTS.CUSTOMER}/liste`,
     details: `${ROOTS.CUSTOMER}/detay`,
+    messages: `${ROOTS.CUSTOMER}/mesajlar`,
     customer: `${ROOTS.CUSTOMER}/detay/5`,
   },
   countryTracking: {

@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 
 import AWS from 'aws-sdk';
-import ClientService from 'src/api/clientService';
 import Iconify from 'src/components/iconify';
 import { UploadBox } from 'src/components/upload';
 import { GlobalContext } from 'src/context/GlobalProvider';
@@ -26,6 +25,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import CustomerService from 'src/api/CustomerService';
 import BasicPopover from './PopOver';
 
 const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
@@ -67,7 +67,7 @@ export default function FormDialog({
 }) {
   const { configs } = useContext(GlobalContext);
   const filesData = SelectedCustomerData.files;
-  const { setClients } = ClientService();
+  const { setClients } = CustomerService();
   const dialog = useBoolean();
   const [formData, setFormData] = useState(
     SelectedCustomerData || {
@@ -184,7 +184,7 @@ export default function FormDialog({
               paddingRight: 1,
             }}
           >
-            Edit
+            Düzenle
           </Box>
           <Iconify icon="solar:pen-bold" />
         </IconButton>
@@ -218,7 +218,7 @@ export default function FormDialog({
             <Typography
               variant="h5"
               sx={{ textAlign: 'center', color: 'text.primary', minWidth: 100 }}
-            >{`Add New`}</Typography>
+            >{`Yeni yolcu ekle`}</Typography>
           </Stack>
         </Paper>
       )}
@@ -227,7 +227,7 @@ export default function FormDialog({
         <DialogTitle style={{ background: 'rgba(145, 158, 101, 0.08)' }}>User Details</DialogTitle>
 
         <DialogContent style={{ background: 'rgba(145, 108, 101, 0.08)', padding: 10 }}>
-          <Typography sx={{ mb: 3 }}>Add Deitails and upload required files</Typography>
+          <Typography sx={{ mb: 3 }}>Lütfen kişi bilgilerini doldurunuz.</Typography>
 
           <TextField
             autoFocus
@@ -318,7 +318,7 @@ export default function FormDialog({
                 onClick={onClickSubmit}
                 disabled={loading}
               >
-                Add New User
+                Devam
               </Button>
             </div>
           )}

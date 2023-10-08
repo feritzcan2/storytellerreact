@@ -1,4 +1,3 @@
-import { _analyticTasks } from 'src/_mock';
 // components
 import Iconify from 'src/components/iconify';
 import Label from 'src/components/label';
@@ -10,9 +9,10 @@ import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
+import { useConfigs } from 'src/hooks/use-configs';
+import BasicPopover from './PopOver';
 import AnalyticsTasks from './analytics-tasks';
 import FormDialog from './form-dialog';
-import BasicPopover from './PopOver';
 
 const icondoc = <Box component="img" src="/assets/icons/files/ic_document.svg" />;
 
@@ -27,6 +27,7 @@ export default function SideCard({
   uploadUserData,
   setShouldRefetch,
 }) {
+  var configData = useConfigs(customer);
   const renderCustomer = (
     <>
       <Stack
@@ -84,7 +85,7 @@ export default function SideCard({
             sx={{ color: 'text.secondary', typography: 'caption', ml: 2, mr: 2.5 }}
           >
             <Iconify icon="solar:users-group-rounded-bold" width={16} sx={{ mr: 0.5 }} />
-            {'Tax Type: '} {customer?.taxType}
+            {'Vergi türü:  '} {configData?.taxType.name}
           </Stack>
         </Stack>
       </Stack>
@@ -94,7 +95,7 @@ export default function SideCard({
   const renderFiles = (
     <div>
       <Label color={'warning'} variant="soft" sx={{ mt: 1, mx: 1 }}>
-        Files to be deliver by hand
+        Yanınızda getirmeniz gerekenler
       </Label>
       <Stack spacing={1} sx={{ pt: 1, px: 1, pb: 2 }}>
         {customer?.files
@@ -128,7 +129,7 @@ export default function SideCard({
   const renderStatusList = (
     <>
       {/* <CardHeader title="Status" /> */}
-      <AnalyticsTasks title="Status" list={customer?.statusData} />
+      <AnalyticsTasks title="Durum" list={customer?.statusData} />
     </>
   );
 

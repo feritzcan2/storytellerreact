@@ -76,7 +76,8 @@ export default function ViewCustomer(id) {
         justifyContent={'space-between'}
       >
         <UserProfileView
-          customer={userData.customers.find((customer) => customer.id === id.id)}
+          customerId={id.id}
+          session={userData}
           setShouldRefetch={setShouldRefetch}
         />
       </Grid>

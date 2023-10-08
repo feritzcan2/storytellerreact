@@ -22,7 +22,7 @@ export default function AdminMessage({ name = '', description = '', postedAt = '
     >
       {/* <CardHeader title={'Admin message'} /> */}
       <Typography variant="h5" color="black" sx={{ p: 2 }}>
-        {'Admin message'}
+        {'Danışmandan mesajınız var'}
       </Typography>
       <Stack
         spacing={2}
@@ -36,7 +36,7 @@ export default function AdminMessage({ name = '', description = '', postedAt = '
 
           <ListItemText
             primary={name}
-            secondary={`Posted ${fDateTime(postedAt)}`}
+            secondary={`tarafından gönderildi ${fDateTime(postedAt)}`}
             primaryTypographyProps={{
               color: 'black',
             }}

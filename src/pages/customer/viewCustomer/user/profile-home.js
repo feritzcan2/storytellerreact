@@ -39,7 +39,7 @@ const s3 = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
 });
-export default function ProfileHome({ customer }) {
+export default function ProfileHome({ customer, session }) {
   const quickEdit = useBoolean();
   const params = useParams();
   const nav = useNavigate();
@@ -103,33 +103,6 @@ export default function ProfileHome({ customer }) {
     setFilesData(updatedFiles);
   };
 
-  //   const onSubmit = async () => {
-  //   console.log('filesData >', filesData);
-  //   const updateCustomerrData = [...customer.customers];
-  //   updateCustomerrData[customerIndex] = {
-  //     ...customer.customers[customerIndex],
-  //     name: formData.name,
-  //     email: formData.email,
-  //     surname: formData.surname,
-  //     phone: formData.phone,
-  //     taxType: formData.taxType,
-  //     files: [...formData.files],
-  //   };
-
-  //   let updatedUserData = customer;
-  //   updatedUserData = {
-  //     ...customer,
-  //     customers: updateCustomerrData,
-  //   };
-  //   const newData = await setClients(id, updatedUserData);
-  //   setUserData(newData);
-  //   setShouldRefetch(true);
-  //   onCancel();
-  //   if (formData?.files?.length > 0) {
-  //     onCancel();
-  //   }
-  // };
-
   const renderEdit = (
     <Stack alignItems="center" sx={{ p: 0 }}>
       <Stack
@@ -149,7 +122,7 @@ export default function ProfileHome({ customer }) {
           fullWidth
           color="success"
           variant="soft"
-          onClick={() => nav('/client/' + customer.id)}
+          onClick={() => nav('/kolayBasvuru/' + customer.id)}
         >
           Gözünden gör
         </Button>
@@ -206,12 +179,9 @@ export default function ProfileHome({ customer }) {
     </Card>
   );
 
-  if (configData.visaType === undefined) {
-    debugger;
-  }
   const renderAbout = (
     <Card>
-      <CardHeader title="Hakkında" />
+      <CardHeader title="" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Stack direction="row" spacing={2}>
@@ -243,7 +213,12 @@ export default function ProfileHome({ customer }) {
     </Card>
   );
 
-  const renderOtherCustomers = <OtherUsers title="Grubundaki kişiler" list={customer} />;
+  const renderOtherCustomers = (
+    <OtherUsers
+      title="Grubundaki kişiler"
+      list={session.customers.filter((x) => x.id !== customer.id)}
+    />
+  );
 
   return (
     <>
