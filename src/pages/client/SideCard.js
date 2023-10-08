@@ -21,7 +21,7 @@ const avatarUrl = 'https://api-dev-minimal-v510.vercel.app/assets/images/avatar/
 
 export default function SideCard({
   customer,
-  userData,
+  customerData,
   setUserData,
   customerIndex,
   uploadUserData,
@@ -58,7 +58,7 @@ export default function SideCard({
           />
           <FormDialog
             SelectedCustomerData={customer}
-            userData={userData}
+            customerData={customerData}
             setUserData={setUserData}
             customerIndex={customerIndex}
             uploadUserData={uploadUserData}

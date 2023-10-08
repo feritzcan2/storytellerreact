@@ -220,7 +220,7 @@ function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRe
         <FormDialog
           SelectedCustomerData={newCustomerBase}
           customerData={customerData}
-          setCustomerData={setCustomerData}
+          setUserData={setCustomerData}
           customerIndex={customerData?.customers?.length || 0}
           setShouldRefetch={setShouldRefetch}
         />
@@ -231,7 +231,7 @@ function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRe
               key={`${index}_${customer}`}
               customer={customer}
               customerData={customerData}
-              setCustomerData={setCustomerData}
+              setUserData={setCustomerData}
               customerIndex={index}
               setShouldRefetch={setShouldRefetch}
             />

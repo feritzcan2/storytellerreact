@@ -59,7 +59,7 @@ const s3 = new AWS.S3({
 
 export default function FormDialog({
   SelectedCustomerData,
-  userData,
+  customerData,
   setUserData,
   customerIndex,
   editButton,
@@ -117,7 +117,7 @@ export default function FormDialog({
       setLoading(false);
       return;
     }
-    const updateCustomerrData = [...userData.customers];
+    const updateCustomerrData = [...customerData.customers];
     updateCustomerrData[customerIndex] = {
       ...updateCustomerrData[customerIndex],
       name: formData.name,
@@ -127,9 +127,9 @@ export default function FormDialog({
       taxType: formData.taxType,
       files: formData.files,
     };
-    let updatedUserData = userData;
+    let updatedUserData = customerData;
     updatedUserData = {
-      ...userData,
+      ...customerData,
       customers: updateCustomerrData,
     };
     console.log('updatedUserData >', updatedUserData);
