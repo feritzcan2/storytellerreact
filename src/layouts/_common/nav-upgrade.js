@@ -1,16 +1,13 @@
 // @mui
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // routes
-import { paths } from 'src/routes/paths';
 // locales
 // components
-import Label from 'src/components/label';
+import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -26,36 +23,28 @@ export default function NavUpgrade() {
       }}
     >
       <Stack alignItems="center">
-        <Box sx={{ position: 'relative' }}>
-          <Avatar src={user?.photoURL} alt={user?.displayName} sx={{ width: 48, height: 48 }} />
-          <Label
-            color="success"
-            variant="filled"
-            sx={{
-              top: -6,
-              px: 0.5,
-              left: 40,
-              height: 20,
-              position: 'absolute',
-              borderBottomLeftRadius: 2,
-            }}
-          >
-            Free
-          </Label>
-        </Box>
-
-        <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
+        <Typography variant="subtitle2" noWrap>
+          Ferit Özcan
+        </Typography>
+        <Typography variant="caption" noWrap>
+          7/24 whatsapp ve mail üzerinden ulaşabilirsiniz.
+        </Typography>
+        <Stack direction={'row'} spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
+          <Iconify icon="solar:phone-bold" />
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+            +90532-559-6676
           </Typography>
+        </Stack>
+        <Stack direction={'row'} spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
+          <Iconify icon="fluent:mail-24-filled" />
 
-          <Typography variant="body2" noWrap sx={{ color: 'text.disabled' }}>
-            {user?.email}
+          <Typography variant="subtitle2" noWrap>
+            feritzcan93@gmail.com
           </Typography>
         </Stack>
 
-        <Button variant="contained" href={paths.minimalUI} target="_blank" rel="noopener">
-          Upgrade to Pro
+        <Button variant="contained" target="_blank" rel="noopener">
+          Vize defterine ulaş
         </Button>
       </Stack>
     </Stack>

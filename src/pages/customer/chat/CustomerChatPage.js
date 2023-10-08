@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 // sections
 import { Typography } from '@mui/material';
 import { useContext } from 'react';
-import { LoadingScreen } from 'src/components/loading-screen';
 import { useSettingsContext } from 'src/components/settings';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import MainContainer from 'src/pages/mainContainer';
@@ -16,7 +15,6 @@ export default function CustomerChatPage() {
   const settings = useSettingsContext();
   const { customerList } = useContext(GlobalContext);
 
-  if (configs === null || customerList === null) return <LoadingScreen />;
   return (
     <>
       <Helmet>

@@ -3,7 +3,6 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 // hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 // _mock
 import { _appInstalled } from 'src/_mock';
 // components
@@ -22,7 +21,6 @@ import InvoiceAnalytic from './invoice-analytic';
 // ----------------------------------------------------------------------
 
 export default function DashboardView() {
-  const { user } = useMockedUser();
   const { countryAppointmentData, dashboardData, configs } = useContext(GlobalContext);
   console.log(dashboardData);
   console.log(configs);

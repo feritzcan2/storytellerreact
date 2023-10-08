@@ -16,12 +16,14 @@ import Typography from '@mui/material/Typography';
 // sections
 import Grid from '@mui/material/Unstable_Grid2';
 
+import ConfigService from 'src/api/ConfigService';
 import CustomerService from 'src/api/CustomerService';
 import Iconify from 'src/components/iconify';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import { useConfigs } from 'src/hooks/use-configs';
 import AdminMessage from './adminMessage';
 import ContactHero from './contact/contact-hero';
+import HandDeliverFilesDialog from './customerCard/HandDeliverFilesDialog';
 import FormDialog from './form-dialog';
 import SideCard from './SideCard';
 
@@ -37,13 +39,15 @@ export default function ContactView() {
   const theme = useTheme();
   const params = useParams();
   const { configs } = useContext(GlobalContext);
-  const { getCustomer } = CustomerService();
+  const [isLoading, setIsLoading] = useState(configs === null);
+
   const { id } = params;
+  const { getCustomer } = CustomerService();
+  const { getConfigs } = ConfigService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [customerData, setCustomerData] = useState();
-  // const { userData } = useContext(GlobalContext);
+  const { userData } = useContext(GlobalContext);
 
   const newCustomerBase = {
     name: '',
@@ -58,10 +62,18 @@ export default function ContactView() {
   const getUserData = async () => {
     setIsLoading(true);
     setCustomerData(await getCustomer(id));
-    setIsLoading(false);
+    if (configs !== null) setIsLoading(false);
+  };
+  const fetchConfigs = async () => {
+    setIsLoading(true);
+    await getConfigs();
+    if (customerData !== null) setIsLoading(false);
   };
 
   useEffect(() => {
+    if (configs === null) {
+      fetchConfigs();
+    }
     getUserData();
     setShouldRefetch(false);
   }, [shouldRefetch]);
@@ -151,10 +163,10 @@ export default function ContactView() {
                   Ülke:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {configData?.country?.name || 'No Country'}
+                  {configData.country.name || 'No Country'}
                 </Typography>
                 <Iconify
-                  icon={'flagpack:' + configData?.country?.code.toLowerCase()}
+                  icon={'flagpack:' + configData.country.code.toLowerCase()}
                   sx={{ borderRadius: 0.65, width: 40, height: 40, mr: 1 }}
                 />
               </Stack>
@@ -163,7 +175,7 @@ export default function ContactView() {
                   Vize türü:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {configData?.visaType?.name}
+                  {configData.visaType.name}
                 </Typography>
               </Stack>
               <Stack
@@ -181,9 +193,9 @@ export default function ContactView() {
               </Stack>
               <Stack direction="row" alignItems="start" sx={{ color: 'text.primary', mb: 2 }}>
                 <AdminMessage
-                  name={customerData?.adminName}
-                  description={customerData?.adminMessage}
-                  postedAt={customerData?.adminMessageTime}
+                  name={customerData.adminName}
+                  description={customerData.adminMessage}
+                  postedAt={customerData.adminMessageTime}
                 />
               </Stack>
             </Grid>
@@ -206,6 +218,7 @@ export default function ContactView() {
 }
 
 function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRefetch }) {
+  const [filesModalOpen, setFilesModalOpen] = useState(false);
   return (
     <Box
       sx={{
@@ -227,14 +240,26 @@ function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRe
 
         {customerData?.customers &&
           customerData?.customers?.map((customer, index) => (
-            <SideCard
-              key={`${index}_${customer}`}
-              customer={customer}
-              customerData={customerData}
-              setUserData={setCustomerData}
-              customerIndex={index}
-              setShouldRefetch={setShouldRefetch}
-            />
+            <>
+              <SideCard
+                onViewFiles={() => {
+                  setFilesModalOpen(true);
+                }}
+                key={`${index}_${customer}`}
+                customer={customer}
+                customerData={customerData}
+                setUserData={setCustomerData}
+                customerIndex={index}
+                setShouldRefetch={setShouldRefetch}
+              />
+              <HandDeliverFilesDialog
+                customer={customer}
+                open={filesModalOpen}
+                onClose={() => {
+                  setFilesModalOpen(false);
+                }}
+              ></HandDeliverFilesDialog>
+            </>
           ))}
       </Masonry>
     </Box>
