@@ -1,6 +1,5 @@
 // components
 import Iconify from 'src/components/iconify';
-import Label from 'src/components/label';
 import { fDateTime } from 'src/utils/format-time';
 
 import Avatar from '@mui/material/Avatar';
@@ -12,16 +11,15 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useConfigs } from 'src/hooks/use-configs';
-import BasicPopover from './PopOver';
-import AnalyticsTasks from './analytics-tasks';
-import FormDialog from './form-dialog';
+import AnalyticsTasks from '../analytics-tasks';
+import FormDialog from '../form-dialog';
 
 const icondoc = <Box component="img" src="/assets/icons/files/ic_document.svg" />;
 
 const avatarUrl = 'https://api-dev-minimal-v510.vercel.app/assets/images/avatar/avatar_2.jpg';
 // ----------------------------------------------------------------------
 
-export default function SideCard({
+export default function CustomerCard({
   customer,
   customerData,
   setUserData,
@@ -98,43 +96,6 @@ export default function SideCard({
     </>
   );
 
-  const renderFiles = (
-    <div>
-      <Label key={'info'} color={'info'} variant="soft" sx={{ mt: 1, mx: 1 }}>
-        <Iconify icon={'jam:document'}></Iconify>
-        <Typography sx={{ ml: 1 }} variant="h6">
-          Yanınızda getirmeniz gerekenler
-        </Typography>
-      </Label>
-      <Stack spacing={1} sx={{ pt: 1, pl: 1, pb: 0 }}>
-        {customer?.files
-          .filter((file) => !file?.requiredFileDetails?.uploadRequired)
-          .map((file, index) => (
-            <div key={`${index}_${file.name}`}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                sx={{ color: 'text.main', typography: 'caption', ml: 0 }}
-              >
-                <Stack direction="row" alignItems="center">
-                  <Iconify icon="fluent-mdl2:radio-bullet" width={10} sx={{}} />
-                  <Typography sx={{ ml: 1 }} variant="subtitle2">
-                    {file.requiredFileDetails?.fileName}
-                  </Typography>
-                </Stack>
-                <BasicPopover
-                  popoverText={file.requiredFileDetails.description}
-                  helpLink={file.requiredFileDetails.helpLink}
-                  iconSize={30}
-                  cricleSize={30}
-                />
-              </Stack>
-              <Divider sx={{ borderStyle: 'dashed' }} />
-            </div>
-          ))}
-      </Stack>
-    </div>
-  );
   const renderButtons = (
     <div>
       <Stack
@@ -166,7 +127,7 @@ export default function SideCard({
   );
 
   return (
-    <Card>
+    <Card sx={{ maxWidth: 500 }}>
       {renderCustomer}
 
       <Divider sx={{ borderStyle: 'dashed' }} />

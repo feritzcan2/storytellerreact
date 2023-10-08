@@ -23,9 +23,9 @@ import { GlobalContext } from 'src/context/GlobalProvider';
 import { useConfigs } from 'src/hooks/use-configs';
 import AdminMessage from './adminMessage';
 import ContactHero from './contact/contact-hero';
+import CustomerCard from './customerCard/CustomerCard';
 import HandDeliverFilesDialog from './customerCard/HandDeliverFilesDialog';
 import FormDialog from './form-dialog';
-import SideCard from './SideCard';
 
 // ----------------------------------------------------------------------
 
@@ -224,12 +224,10 @@ function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRe
       sx={{
         py: { md: 10 },
         height: { md: 1 },
-        overflow: 'hidden',
         hideScroll: true,
-        overflowX: 'hidden',
       }}
     >
-      <Masonry spacing={{ xs: 1, md: 3 }} columns={{ xs: 1, md: 2 }}>
+      <Masonry spacing={{ xs: 1, md: 3 }} columns={{ xs: 1, lg: 2, md: 1 }}>
         <FormDialog
           SelectedCustomerData={newCustomerBase}
           customerData={customerData}
@@ -241,7 +239,7 @@ function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRe
         {customerData?.customers &&
           customerData?.customers?.map((customer, index) => (
             <>
-              <SideCard
+              <CustomerCard
                 onViewFiles={() => {
                   setFilesModalOpen(true);
                 }}
