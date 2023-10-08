@@ -110,7 +110,7 @@ export default function FormDialog({
     });
     dialog.onFalse();
   };
-  console.log('submit form Data', formData);
+
   const onClickSubmit = async () => {
     console.log('submit form Data', formData);
     setLoading(true);
@@ -151,7 +151,9 @@ export default function FormDialog({
       ...formData,
       [name]: value,
     });
-    setTaxChange(true);
+    if (name === 'taxType') {
+      setTaxChange(true);
+    }
   };
 
   useEffect(() => {

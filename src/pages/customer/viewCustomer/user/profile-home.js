@@ -26,6 +26,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useConfigs } from 'src/hooks/use-configs';
 import UserQuickEditForm from '../../list/components/UserQuickEditForm';
 import OtherUsers from './otherUsers';
+import CustomerService from 'src/api/CustomerService';
 // ----------------------------------------------------------------------
 const accessKeyId = 'AKIA2BSIFJ6DJHWHWYUE';
 const secretAccessKey = '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';
@@ -43,32 +44,32 @@ export default function ProfileHome({ customer, session }) {
   const quickEdit = useBoolean();
   const params = useParams();
   const nav = useNavigate();
+  const { setClients } = CustomerService();
   const [uploadStatus, setUploadStatus] = useState(null);
   const { configs } = useContext(GlobalContext);
   const [filesData, setFilesData] = useState(customer?.files);
+  const [shouldSubmit, setShouldSubmit] = useState(false);
   console.log(customer);
   const configData = useConfigs(customer);
+
+  useEffect(() => {
+    if (shouldSubmit) {
+      setShouldSubmit(false);
+      onSubmit();
+    }
+  }, [shouldSubmit]);
+
   const uploadFile = async (sFile) => {
+    setUploadStatus(true);
     const params = {
       Bucket: S3_BUCKET,
-      Key: `${customer.id}__${sFile.name}`,
+      Key: `${customer.id}_${id}_${sFile.name}`,
       Body: sFile,
     };
-    console.log('upload Params', params);
-    var upload = s3
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        console.log('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
-        setUploadStatus('Uploading ' + parseInt((evt.loaded * 100) / evt.total) + '%');
-      })
-      .promise();
-
-    const cje = await upload.then((err, data) => {
-      setUploadStatus(null);
-      console.log(err);
-      console.log('upload file data', data);
-    });
-    console.log('upload file cje', cje);
+    const uploadedImage = await s3.upload(params).promise();
+    console.log('S3 Uploaded Image', uploadedImage);
+    setUploadStatus(false);
+    return uploadedImage.Location;
   };
 
   const handleFileChange = async (e, index) => {
@@ -83,13 +84,12 @@ export default function ProfileHome({ customer, session }) {
       fileSize: newFile.size,
       fileType: newFile.type,
       fileStatus: 1,
-      fileUrl:
-        'https://file-examples.com/storage/feaade38c1651bd01984236/2017/10/file-sample_150kB.pdf',
-      // newFile.fileUrl,
+      fileUrl: fileUrl,
     };
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
+    setShouldSubmit(true);
   };
 
   const handleAcceptReject = async (acceptReject, index) => {
@@ -101,6 +101,24 @@ export default function ProfileHome({ customer, session }) {
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
+    setShouldSubmit();
+  };
+
+  const onSubmit = async () => {
+    console.log('filesData >', filesData);
+    const updateCustomerrData = [...userData.customers];
+    updateCustomerrData[customerIndex] = {
+      ...userData.customers[customerIndex],
+      files: filesData,
+    };
+
+    let updatedUserData = userData;
+    updatedUserData = {
+      ...userData,
+      customers: updateCustomerrData,
+    };
+    await setClients(id, updatedUserData);
+    setShouldRefetch(true);
   };
 
   const renderEdit = (
