@@ -13,6 +13,7 @@ export default function DashboardService() {
           result !== undefined &&
           (result.data.error === null || result.data.error === undefined)
         ) {
+          debugger;
           console.log('notifications');
           console.log(result.data);
           setNotifications(result.data);

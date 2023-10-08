@@ -11,8 +11,8 @@ export default function BasicPopover({
   popoverText,
   helpLink,
   buttonIcon,
-  iconSize = 30,
-  cricleSize = 50,
+  iconSize = 15,
+  radius = 18,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -30,16 +30,15 @@ export default function BasicPopover({
   return (
     <div>
       <IconButton
-        aria-label="settings"
+        aria-label="Bilgi"
         onClick={handleClick}
         sx={{
-          width: cricleSize,
-          height: cricleSize,
-          background: 'rgba(145, 158, 171, 0.08);',
+          minWidth: radius,
+          minHeight: radius,
           marginLeft: 1,
         }}
       >
-        <Iconify icon={buttonIcon || 'jam:alert'} width={iconSize} height={iconSize} />
+        <Iconify width={radius} height={radius} icon={buttonIcon || 'raphael:question'} />
       </IconButton>
       <Popover
         id={id}
@@ -57,7 +56,7 @@ export default function BasicPopover({
           <a href={helpLink} target="_blank" style={{ cursor: 'pointer' }}>
             <Typography color={colors.blue[600]} sx={{ p: 2 }}>
               {'Example Link'}
-            </Typography>{' '}
+            </Typography>
           </a>
         )}
       </Popover>

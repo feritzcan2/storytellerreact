@@ -33,11 +33,11 @@ export default function UserQuickEditForm({ currentUser, open, onClose }) {
   const { configs } = useContext(GlobalContext);
 
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('İsim gerekli'),
-    surname: Yup.string().required('İsim gerekli'),
+    name: Yup.string(),
+    surname: Yup.string(),
     city: Yup.number().required('Şehir gerekli'),
-    email: Yup.string().email('Email  gerekli'),
-    phoneNumber: Yup.string().required('Phone number is required'),
+    email: Yup.string(),
+    phoneNumber: Yup.string(),
     country: Yup.number().required('Country is required'),
     visaType: Yup.number().required('Country is required'),
     taxType: Yup.number().required('Country is required'),

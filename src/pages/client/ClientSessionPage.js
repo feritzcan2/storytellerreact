@@ -23,6 +23,7 @@ import { GlobalContext } from 'src/context/GlobalProvider';
 import { useConfigs } from 'src/hooks/use-configs';
 import AdminMessage from './adminMessage';
 import ContactHero from './contact/contact-hero';
+import HandDeliverFilesDialog from './customerCard/HandDeliverFilesDialog';
 import FormDialog from './form-dialog';
 import SideCard from './SideCard';
 
@@ -217,6 +218,7 @@ export default function ContactView() {
 }
 
 function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRefetch }) {
+  const [filesModalOpen, setFilesModalOpen] = useState(false);
   return (
     <Box
       sx={{
@@ -238,14 +240,26 @@ function UsersCard({ customerData, setCustomerData, newCustomerBase, setShouldRe
 
         {customerData?.customers &&
           customerData?.customers?.map((customer, index) => (
-            <SideCard
-              key={`${index}_${customer}`}
-              customer={customer}
-              customerData={customerData}
-              setUserData={setCustomerData}
-              customerIndex={index}
-              setShouldRefetch={setShouldRefetch}
-            />
+            <>
+              <SideCard
+                onViewFiles={() => {
+                  setFilesModalOpen(true);
+                }}
+                key={`${index}_${customer}`}
+                customer={customer}
+                customerData={customerData}
+                setUserData={setCustomerData}
+                customerIndex={index}
+                setShouldRefetch={setShouldRefetch}
+              />
+              <HandDeliverFilesDialog
+                customer={customer}
+                open={filesModalOpen}
+                onClose={() => {
+                  setFilesModalOpen(false);
+                }}
+              ></HandDeliverFilesDialog>
+            </>
           ))}
       </Masonry>
     </Box>

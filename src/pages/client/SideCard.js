@@ -5,10 +5,12 @@ import { fDateTime } from 'src/utils/format-time';
 
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useConfigs } from 'src/hooks/use-configs';
 import BasicPopover from './PopOver';
 import AnalyticsTasks from './analytics-tasks';
@@ -26,6 +28,7 @@ export default function SideCard({
   customerIndex,
   uploadUserData,
   setShouldRefetch,
+  onViewFiles,
 }) {
   var configData = useConfigs(customer);
   const renderCustomer = (
@@ -74,18 +77,21 @@ export default function SideCard({
           justifyContent="space-between"
           sx={{ mt: 0.5, mb: 0.5 }}
         >
-          <Stack direction="row" alignItems="center" sx={{ color: 'text.primary', ml: 2 }}>
-            <Iconify icon="solar:calendar-date-bold" width={16} sx={{ mr: 0.5 }} />
-            {customer.appointmentDate ? fDateTime(customer.appointmentDate) : ' No Appointent'}
+          <Stack direction="column" alignItems="center" sx={{ color: 'text.primary', ml: 2 }}>
+            <Stack direction="row" alignItems="center">
+              <Iconify icon="solar:calendar-date-bold" width={16} sx={{ mr: 0.5 }} />
+              <Typography variant="subtitle1">Vize randevu tarihi</Typography>
+            </Stack>
+            <Typography variant="subtitle2">
+              {' '}
+              {customer.appointmentDate ? fDateTime(customer.appointmentDate) : ' Aranıyor'}
+            </Typography>
           </Stack>
-
-          <Stack
-            direction="row"
-            alignItems="center"
-            sx={{ color: 'text.secondary', typography: 'caption', ml: 2, mr: 2.5 }}
-          >
-            <Iconify icon="solar:users-group-rounded-bold" width={16} sx={{ mr: 0.5 }} />
-            {'Vergi türü:  '} {configData?.taxType.name}
+          <Stack direction="column" alignItems="center" sx={{ color: 'text.primary', mr: 2 }}>
+            <Stack direction="row" alignItems="center">
+              <Typography variant="subtitle1">Vergi türü</Typography>
+            </Stack>
+            <Typography variant="subtitle2">{configData?.taxType.name}</Typography>
           </Stack>
         </Stack>
       </Stack>
@@ -94,23 +100,27 @@ export default function SideCard({
 
   const renderFiles = (
     <div>
-      <Label color={'warning'} variant="soft" sx={{ mt: 1, mx: 1 }}>
-        Yanınızda getirmeniz gerekenler
+      <Label key={'info'} color={'info'} variant="soft" sx={{ mt: 1, mx: 1 }}>
+        <Iconify icon={'jam:document'}></Iconify>
+        <Typography sx={{ ml: 1 }} variant="h6">
+          Yanınızda getirmeniz gerekenler
+        </Typography>
       </Label>
-      <Stack spacing={1} sx={{ pt: 1, px: 1, pb: 2 }}>
+      <Stack spacing={1} sx={{ pt: 1, pl: 1, pb: 0 }}>
         {customer?.files
           .filter((file) => !file?.requiredFileDetails?.uploadRequired)
           .map((file, index) => (
             <div key={`${index}_${file.name}`}>
               <Stack
-                spacing={2}
                 direction="row"
                 alignItems="center"
-                sx={{ color: 'text.main', typography: 'caption', ml: 0, mt: 1 }}
+                sx={{ color: 'text.main', typography: 'caption', ml: 0 }}
               >
                 <Stack direction="row" alignItems="center">
-                  <Iconify icon="system-uicons:files-multi" width={16} sx={{ mr: 0.5 }} />
-                  {file.requiredFileDetails?.fileName}
+                  <Iconify icon="fluent-mdl2:radio-bullet" width={10} sx={{}} />
+                  <Typography sx={{ ml: 1 }} variant="subtitle2">
+                    {file.requiredFileDetails?.fileName}
+                  </Typography>
                 </Stack>
                 <BasicPopover
                   popoverText={file.requiredFileDetails.description}
@@ -125,7 +135,29 @@ export default function SideCard({
       </Stack>
     </div>
   );
+  const renderButtons = (
+    <div>
+      <Stack
+        direction={'column'}
+        spacing={1}
+        sx={{ height: '100%', justifyContent: 'space-evenly' }}
+      >
+        {customer.filesReady === false && (
+          <Button
+            variant={'soft'}
+            color="error"
+            startIcon={<Iconify icon="ic:round-access-alarm" />}
+          >
+            Eksik dosyaları yükle
+          </Button>
+        )}
 
+        <Button onClick={onViewFiles} variant={'soft'}>
+          Yanında getirmen gerekenler
+        </Button>
+      </Stack>
+    </div>
+  );
   const renderStatusList = (
     <>
       {/* <CardHeader title="Status" /> */}
@@ -139,12 +171,13 @@ export default function SideCard({
 
       <Divider sx={{ borderStyle: 'dashed' }} />
       <Divider sx={{ borderStyle: 'dashed' }} />
-      {renderFiles}
       {/* {renderStatusList} */}
 
       <Divider sx={{ borderStyle: 'dashed' }} />
       <Divider sx={{ borderStyle: 'dashed' }} />
-      {renderStatusList}
+      <Stack sx={{ mr: 2, ml: 2, justifyContent: 'space-between' }} direction={'row'}>
+        {renderStatusList} {renderButtons}
+      </Stack>
       {/* {renderFiles} */}
     </Card>
   );

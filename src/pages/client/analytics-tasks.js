@@ -3,10 +3,8 @@ import Iconify from 'src/components/iconify';
 import Label from 'src/components/label';
 
 import { Box } from '@mui/material';
-import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { _descriptions } from '../../_mock/assets';
 
 // ----------------------------------------------------------------------
 
@@ -14,11 +12,14 @@ export default function AnalyticsTasks({ list = [0], ...other }) {
   // const [selected] = useState([1, 2]);
 
   return (
-    <Card {...other}>
+    <Stack>
       <Label key={'info'} color={'info'} variant="soft" sx={{ mt: 1, mx: 1 }}>
-        Status
+        <Iconify icon={'solar:checklist-minimalistic-bold'}></Iconify>
+        <Typography sx={{ ml: 1 }} variant="h6">
+          Aşamalar
+        </Typography>
       </Label>
-      <Box padding={1} columnGap={1} rowGap={1} display="grid" gridTemplateColumns="repeat(2, 1fr)">
+      <Box padding={1} columnGap={1} rowGap={1} display="grid">
         {list.map((task, index) => (
           <TaskItem
             key={`${index}${task.order}`}
@@ -28,7 +29,7 @@ export default function AnalyticsTasks({ list = [0], ...other }) {
           />
         ))}
       </Box>
-    </Card>
+    </Stack>
   );
 }
 
