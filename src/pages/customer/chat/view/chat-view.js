@@ -14,7 +14,6 @@ import { useGetContacts, useGetConversation, useGetConversations } from 'src/api
 // components
 import { useSettingsContext } from 'src/components/settings';
 //
-import CustomerService from 'src/api/CustomerService';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import ChatHeaderCompose from '../chat-header-compose';
@@ -26,23 +25,22 @@ import ChatRoom from '../chat-room';
 
 // ----------------------------------------------------------------------
 
-export default function ChatView() {
+export default function ChatView({ customerId }) {
   const router = useRouter();
-
   const { user } = useMockedUser();
 
   const settings = useSettingsContext();
 
   const searchParams = useSearchParams();
-  const { getCustomerNames } = CustomerService();
 
-  const selectedConversationId = searchParams.get('id') || '';
+  const selectedConversationId = customerId || parseInt(searchParams.get('id')) || null;
 
   const [recipients, setRecipients] = useState([]);
   const [contacts, setContacts] = useState(null);
   const { customerList } = useContext(GlobalContext);
 
   const { conversations, conversationsLoading } = useGetConversations();
+  debugger;
   useEffect(() => {
     let contacts = useGetContacts(customerList);
     setContacts(contacts);
@@ -111,18 +109,18 @@ export default function ChatView() {
 
   if (contacts === null || contacts === undefined) return <LoadingScreen></LoadingScreen>;
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <Container>
       <Typography
         variant="h4"
         sx={{
           mb: { xs: 3, md: 5 },
         }}
       >
-        Chat
+        Mesajlaşma ( Whatsapp + Email)
       </Typography>
 
       <Stack component={Card} direction="row" sx={{ height: '72vh' }}>
-        {renderNav}
+        {customerId === undefined && renderNav}
 
         <Stack
           sx={{

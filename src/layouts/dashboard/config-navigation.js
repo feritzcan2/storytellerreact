@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import Label from 'src/components/label';
 
 // components
 import SvgColor from 'src/components/svg-color';
@@ -62,7 +63,12 @@ export function useNavData() {
           { title: 'Yeni Müşteri', path: paths.customer.newCustomer, icon: ICONS.dashboard },
           { title: 'Müşteri Detay', path: paths.customer.details, icon: ICONS.user },
           { title: 'Müşteri Listesi', path: paths.customer.customerList, icon: ICONS.ecommerce },
-          { title: 'Mesajlar', path: paths.customer.messages, icon: ICONS.ecommerce },
+          {
+            title: 'Mesajlar',
+            path: paths.customer.messages,
+            icon: ICONS.ecommerce,
+            info: <Label color="success">+32</Label>,
+          },
         ],
       },
 

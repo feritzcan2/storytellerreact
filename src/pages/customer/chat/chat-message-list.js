@@ -2,17 +2,17 @@ import PropTypes from 'prop-types';
 // @mui
 import Box from '@mui/material/Box';
 // components
-import Scrollbar from 'src/components/scrollbar';
 import Lightbox, { useLightBox } from 'src/components/lightbox';
+import Scrollbar from 'src/components/scrollbar';
 //
-import { useMessagesScroll } from './hooks';
 import ChatMessageItem from './chat-message-item';
+import { useMessagesScroll } from './hooks';
 
 // ----------------------------------------------------------------------
 
 export default function ChatMessageList({ messages = [], participants }) {
   const { messagesEndRef } = useMessagesScroll(messages);
-
+  debugger;
   const slides = messages
     .filter((message) => message.contentType === 'image')
     .map((message) => ({ src: message.body }));

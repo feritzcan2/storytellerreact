@@ -40,7 +40,7 @@ function getConversations(customers) {
   customers.forEach((customer) => {
     if (conv.length < 6)
       conv.push({
-        id: 'conv' + customer.id,
+        id: customer.id,
         participants: [
           {
             status: 'online',
