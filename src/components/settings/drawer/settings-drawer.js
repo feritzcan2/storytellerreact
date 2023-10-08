@@ -1,12 +1,12 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Drawer, { drawerClasses } from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 // theme
 import { paper } from 'src/theme/css';
 //
@@ -15,9 +15,6 @@ import Scrollbar from '../../scrollbar';
 //
 import { useSettingsContext } from '../context';
 import BaseOptions from './base-option';
-import LayoutOptions from './layout-options';
-import PresetsOptions from './presets-options';
-import StretchOptions from './stretch-options';
 import FullScreenOption from './fullscreen-option';
 
 // ----------------------------------------------------------------------
@@ -41,7 +38,7 @@ export default function SettingsDrawer() {
       sx={{ py: 2, pr: 1, pl: 2.5 }}
     >
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        Settings
+        Ayarlar
       </Typography>
 
       <Tooltip title="Reset">
@@ -61,7 +58,7 @@ export default function SettingsDrawer() {
   const renderMode = (
     <div>
       <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Mode
+        Koyu mod
       </Typography>
 
       <BaseOptions
@@ -73,86 +70,15 @@ export default function SettingsDrawer() {
     </div>
   );
 
-  const renderContrast = (
-    <div>
-      <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Contrast
-      </Typography>
+  const renderContrast = <div></div>;
 
-      <BaseOptions
-        value={settings.themeContrast}
-        onChange={(newValue) => settings.onUpdate('themeContrast', newValue)}
-        options={['default', 'bold']}
-        icons={['contrast', 'contrast_bold']}
-      />
-    </div>
-  );
+  const renderDirection = <div></div>;
 
-  const renderDirection = (
-    <div>
-      <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Direction
-      </Typography>
+  const renderLayout = <div></div>;
 
-      <BaseOptions
-        value={settings.themeDirection}
-        onChange={(newValue) => settings.onUpdate('themeDirection', newValue)}
-        options={['ltr', 'rtl']}
-        icons={['align_left', 'align_right']}
-      />
-    </div>
-  );
+  const renderStretch = <div></div>;
 
-  const renderLayout = (
-    <div>
-      <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Layout
-      </Typography>
-
-      <LayoutOptions
-        value={settings.themeLayout}
-        onChange={(newValue) => settings.onUpdate('themeLayout', newValue)}
-        options={['vertical', 'horizontal', 'mini']}
-      />
-    </div>
-  );
-
-  const renderStretch = (
-    <div>
-      <Typography
-        variant="caption"
-        component="div"
-        sx={{
-          ...labelStyles,
-          display: 'inline-flex',
-          alignItems: 'center',
-        }}
-      >
-        Stretch
-        <Tooltip title="Only available at large resolutions > 1600px (xl)">
-          <Iconify icon="eva:info-outline" width={16} sx={{ ml: 0.5 }} />
-        </Tooltip>
-      </Typography>
-
-      <StretchOptions
-        value={settings.themeStretch}
-        onChange={() => settings.onUpdate('themeStretch', !settings.themeStretch)}
-      />
-    </div>
-  );
-
-  const renderPresets = (
-    <div>
-      <Typography variant="caption" component="div" sx={{ ...labelStyles }}>
-        Presets
-      </Typography>
-
-      <PresetsOptions
-        value={settings.themeColorPresets}
-        onChange={(newValue) => settings.onUpdate('themeColorPresets', newValue)}
-      />
-    </div>
-  );
+  const renderPresets = <div></div>;
 
   return (
     <Drawer

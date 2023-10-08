@@ -16,13 +16,7 @@ import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 
-import {
-  AccountPopover,
-  ContactsPopover,
-  LanguagePopover,
-  NotificationsPopover,
-  SettingsButton,
-} from '../_common';
+import { AccountPopover, NotificationsPopover, SettingsButton } from '../_common';
 //
 import { HEADER, NAV } from '../config-layout';
 
@@ -62,11 +56,7 @@ export default function Header({ onOpenNav }) {
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1 }}
       >
-        <LanguagePopover />
-
         <NotificationsPopover />
-
-        <ContactsPopover />
 
         <SettingsButton />
 

@@ -1,6 +1,5 @@
 // _mock
 import { _userAbout } from 'src/_mock';
-import { useSettingsContext } from 'src/components/settings';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
@@ -13,7 +12,6 @@ import { useCallback, useState } from 'react';
 import Iconify from 'src/components/iconify';
 import Label from 'src/components/label';
 import { ChatView } from 'src/pages/customer/chat/view';
-import { useParams } from 'src/routes/hooks';
 import ProfileHome from '../profile-home';
 
 // ----------------------------------------------------------------------
@@ -35,8 +33,6 @@ const TABS = [
   },
 ];
 export default function UserProfileView({ customerId, session, setShouldRefetch }) {
-  const params = useParams();
-  const settings = useSettingsContext();
   const { user } = useMockedUser();
   const [currentTab, setCurrentTab] = useState('profile');
 
