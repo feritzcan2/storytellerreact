@@ -37,13 +37,13 @@ export default function ContactView() {
   const theme = useTheme();
   const params = useParams();
   const { configs } = useContext(GlobalContext);
-  const { id } = params;
   const { getCustomer } = CustomerService();
+  const { id } = params;
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [customerData, setCustomerData] = useState();
-  const { userData } = useContext(GlobalContext);
+  // const { userData } = useContext(GlobalContext);
 
   const newCustomerBase = {
     name: '',
@@ -151,10 +151,10 @@ export default function ContactView() {
                   Ülke:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {configData.country.name || 'No Country'}
+                  {configData?.country?.name || 'No Country'}
                 </Typography>
                 <Iconify
-                  icon={'flagpack:' + configData.country.code.toLowerCase()}
+                  icon={'flagpack:' + configData?.country?.code.toLowerCase()}
                   sx={{ borderRadius: 0.65, width: 40, height: 40, mr: 1 }}
                 />
               </Stack>
@@ -163,7 +163,7 @@ export default function ContactView() {
                   Vize türü:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {configData.visaType.name}
+                  {configData?.visaType?.name}
                 </Typography>
               </Stack>
               <Stack
@@ -181,9 +181,9 @@ export default function ContactView() {
               </Stack>
               <Stack direction="row" alignItems="start" sx={{ color: 'text.primary', mb: 2 }}>
                 <AdminMessage
-                  name={customerData.adminName}
-                  description={customerData.adminMessage}
-                  postedAt={customerData.adminMessageTime}
+                  name={customerData?.adminName}
+                  description={customerData?.adminMessage}
+                  postedAt={customerData?.adminMessageTime}
                 />
               </Stack>
             </Grid>

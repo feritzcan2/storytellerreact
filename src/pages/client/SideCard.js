@@ -85,7 +85,7 @@ export default function SideCard({
             sx={{ color: 'text.secondary', typography: 'caption', ml: 2, mr: 2.5 }}
           >
             <Iconify icon="solar:users-group-rounded-bold" width={16} sx={{ mr: 0.5 }} />
-            {'Vergi türü:  '} {configData?.taxType.name}
+            {'Vergi türü:  '} {configData?.taxType?.name}
           </Stack>
         </Stack>
       </Stack>
@@ -101,7 +101,7 @@ export default function SideCard({
         {customer?.files
           .filter((file) => !file?.requiredFileDetails?.uploadRequired)
           .map((file, index) => (
-            <div key={`${index}_${file.name}`}>
+            <div key={`${index}_${file?.name}`}>
               <Stack
                 spacing={2}
                 direction="row"
@@ -110,7 +110,7 @@ export default function SideCard({
               >
                 <Stack direction="row" alignItems="center">
                   <Iconify icon="system-uicons:files-multi" width={16} sx={{ mr: 0.5 }} />
-                  {file.requiredFileDetails?.fileName}
+                  {file?.requiredFileDetails?.fileName}
                 </Stack>
                 <BasicPopover
                   popoverText={file.requiredFileDetails.description}

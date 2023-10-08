@@ -50,9 +50,8 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
   const { configs } = useContext(GlobalContext);
   const [filesData, setFilesData] = useState(customer?.files);
   const [shouldSubmit, setShouldSubmit] = useState(false);
-  console.log(customer);
   const configData = useConfigs(customer);
-  const customerIndex = session.customers.findIndex((customer) => customer.id === id);
+  const customerIndex = session.customers.findIndex((customer) => customer.id == id);
 
   useEffect(() => {
     if (shouldSubmit) {
@@ -77,9 +76,7 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
-    console.log(fileUrl);
     const updatedFiles = [...filesData];
-    console.log('updatedFiles', updatedFiles);
     updatedFiles[index] = {
       ...updatedFiles[index],
       fileName: newFile.name,
@@ -88,7 +85,6 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
       fileStatus: 1,
       fileUrl: fileUrl,
     };
-    console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
     setShouldSubmit(true);
@@ -100,17 +96,15 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
       ...updatedFiles[index],
       fileStatus: acceptReject,
     };
-    console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
     setShouldSubmit(true);
   };
 
   const onSubmit = async () => {
-    console.log('filesData >', filesData);
     const updateCustomerrData = [...session.customers];
     updateCustomerrData[customerIndex] = {
-      ...session.customers[customerIndex],
+      ...updateCustomerrData[customerIndex],
       files: filesData,
     };
 
@@ -119,6 +113,7 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
       ...session,
       customers: updateCustomerrData,
     };
+    console.log('Final Data >', updatedsession);
     await setClients(id, updatedsession);
     setShouldRefetch(true);
   };
