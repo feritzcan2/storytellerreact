@@ -6,27 +6,10 @@ import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { _descriptions } from '../../_mock/assets';
 
 // ----------------------------------------------------------------------
 
-const steps = [
-  {
-    id: 1,
-    name: 'Files are uploaded',
-  },
-  {
-    id: 2,
-    name: 'Payment is done',
-  },
-  {
-    id: 3,
-    name: 'Appointment date is found',
-  },
-  {
-    id: 4,
-    name: 'Appointment is made',
-  },
-];
 export default function AnalyticsTasks({ list = [0], ...other }) {
   // const [selected] = useState([1, 2]);
 
@@ -36,11 +19,11 @@ export default function AnalyticsTasks({ list = [0], ...other }) {
         Status
       </Label>
       <Box padding={1} columnGap={1} rowGap={1} display="grid" gridTemplateColumns="repeat(2, 1fr)">
-        {steps.map((task) => (
+        {list.map((task, index) => (
           <TaskItem
-            key={task.id}
+            key={`${index}${task.order}`}
             task={task}
-            checked={list.includes(task.id)}
+            // checked={list.includes(task.succeed)}
             // onChange={() => {}}
           />
         ))}
@@ -57,7 +40,7 @@ AnalyticsTasks.propTypes = {
 
 // ----------------------------------------------------------------------
 
-function TaskItem({ task, checked }) {
+function TaskItem({ task }) {
   return (
     <>
       <Stack
@@ -71,7 +54,7 @@ function TaskItem({ task, checked }) {
           '&:not(:last-of-type)': {
             borderBottom: (theme) => `dashed 1px ${theme.palette.divider}`,
           },
-          ...(!checked && {
+          ...(!task.succeed && {
             color: 'text.disabled',
             textAlign: 'center',
             // textDecoration: 'line-through',
@@ -81,22 +64,17 @@ function TaskItem({ task, checked }) {
         <Iconify
           icon="ei:check"
           sx={{
-            color: checked ? 'primary.main' : 'text.disabled',
+            color: task.succeed ? 'primary.main' : 'text.disabled',
             marginRight: 0.5,
           }}
         />
         <Typography
           variant="caption"
-          color={checked ? 'text.main' : 'text.disabled'}
+          color={task.succeed ? 'text.main' : 'text.disabled'}
           sx={{ m: 0, mx: 0, textAlign: 'center' }}
         >
-          {task.name}
+          {task.description}
         </Typography>
-        {/* <FormControlLabel
-          control={<Checkbox checked={checked} />}
-          label={task.name}
-          sx={{ flexGrow: 1, m: 0 }}
-        /> */}
       </Stack>
     </>
   );
