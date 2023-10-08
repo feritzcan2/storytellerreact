@@ -16,7 +16,6 @@ import ConfigService from './api/ConfigService';
 import CountryService from './api/CountryService';
 import CustomerService from './api/CustomerService';
 import DashboardService from './api/DashboardService';
-import { LoadingScreen } from './components/loading-screen';
 import { isAuthenticated } from './context/AuthContext';
 import { GlobalContext } from './context/GlobalProvider';
 
@@ -61,7 +60,6 @@ AppMain
 
   useScrollToTop();
 
-  if (configs === null) return <LoadingScreen />;
   return (
     <Fragment>
       <Router />
