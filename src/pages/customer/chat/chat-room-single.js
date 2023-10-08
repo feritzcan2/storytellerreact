@@ -1,21 +1,23 @@
 import PropTypes from 'prop-types';
 // @mui
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
-import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
 import Iconify from 'src/components/iconify';
+import { useConfigs } from 'src/hooks/use-configs';
 
 // ----------------------------------------------------------------------
 
 export default function ChatRoomSingle({ participant }) {
   const collapse = useBoolean(true);
 
+  let configData = useConfigs(participant.customer);
   const { name, avatarUrl, role, address, phoneNumber, email } = participant;
 
   const renderInfo = (
@@ -43,7 +45,7 @@ export default function ChatRoomSingle({ participant }) {
       }}
     >
       <Box component="span" sx={{ flexGrow: 1 }}>
-        Information
+        Kişi bilgisi
       </Box>
       <Iconify
         width={16}
@@ -65,6 +67,21 @@ export default function ChatRoomSingle({ participant }) {
         },
       }}
     >
+      <Stack direction="row">
+        <Iconify
+          icon={'flagpack:' + configData.country.code.toLowerCase()}
+          sx={{ borderRadius: 0.65, width: 24, mr: 1 }}
+        />
+        <Box sx={{ typography: 'body2' }}>{configData.country.name || 'No Country'}</Box>
+      </Stack>
+      <Stack direction="row">
+        <Iconify icon="mingcute:location-fill" />
+        <Typography variant="body2">Randevu Tarihi: YOK</Typography>
+      </Stack>
+      <Stack direction="row">
+        <Iconify icon="solar:phone-bold" />
+        <Typography variant="body2">Alınan ödeme: 0 TL</Typography>
+      </Stack>
       <Stack direction="row">
         <Iconify icon="mingcute:location-fill" />
         <Typography variant="body2">{address}</Typography>

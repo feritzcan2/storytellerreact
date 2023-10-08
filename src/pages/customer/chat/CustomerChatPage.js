@@ -13,7 +13,9 @@ export default function CustomerChatPage() {
   const { configs } = useContext(GlobalContext);
   console.log(configs);
   const settings = useSettingsContext();
-  if (configs === null) return <LoadingScreen />;
+  const { customerList } = useContext(GlobalContext);
+
+  if (configs === null || customerList === null) return <LoadingScreen />;
   return (
     <>
       <Helmet>

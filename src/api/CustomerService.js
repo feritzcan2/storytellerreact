@@ -4,7 +4,7 @@ import { GlobalContext } from '../context/GlobalProvider';
 import api from './api';
 
 export default function CustomerService() {
-  let { setCustomers, customerList } = useContext(GlobalContext);
+  let { setCustomers, customerList, setCustomerNames } = useContext(GlobalContext);
 
   const getCustomers = async (data, errorMsg) => {
     return api
@@ -83,6 +83,7 @@ export default function CustomerService() {
           result !== undefined &&
           (result.data.error === null || result.data.error === undefined)
         ) {
+          setCustomerNames(result.data);
           return result.data;
         } else {
           if (errorMsg !== undefined) errorMsg(result.data.error.message);

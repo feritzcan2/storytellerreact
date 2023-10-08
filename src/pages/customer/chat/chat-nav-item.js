@@ -1,6 +1,5 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 // @mui
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -17,7 +16,6 @@ import { paths } from 'src/routes/paths';
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 import { useResponsive } from 'src/hooks/use-responsive';
 // api
-import { clickConversation } from 'src/api/chat';
 //
 import { useGetNavItem } from './hooks';
 
@@ -40,19 +38,17 @@ export default function ChatNavItem({ selected, collapse, conversation, onCloseM
 
   const { name, avatarUrl, status } = singleParticipant;
 
-  const handleClickConversation = useCallback(async () => {
+  const handleClickConversation = () => {
     try {
       if (!mdUp) {
         onCloseMobile();
       }
 
-      await clickConversation(conversation.id);
-
       router.push(`${paths.customer.messages}?id=${conversation.id}`);
     } catch (error) {
       console.error(error);
     }
-  }, [conversation.id, mdUp, onCloseMobile, router]);
+  };
 
   const renderGroup = (
     <Badge

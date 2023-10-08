@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 // @mui
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
@@ -10,12 +10,13 @@ import { paths } from 'src/routes/paths';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 // api
-import { useGetConversation, useGetConversations } from 'src/api/chat';
+import { useGetContacts, useGetConversation, useGetConversations } from 'src/api/chat';
 // components
 import { useSettingsContext } from 'src/components/settings';
 //
 import CustomerService from 'src/api/CustomerService';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { GlobalContext } from 'src/context/GlobalProvider';
 import ChatHeaderCompose from '../chat-header-compose';
 import ChatHeaderDetail from '../chat-header-detail';
 import ChatMessageInput from '../chat-message-input';
@@ -39,8 +40,13 @@ export default function ChatView() {
 
   const [recipients, setRecipients] = useState([]);
   const [contacts, setContacts] = useState(null);
+  const { customerList } = useContext(GlobalContext);
 
   const { conversations, conversationsLoading } = useGetConversations();
+  useEffect(() => {
+    let contacts = useGetContacts(customerList);
+    setContacts(contacts);
+  }, [customerList]);
 
   const { conversation, conversationError } = useGetConversation(`${selectedConversationId}`);
 
@@ -48,37 +54,7 @@ export default function ChatView() {
     ? conversation.participants.filter((participant) => participant.id !== `${user.id}`)
     : [];
 
-  async function getContacts() {
-    var customers = await getCustomerNames();
-
-    let contacts = [];
-    customers.forEach((x) => {
-      contacts.push({
-        status: 'online',
-        id: '' + x.id,
-        avatarUrl: 'https://api-prod-minimal-v510.vercel.app/assets/images/avatar/avatar_1.jpg',
-        email: x.email,
-        lastActivity: '2023-10-07T23:52:32.830Z',
-        name: x.fullName,
-        phoneNumber: x.phone,
-        role: 'Müşteri',
-      });
-    });
-
-    return {
-      contacts: contacts || [],
-    };
-  }
   useEffect(() => {
-    getContacts().then((x) => {
-      setContacts(x);
-    });
-  }, []);
-  useEffect(() => {
-    getContacts().then((x) => {
-      setContacts(x);
-    });
-
     if (conversationError || !selectedConversationId) {
       router.push(paths.dashboard.chat);
     }
@@ -104,7 +80,6 @@ export default function ChatView() {
       )}
     </Stack>
   );
-  debugger;
   const renderNav = (
     <ChatNav
       contacts={contacts}
@@ -134,8 +109,7 @@ export default function ChatView() {
     </Stack>
   );
 
-  if (contacts === null) return <LoadingScreen></LoadingScreen>;
-
+  if (contacts === null || contacts === undefined) return <LoadingScreen></LoadingScreen>;
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Typography

@@ -8,6 +8,7 @@ const initialState = {
   configs: null,
   notifications: [],
   dashboardData: null,
+  customerNames: null,
   calendarData: null,
 };
 
@@ -55,7 +56,12 @@ export const GlobalProvider = ({ children }) => {
       payload: data,
     });
   }
-
+  function setCustomerNames(data) {
+    dispatch({
+      type: 'SET_CUSTOMER_NAMES',
+      payload: data,
+    });
+  }
   function setUserData(data) {
     dispatch({
       type: 'SET_USER_DATA',
@@ -80,6 +86,8 @@ export const GlobalProvider = ({ children }) => {
         setDashboardData: setDashboardData,
         setCalendarData: setCalendarData,
         calendarData: state.calendarData,
+        setCustomerNames: setCustomerNames,
+        customerNames: state.customerNames,
       }}
     >
       {children}

@@ -1,28 +1,28 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material/styles';
 // hooks
 import { useResponsive } from 'src/hooks/use-responsive';
 // routes
-import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
+import { paths } from 'src/routes/paths';
 // components
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 //
-import { useCollapseNav } from './hooks';
-import ChatNavItem from './chat-nav-item';
 import ChatNavAccount from './chat-nav-account';
-import { ChatNavItemSkeleton } from './chat-skeleton';
+import ChatNavItem from './chat-nav-item';
 import ChatNavSearchResults from './chat-nav-search-results';
+import { ChatNavItemSkeleton } from './chat-skeleton';
+import { useCollapseNav } from './hooks';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,6 @@ const NAV_COLLAPSE_WIDTH = 96;
 
 export default function ChatNav({ loading, contacts, conversations, selectedConversationId }) {
   const theme = useTheme();
-
   const router = useRouter();
 
   const mdUp = useResponsive('up', 'md');

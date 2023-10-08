@@ -14,6 +14,7 @@ import Router from 'src/routes/sections';
 import AuthService from './api/AuthService';
 import ConfigService from './api/ConfigService';
 import CountryService from './api/CountryService';
+import CustomerService from './api/CustomerService';
 import DashboardService from './api/DashboardService';
 import { LoadingScreen } from './components/loading-screen';
 import { isAuthenticated } from './context/AuthContext';
@@ -25,6 +26,7 @@ export default function AppMain() {
   const { getCountryData } = CountryService();
   const { getUserData } = AuthService();
   const { getConfigs } = ConfigService();
+  const { getCustomers } = CustomerService();
   const { getNotifications } = DashboardService();
 
   const { configs } = useContext(GlobalContext);
@@ -35,6 +37,7 @@ export default function AppMain() {
       getConfigs();
       getCountryData();
       getNotifications();
+      getCustomers();
     }
     setInterval(() => {
       if (isAuthenticated()) {
