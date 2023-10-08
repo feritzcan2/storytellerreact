@@ -52,7 +52,7 @@ const getEvents = (calendarData) => {
       description: element.description,
       date: element.date,
       allDay: true,
-      title: element.title,
+      title: element.description,
       editable: false,
     });
   });

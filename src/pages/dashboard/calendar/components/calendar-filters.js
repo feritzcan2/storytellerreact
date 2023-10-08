@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
+import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 // @mui
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
-import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
+import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // utils
 import { fDateTime } from 'src/utils/format-time';
 // components
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { ColorPicker } from 'src/components/color-utils';
+import Iconify from 'src/components/iconify';
+import Scrollbar from 'src/components/scrollbar';
 
 // ----------------------------------------------------------------------
 
@@ -158,7 +158,7 @@ export default function CalendarFilters({
               disableTypography
               primary={
                 <Typography variant="subtitle2" sx={{ fontSize: 13, mt: 0.5 }}>
-                  {event.title}
+                  {event.description}
                 </Typography>
               }
               secondary={
