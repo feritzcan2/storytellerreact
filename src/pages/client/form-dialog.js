@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import AWS from 'aws-sdk';
 import Iconify from 'src/components/iconify';
@@ -66,9 +66,11 @@ export default function FormDialog({
   setShouldRefetch,
 }) {
   const { configs } = useContext(GlobalContext);
-  const filesData = SelectedCustomerData.files;
-  const { setClients } = CustomerService();
+  const params = useParams();
   const dialog = useBoolean();
+  const { setClients } = CustomerService();
+  const filesData = SelectedCustomerData.files;
+  const [taxChange, setTaxChange] = useState(false);
   const [formData, setFormData] = useState(
     SelectedCustomerData || {
       name: '',
@@ -82,7 +84,6 @@ export default function FormDialog({
 
   const [loading, setLoading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(null);
-  const params = useParams();
 
   const { id } = params;
   const uploadFile = async (sFile) => {
@@ -109,8 +110,9 @@ export default function FormDialog({
     });
     dialog.onFalse();
   };
-
+  console.log('submit form Data', formData);
   const onClickSubmit = async () => {
+    console.log('submit form Data', formData);
     setLoading(true);
     if (!formData.name || !formData.surname || !formData.email || !formData.phone) {
       alert('Please fill in all required fields (Name, Surname, Email, Phone)');
@@ -143,16 +145,22 @@ export default function FormDialog({
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
-    if (name === 'taxType') {
+    setTaxChange(true);
+  };
+
+  useEffect(() => {
+    if (taxChange) {
+      setTaxChange(false);
       onClickSubmit();
     }
-  };
+  }, [taxChange]);
+
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
