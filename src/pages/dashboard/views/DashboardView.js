@@ -24,7 +24,8 @@ import InvoiceAnalytic from './invoice-analytic';
 export default function DashboardView() {
   const { user } = useMockedUser();
   const { countryAppointmentData, dashboardData, configs } = useContext(GlobalContext);
-
+  console.log(dashboardData);
+  console.log(configs);
   var { getDashboardData } = DashboardService();
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function DashboardView() {
             <ClosestAppointmentComponent
               configs={configs}
               title="Yaklaşan Randevular"
-              data={dashboardData?.closestAppointments}
+              data={dashboardData}
               list={_appInstalled}
             />
           </Grid>

@@ -24,13 +24,14 @@ export default function ClosestAppointmentComponent({
   data,
   ...other
 }) {
+  console.log(data);
   if ((data === null) | (data === undefined) || configs === null) return <LoadingScreen />;
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {orderBy(data, ['date'], ['asc']).map((author, index) => (
+        {orderBy(data.closestAppointments, ['date'], ['asc']).map((author, index) => (
           <AuthorItem
             cities={configs.cities}
             countries={configs.countries}

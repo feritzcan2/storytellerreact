@@ -1,11 +1,11 @@
-import { Navigate } from 'react-router-dom';
-import { setToken, logout } from '../context/AuthContext';
-import api from './api';
-import { GlobalContext } from '../context/GlobalProvider';
 import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { logout, setToken } from '../context/AuthContext';
+import { GlobalContext } from '../context/GlobalProvider';
+import api from './api';
 
 export default function UserAuth() {
-  let { setUserData } = useContext(GlobalContext);
+  let { setUserData, setConfigs } = useContext(GlobalContext);
 
   const setUserContext = async (result) => {
     setToken(result.data.tokenData.jwtToken, result.data.tokenData.jwtToken.organisationId);
@@ -19,6 +19,8 @@ export default function UserAuth() {
       .then(async (result) => {
         if (result.data.error === null || result.data.error === undefined) {
           setUserData(result.data);
+          debugger;
+          setConfigs(result.data.configs);
         } else {
           if (errorMsg) errorMsg(result.data.error.message);
         }
@@ -40,6 +42,7 @@ export default function UserAuth() {
         password,
       })
       .then(async (result) => {
+        debugger;
         if (result.data.error === null) {
           await setUserContext(result);
         } else {
