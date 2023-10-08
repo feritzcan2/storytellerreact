@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 // sections
 import Grid from '@mui/material/Unstable_Grid2';
 
+import ConfigService from 'src/api/ConfigService';
 import CustomerService from 'src/api/CustomerService';
 import Iconify from 'src/components/iconify';
 import { GlobalContext } from 'src/context/GlobalProvider';
@@ -37,10 +38,12 @@ export default function ContactView() {
   const theme = useTheme();
   const params = useParams();
   const { configs } = useContext(GlobalContext);
+  const [isLoading, setIsLoading] = useState(configs === null);
+
   const { id } = params;
   const { getCustomer } = CustomerService();
+  const { getConfigs } = ConfigService();
   const [shouldRefetch, setShouldRefetch] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [customerData, setCustomerData] = useState();
   const { userData } = useContext(GlobalContext);
@@ -58,10 +61,18 @@ export default function ContactView() {
   const getUserData = async () => {
     setIsLoading(true);
     setCustomerData(await getCustomer(id));
-    setIsLoading(false);
+    if (configs !== null) setIsLoading(false);
+  };
+  const fetchConfigs = async () => {
+    setIsLoading(true);
+    await getConfigs();
+    if (customerData !== null) setIsLoading(false);
   };
 
   useEffect(() => {
+    if (configs === null) {
+      fetchConfigs();
+    }
     getUserData();
     setShouldRefetch(false);
   }, [shouldRefetch]);
