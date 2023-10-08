@@ -15,7 +15,6 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 // utils
 import { fDateTime } from 'src/utils/format-time';
 // api
-import { deleteEvent } from 'src/api/calendar';
 // components
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -30,7 +29,7 @@ import CalendarService from 'src/api/CalendarService';
 export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { addCalendarEntry } = CalendarService();
+  const { addCalendarEntry, removeCalendarEntry } = CalendarService();
 
   const EventSchema = Yup.object().shape({
     title: Yup.string().max(255).required('Başlık gerekli'),
@@ -75,7 +74,7 @@ export default function CalendarForm({ currentEvent, colorOptions, onClose }) {
 
   const onDelete = useCallback(async () => {
     try {
-      await deleteEvent(`${currentEvent?.id}`);
+      if (currentEvent.editable === true) await removeCalendarEntry(`${currentEvent?.id}`);
       enqueueSnackbar('Delete success!');
       onClose();
     } catch (error) {

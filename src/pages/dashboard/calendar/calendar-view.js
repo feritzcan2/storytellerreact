@@ -64,7 +64,7 @@ const getEvents = (calendarData) => {
       date: element.date,
       allDay: true,
       title: element.title,
-      editable: false,
+      editable: true,
     });
   });
 

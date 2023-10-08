@@ -47,8 +47,27 @@ export default function CalendarService() {
           );
       });
   };
+  const removeCalendarEntry = async (id) => {
+    return api
+      .delete('calendar?id=' + id)
+      .then(async (result) => {
+        let newData = { ...calendarData };
+        let newEntries = [...calendarData.entries];
+        newEntries = newEntries.filter((customer) => customer.id !== parseInt(id));
+        newData.entries = newEntries;
+        setCalendarData(newData);
+      })
+      .catch((err) => {
+        if (errorMsg !== undefined)
+          errorMsg(
+            'Sistemsel bir hata var. Lütfen yetkiliye başvurun.İletişim: feritzcan93@gmail.com',
+            'danger'
+          );
+      });
+  };
 
   return {
+    removeCalendarEntry,
     getCalendar,
     addCalendarEntry,
   };
