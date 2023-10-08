@@ -18,7 +18,7 @@ export default function MainContainer({ children }) {
   const { getCountryData } = CountryService();
   const { getUserData } = AuthService();
   const { getConfigs } = ConfigService();
-  const { getCustomers } = CustomerService();
+  const { getCustomers, getCustomerNames } = CustomerService();
   const { getNotifications } = DashboardService();
   const { configs } = useContext(GlobalContext);
   const [loaded, setLoaded] = useState(configs !== null);
@@ -32,6 +32,7 @@ export default function MainContainer({ children }) {
       loadData();
       getCountryData();
       getNotifications();
+      getCustomerNames();
       getCustomers();
     } else if (loaded === false) setLoaded(true);
   }, [configs]);
