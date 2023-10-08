@@ -33,8 +33,8 @@ export default function MainContainer({ children }) {
       getCountryData();
       getNotifications();
       getCustomers();
-    }
-  }, []);
+    } else if (loaded === false) setLoaded(true);
+  }, [configs]);
 
   if (!loaded) return <LoadingScreen />;
 
