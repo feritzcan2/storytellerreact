@@ -252,7 +252,7 @@ function getConversations(customers) {
           },
           {
             id: '8bd65dd0-ad04-4169-8b9e-4afbse6fcb',
-            body: 'www.vizedefteri.com',
+            body: 'https://globalvisa.vizedefteri.com/kolayBasvuru/' + customer.id,
             contentType: 'text',
             attachments: [
               {
