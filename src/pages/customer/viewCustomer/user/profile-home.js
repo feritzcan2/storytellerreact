@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import AWS from 'aws-sdk';
 import PropTypes from 'prop-types';
@@ -40,9 +40,10 @@ const s3 = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
 });
-export default function ProfileHome({ customer, session }) {
+export default function ProfileHome({ customer, session, setShouldRefetch }) {
   const quickEdit = useBoolean();
   const params = useParams();
+  const { id } = params;
   const nav = useNavigate();
   const { setClients } = CustomerService();
   const [uploadStatus, setUploadStatus] = useState(null);
@@ -51,6 +52,7 @@ export default function ProfileHome({ customer, session }) {
   const [shouldSubmit, setShouldSubmit] = useState(false);
   console.log(customer);
   const configData = useConfigs(customer);
+  const customerIndex = session.customers.findIndex((customer) => customer.id === id);
 
   useEffect(() => {
     if (shouldSubmit) {
@@ -101,23 +103,23 @@ export default function ProfileHome({ customer, session }) {
     console.log('updatedFiles', updatedFiles[index]);
     // Update the files at the specified index
     setFilesData(updatedFiles);
-    setShouldSubmit();
+    setShouldSubmit(true);
   };
 
   const onSubmit = async () => {
     console.log('filesData >', filesData);
-    const updateCustomerrData = [...userData.customers];
+    const updateCustomerrData = [...session.customers];
     updateCustomerrData[customerIndex] = {
-      ...userData.customers[customerIndex],
+      ...session.customers[customerIndex],
       files: filesData,
     };
 
-    let updatedUserData = userData;
-    updatedUserData = {
-      ...userData,
+    let updatedsession = session;
+    updatedsession = {
+      ...session,
       customers: updateCustomerrData,
     };
-    await setClients(id, updatedUserData);
+    await setClients(id, updatedsession);
     setShouldRefetch(true);
   };
 
