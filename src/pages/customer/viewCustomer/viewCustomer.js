@@ -4,7 +4,6 @@ import CustomerService from 'src/api/CustomerService';
 import { LoadingScreen } from 'src/components/loading-screen';
 
 import { Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import MainContainer from 'src/pages/mainContainer';
 import UserProfileView from './user/view/user-profile-view';
@@ -51,37 +50,28 @@ export default function ViewCustomer(id) {
 
   if (!userData || error) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignContent: 'center',
-          textAlign: 'center',
-          width: '100vw',
-          height: '100vh',
-        }}
-      >
-        <Typography variant="h2" sx={{ margin: 1, color: 'text.primary' }}>
-          No Data try again Later
-        </Typography>
-      </div>
+      <MainContainer>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignContent: 'center',
+            textAlign: 'center',
+            width: '100vw',
+            height: '100vh',
+          }}
+        >
+          <Typography variant="h2" sx={{ margin: 1, color: 'text.primary' }}>
+            No Data try again Later
+          </Typography>
+        </div>{' '}
+      </MainContainer>
     );
   }
   return (
     <MainContainer>
-      <Grid
-        flexDirection={'column'}
-        display={'flex'}
-        height={'100%'}
-        justifyContent={'space-between'}
-      >
-        <UserProfileView
-          customerId={id.id}
-          session={userData}
-          setShouldRefetch={setShouldRefetch}
-        />
-      </Grid>
+      <UserProfileView customerId={id.id} session={userData} setShouldRefetch={setShouldRefetch} />
     </MainContainer>
   );
 }
