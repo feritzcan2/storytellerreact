@@ -50,8 +50,7 @@ const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 export default function UserListView(props) {
   const { configs } = useContext(GlobalContext);
 
-  if (props.tableData === null || props.tableData === undefined || configs === null)
-    return <LoadingScreen />;
+  if (props.tableData === null || props.tableData === undefined) return <LoadingScreen />;
 
   const { columns, customers } = props.tableData;
   const [TABLE_HEAD, setTableHead] = useState([]);
