@@ -1,19 +1,17 @@
 import * as React from 'react';
 // @mui
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
+import { alpha } from '@mui/material/styles';
 
 // components
-import { useSettingsContext } from 'src/components/settings';
 import { useTheme } from '@emotion/react';
-import { Card, CardHeader, Stack } from '@mui/material';
-import { bgGradient } from 'src/theme/css';
-import ComponentBlock from 'src/pages/component-block';
+import { Stack, colors } from '@mui/material';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { useSettingsContext } from 'src/components/settings';
+import { bgGradient } from 'src/theme/css';
 
 // ----------------------------------------------------------------------
 
@@ -47,8 +45,8 @@ export default function AvailableDatesView(props) {
 
   if (props.countryData === undefined) return <LoadingScreen />;
   return (
-    <Container sx={{ minHeight: '40vh' }} maxWidth={settings.themeStretch ? false : 'xl'}>
-      <Typography variant="h4">
+    <>
+      <Typography color={colors.brown[400]} variant="h6">
         {props.countryData.name.charAt(0).toLocaleUpperCase('tr-TR') +
           props.countryData.name.slice(1)}{' '}
         için uygun tarihler
@@ -112,7 +110,7 @@ export default function AvailableDatesView(props) {
             );
           })}
       </Box>
-    </Container>
+    </>
   );
 }
 

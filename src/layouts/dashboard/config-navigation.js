@@ -61,8 +61,8 @@ export function useNavData() {
         subheader: 'Müşteri Yönetimi',
         items: [
           { title: 'Yeni Müşteri', path: paths.customer.newCustomer, icon: ICONS.dashboard },
-          { title: 'Müşteri Detay', path: paths.customer.details, icon: ICONS.user },
-          { title: 'Müşteri Listesi', path: paths.customer.customerList, icon: ICONS.ecommerce },
+          { title: 'Müşteri Bul', path: paths.customer.details, icon: ICONS.external },
+          { title: 'Müşteri Listesi', path: paths.customer.customerList, icon: ICONS.user },
           {
             title: 'Mesajlar',
             path: paths.customer.messages,
@@ -89,15 +89,15 @@ export function useNavData() {
               { title: 'İtalya', path: paths.countryTracking.countries.italya },
             ],
           },
+        ],
+      },
+      {
+        subheader: 'Ayarlar',
+        items: [
           {
             title: 'Bildirim Ayarları',
             path: paths.countryTracking.notifications,
             icon: ICONS.ecommerce,
-          },
-          {
-            title: 'Client Page',
-            path: paths.client.clientPage,
-            icon: ICONS.booking,
           },
         ],
       },

@@ -1,10 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { useSettingsContext } from 'src/components/settings';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import MainContainer from 'src/pages/mainContainer';
 import CustomerEditForm from './components/CustomerEditForm';
 
 // ----------------------------------------------------------------------
@@ -20,9 +21,9 @@ export default function CreateCustomerPage() {
         <title> Müşteri Ekle</title>
       </Helmet>
       <Typography variant="h4">Yeni müşteri ekle</Typography>
-      <Container sx={{ marginLeft: 0 }} maxWidth={settings.themeStretch ? false : 'lg'}>
+      <MainContainer>
         <CustomerEditForm configs={configs} />
-      </Container>
+      </MainContainer>
     </>
   );
 }

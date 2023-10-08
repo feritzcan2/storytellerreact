@@ -1,9 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import AvailableDatesView from './views/AvailableDatesView';
+import { Typography } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { useContext } from 'react';
 import { GlobalContext } from 'src/context/GlobalProvider';
-import Grid from '@mui/material/Unstable_Grid2';
+import MainContainer from '../mainContainer';
+import AvailableDatesView from './views/AvailableDatesView';
 import TrackingDatesView from './views/TrackingDatesView';
 
 // ----------------------------------------------------------------------
@@ -17,12 +19,17 @@ export default function CountryTrackerPage(props) {
   return (
     <>
       <Helmet>
-        <title> CountryTrackerPage: ss</title>
+        <title> Ülkeler</title>
       </Helmet>
-      <Grid flexDirection={'column'} display={'flex'} height={'100%'}>
-        <AvailableDatesView country={props.country} countryData={countryAppointmentData[index]} />
-        <TrackingDatesView country={props.country} countryData={countryAppointmentData[index]} />
-      </Grid>
+
+      <Typography variant="h4">Ülke randevu bilgisi</Typography>
+
+      <MainContainer>
+        <Grid flexDirection={'column'} display={'flex'}>
+          <AvailableDatesView country={props.country} countryData={countryAppointmentData[index]} />
+          <TrackingDatesView country={props.country} countryData={countryAppointmentData[index]} />
+        </Grid>
+      </MainContainer>
     </>
   );
 }

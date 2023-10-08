@@ -1,47 +1,41 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback, useContext } from 'react';
+import { useCallback, useContext, useState } from 'react';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
-import Tooltip from '@mui/material/Tooltip';
+import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
+import Tooltip from '@mui/material/Tooltip';
+import Grid from '@mui/material/Unstable_Grid2';
 // routes
-import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 // _mock
-import { _userList, _roles, USER_STATUS_OPTIONS } from 'src/_mock';
+import { _roles, _userList } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
+import { ConfirmDialog } from 'src/components/custom-dialog';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import { ConfirmDialog } from 'src/components/custom-dialog';
 import { useSettingsContext } from 'src/components/settings';
 import {
-  useTable,
-  emptyRows,
-  TableNoData,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
+  TableNoData,
   TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
 } from 'src/components/table';
 //
-import UserTableRow from './components/user-table-row';
-import UserTableToolbar from './components/user-table-row';
-import CountryService from 'src/api/CountryService';
-import { GlobalContext } from 'src/context/GlobalProvider';
-import EmptyContent from 'src/components/empty-content/empty-content';
 import { TableCell } from '@mui/material';
+import CountryService from 'src/api/CountryService';
+import EmptyContent from 'src/components/empty-content/empty-content';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { GlobalContext } from 'src/context/GlobalProvider';
+import { default as UserTableRow, default as UserTableToolbar } from './components/user-table-row';
 
 // ----------------------------------------------------------------------
 
@@ -126,10 +120,7 @@ export default function EmailList() {
 
   return (
     <>
-      <Grid
-        sx={{ minHeight: 560, maxHeight: 560, mt: 10 }}
-        maxWidth={settings.themeStretch ? false : 'xl'}
-      >
+      <Grid sx={{ minHeight: 560 }}>
         <Card>
           <Container
             sx={{

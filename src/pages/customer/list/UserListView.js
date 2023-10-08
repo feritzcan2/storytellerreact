@@ -3,7 +3,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 // @mui
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
 import Table from '@mui/material/Table';
@@ -38,6 +37,7 @@ import {
 import CustomerService from 'src/api/CustomerService';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import MainContainer from 'src/pages/mainContainer';
 import UserTableFiltersResult from './components/UserTableFiltersResult';
 import UserTableRow from './components/UserTableRow';
 import UserTableToolbar from './components/UserTableToolbar';
@@ -149,189 +149,181 @@ export default function UserListView(props) {
   }, []);
 
   return (
-    <>
-      <Container
-        sx={{ minWidth: '100%', padding: 0, margin: 0 }}
-        maxWidth={settings.themeStretch ? false : 'lg'}
-      >
-        <Card>
-          {columns
-            .filter(
-              (column) =>
-                column.filter !== undefined &&
-                column.filter !== null &&
-                filters[column.key] !== undefined
-            )
-            .map((column) => {
-              return (
-                <Tabs
-                  key={column.key}
-                  value={filters[column.key]}
-                  onChange={(event, value) => {
-                    handleFilterStatus(event, value, column.key);
-                  }}
-                  sx={{
-                    px: 2.5,
-                    boxShadow: (theme) =>
-                      `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
-                  }}
-                >
-                  {column.filter.isNullFilter === true &&
-                    column.filter.options.map((filter, index) => {
-                      return (
-                        <Tab
-                          key={filter.label + index}
-                          iconPosition="end"
-                          value={filter.value}
-                          label={filter.label}
-                          icon={
-                            <Label
-                              variant={(filters[column.key] == filter.value && 'filled') || 'soft'}
-                              color={colors[index % colors.length]}
-                            >
-                              {filter.value === -1 && customers.length}
+    <MainContainer>
+      <Card>
+        {columns
+          .filter(
+            (column) =>
+              column.filter !== undefined &&
+              column.filter !== null &&
+              filters[column.key] !== undefined
+          )
+          .map((column) => {
+            return (
+              <Tabs
+                key={column.key}
+                value={filters[column.key]}
+                onChange={(event, value) => {
+                  handleFilterStatus(event, value, column.key);
+                }}
+                sx={{
+                  px: 2.5,
+                  boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+                }}
+              >
+                {column.filter.isNullFilter === true &&
+                  column.filter.options.map((filter, index) => {
+                    return (
+                      <Tab
+                        key={filter.label + index}
+                        iconPosition="end"
+                        value={filter.value}
+                        label={filter.label}
+                        icon={
+                          <Label
+                            variant={(filters[column.key] == filter.value && 'filled') || 'soft'}
+                            color={colors[index % colors.length]}
+                          >
+                            {filter.value === -1 && customers.length}
 
-                              {filter.value === 1 &&
-                                customers.filter(
-                                  (user) =>
-                                    user[column['key']] !== undefined &&
-                                    user[column['key']] !== null
-                                ).length}
-                              {filter.value === 0 &&
-                                customers.filter(
-                                  (user) =>
-                                    user[column['key']] === undefined ||
-                                    user[column['key']] === null
-                                ).length}
-                            </Label>
-                          }
-                        />
-                      );
-                    })}
-                  {column.filter.isNullFilter === false &&
-                    column.filter.options.map((tab, index) => {
-                      return (
-                        <Tab
-                          key={column.filter.label + column.key + 'isNullFilter' + index}
-                          iconPosition="end"
-                          value={tab.value}
-                          label={tab.label}
-                          icon={
-                            <Label
-                              variant={(filters[column.key] == tab.value && 'filled') || 'soft'}
-                              color={colors[index % colors.length]}
-                            >
-                              {tab.value === -1 && customers.length}
-                              {tab.value !== -1 &&
-                                customers.filter((user) => user[column.key] === tab.value).length}
-                            </Label>
-                          }
-                        />
-                      );
-                    })}
-                </Tabs>
-              );
-            })}
+                            {filter.value === 1 &&
+                              customers.filter(
+                                (user) =>
+                                  user[column['key']] !== undefined && user[column['key']] !== null
+                              ).length}
+                            {filter.value === 0 &&
+                              customers.filter(
+                                (user) =>
+                                  user[column['key']] === undefined || user[column['key']] === null
+                              ).length}
+                          </Label>
+                        }
+                      />
+                    );
+                  })}
+                {column.filter.isNullFilter === false &&
+                  column.filter.options.map((tab, index) => {
+                    return (
+                      <Tab
+                        key={column.filter.label + column.key + 'isNullFilter' + index}
+                        iconPosition="end"
+                        value={tab.value}
+                        label={tab.label}
+                        icon={
+                          <Label
+                            variant={(filters[column.key] == tab.value && 'filled') || 'soft'}
+                            color={colors[index % colors.length]}
+                          >
+                            {tab.value === -1 && customers.length}
+                            {tab.value !== -1 &&
+                              customers.filter((user) => user[column.key] === tab.value).length}
+                          </Label>
+                        }
+                      />
+                    );
+                  })}
+              </Tabs>
+            );
+          })}
 
-          <UserTableToolbar
+        <UserTableToolbar
+          filters={filters}
+          onFilters={handleFilters}
+          //
+        />
+
+        {canReset && (
+          <UserTableFiltersResult
             filters={filters}
             onFilters={handleFilters}
             //
+            onResetFilters={handleResetFilters}
+            //
+            results={dataFiltered.length}
+            sx={{ p: 2.5, pt: 0 }}
+          />
+        )}
+
+        <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+          <TableSelectedAction
+            dense={table.dense}
+            numSelected={table.selected.length}
+            rowCount={tableData.length}
+            onSelectAllRows={(checked) =>
+              table.onSelectAllRows(
+                checked,
+                tableData.map((row) => row.id)
+              )
+            }
+            action={
+              <Tooltip title="Delete">
+                <IconButton color="primary" onClick={confirm.onTrue}>
+                  <Iconify icon="solar:trash-bin-trash-bold" />
+                </IconButton>
+              </Tooltip>
+            }
           />
 
-          {canReset && (
-            <UserTableFiltersResult
-              filters={filters}
-              onFilters={handleFilters}
-              //
-              onResetFilters={handleResetFilters}
-              //
-              results={dataFiltered.length}
-              sx={{ p: 2.5, pt: 0 }}
-            />
-          )}
+          <Scrollbar>
+            <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
+              <TableHeadCustom
+                order={table.order}
+                orderBy={table.orderBy}
+                headLabel={TABLE_HEAD}
+                rowCount={tableData.length}
+                numSelected={table.selected.length}
+                onSort={table.onSort}
+                onSelectAllRows={(checked) =>
+                  table.onSelectAllRows(
+                    checked,
+                    tableData.map((row) => row.id)
+                  )
+                }
+              />
 
-          <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-            <TableSelectedAction
-              dense={table.dense}
-              numSelected={table.selected.length}
-              rowCount={tableData.length}
-              onSelectAllRows={(checked) =>
-                table.onSelectAllRows(
-                  checked,
-                  tableData.map((row) => row.id)
-                )
-              }
-              action={
-                <Tooltip title="Delete">
-                  <IconButton color="primary" onClick={confirm.onTrue}>
-                    <Iconify icon="solar:trash-bin-trash-bold" />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
-
-            <Scrollbar>
-              <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
-                <TableHeadCustom
-                  order={table.order}
-                  orderBy={table.orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
-                  numSelected={table.selected.length}
-                  onSort={table.onSort}
-                  onSelectAllRows={(checked) =>
-                    table.onSelectAllRows(
-                      checked,
-                      tableData.map((row) => row.id)
+              <TableBody>
+                {dataFiltered &&
+                  dataFiltered.length > 0 &&
+                  dataFiltered
+                    .slice(
+                      table.page * table.rowsPerPage,
+                      table.page * table.rowsPerPage + table.rowsPerPage
                     )
-                  }
+                    .map((row) => (
+                      <UserTableRow
+                        configs={configs}
+                        columns={columns}
+                        key={row.id}
+                        row={row}
+                        selected={table.selected.includes(row.id)}
+                        onSelectRow={() => table.onSelectRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        onEditRow={() => handleEditRow(row.id)}
+                      />
+                    ))}
+
+                <TableEmptyRows
+                  height={denseHeight}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
                 />
 
-                <TableBody>
-                  {dataFiltered &&
-                    dataFiltered.length > 0 &&
-                    dataFiltered
-                      .slice(
-                        table.page * table.rowsPerPage,
-                        table.page * table.rowsPerPage + table.rowsPerPage
-                      )
-                      .map((row) => (
-                        <UserTableRow
-                          configs={configs}
-                          columns={columns}
-                          key={row.id}
-                          row={row}
-                          selected={table.selected.includes(row.id)}
-                          onSelectRow={() => table.onSelectRow(row.id)}
-                          onDeleteRow={() => handleDeleteRow(row.id)}
-                          onEditRow={() => handleEditRow(row.id)}
-                        />
-                      ))}
+                <TableNoData notFound={notFound} />
+              </TableBody>
+            </Table>
+          </Scrollbar>
+        </TableContainer>
 
-                  <TableEmptyRows
-                    height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
-                  />
-
-                  <TableNoData notFound={notFound} />
-                </TableBody>
-              </Table>
-            </Scrollbar>
-          </TableContainer>
-
-          <TablePaginationCustom
-            count={dataFiltered.length}
-            page={table.page}
-            rowsPerPage={table.rowsPerPage}
-            onPageChange={table.onChangePage}
-            onRowsPerPageChange={table.onChangeRowsPerPage}
-            //
-            dense={table.dense}
-            onChangeDense={table.onChangeDense}
-          />
-        </Card>
-      </Container>
+        <TablePaginationCustom
+          count={dataFiltered.length}
+          page={table.page}
+          rowsPerPage={table.rowsPerPage}
+          onPageChange={table.onChangePage}
+          onRowsPerPageChange={table.onChangeRowsPerPage}
+          //
+          dense={table.dense}
+          onChangeDense={table.onChangeDense}
+        />
+      </Card>
 
       <ConfirmDialog
         open={confirm.value}
@@ -355,7 +347,7 @@ export default function UserListView(props) {
           </Button>
         }
       />
-    </>
+    </MainContainer>
   );
 }
 

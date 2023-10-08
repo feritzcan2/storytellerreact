@@ -1,12 +1,10 @@
 // _mock
 import { _userAbout } from 'src/_mock';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { useSettingsContext } from 'src/components/settings';
 // hooks
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
 
 import ProfileCover from '../profile-cover';
 //
@@ -47,15 +45,7 @@ export default function UserProfileView({ customerId, session, setShouldRefetch 
   }, []);
   let customer = session.customers.find((customer) => customer.id === customerId);
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <CustomBreadcrumbs
-        heading="Profile"
-        links={[{ name: `${customer?.name} ${customer?.surname}` }]}
-        sx={{
-          mb: { xs: 3, md: 5 },
-        }}
-      />
-
+    <>
       <Card
         sx={{
           mb: 3,
@@ -95,6 +85,6 @@ export default function UserProfileView({ customerId, session, setShouldRefetch 
       )}
 
       {currentTab === 'chat' && <ChatView customerId={customer.id}></ChatView>}
-    </Container>
+    </>
   );
 }

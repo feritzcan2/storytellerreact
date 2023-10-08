@@ -1,10 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 // sections
+import { Typography } from '@mui/material';
 import { useSettingsContext } from 'src/components/settings';
-import { Container, Typography, Button } from '@mui/material';
+import MainContainer from 'src/pages/mainContainer';
 import EmailListView from './list/EmailList';
-import CountryService from 'src/api/CountryService';
-import Iconify from 'src/components/iconify/iconify';
 // ----------------------------------------------------------------------
 
 export default function NotificationSettingsPage(props) {
@@ -13,13 +12,15 @@ export default function NotificationSettingsPage(props) {
   return (
     <>
       <Helmet>
-        <title> CountryTrackerPage: ss</title>
+        <title> Bildirim ayarları</title>
       </Helmet>
-      <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Typography variant="h4"> Mail Listesi</Typography>
+      <Typography variant="h4">Bildirim ayarları</Typography>
+
+      <MainContainer>
+        <Typography variant="h6"> Mail Listesi</Typography>
 
         <EmailListView />
-      </Container>
+      </MainContainer>
     </>
   );
 }

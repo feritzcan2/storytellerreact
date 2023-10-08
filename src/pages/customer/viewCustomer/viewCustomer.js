@@ -6,6 +6,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
+import MainContainer from 'src/pages/mainContainer';
 import UserProfileView from './user/view/user-profile-view';
 
 // ----------------------------------------------------------------------
@@ -68,7 +69,7 @@ export default function ViewCustomer(id) {
     );
   }
   return (
-    <>
+    <MainContainer>
       <Grid
         flexDirection={'column'}
         display={'flex'}
@@ -81,6 +82,6 @@ export default function ViewCustomer(id) {
           setShouldRefetch={setShouldRefetch}
         />
       </Grid>
-    </>
+    </MainContainer>
   );
 }

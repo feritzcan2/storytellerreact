@@ -12,7 +12,6 @@ import { useMessagesScroll } from './hooks';
 
 export default function ChatMessageList({ messages = [], participants }) {
   const { messagesEndRef } = useMessagesScroll(messages);
-  debugger;
   const slides = messages
     .filter((message) => message.contentType === 'image')
     .map((message) => ({ src: message.body }));

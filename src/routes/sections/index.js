@@ -5,10 +5,11 @@ import { PATH_AFTER_LOGIN } from 'src/config-global';
 import { mainRoutes } from './main';
 
 import { authRoutes } from './auth';
-import { dashboardRoutes } from './dashboard';
-import { customerRoutes } from './customerRoutes';
-import { countryTrackerRoutes } from './countryTrackerRoutes';
 import { clientRoutes } from './clientRoutes';
+import { countryTrackerRoutes } from './countryTrackerRoutes';
+import { customerRoutes } from './customerRoutes';
+import { dashboardRoutes } from './dashboard';
+import { settingsRoutes } from './settingsRoutes';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +30,7 @@ export default function Router() {
 
     // Main routes
     ...mainRoutes,
+    ...settingsRoutes,
 
     // No match 404
     { path: '*', element: <Navigate to="/404" replace /> },

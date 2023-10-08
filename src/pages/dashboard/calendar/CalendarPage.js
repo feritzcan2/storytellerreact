@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import CalendarService from 'src/api/CalendarService';
@@ -20,7 +21,9 @@ export default function CalendarPage() {
       <Helmet>
         <title> Takvim</title>
       </Helmet>
-
+      <Typography sx={{ marginBottom: 2 }} variant="h4">
+        Takvim
+      </Typography>
       <CalendarView calendarData={calendarData} />
     </>
   );

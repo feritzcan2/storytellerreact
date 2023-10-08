@@ -1,5 +1,4 @@
 // @mui
-import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
@@ -15,6 +14,7 @@ import { Card, Divider, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import DashboardService from 'src/api/DashboardService';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import MainContainer from 'src/pages/mainContainer';
 import ClosestAppointmentComponent from './ClosestAppointmentComponent';
 import CountryDatesWidget from './CountryDatesWidget';
 import InvoiceAnalytic from './invoice-analytic';
@@ -35,7 +35,7 @@ export default function DashboardView() {
   const settings = useSettingsContext();
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <MainContainer>
       <Grid container spacing={5}>
         <Grid spacing={5} xs={12} md={12} lg={12}>
           <Grid xs={6} md={6} lg={6}>
@@ -105,6 +105,6 @@ export default function DashboardView() {
         </Grid>
         <Grid xs={12} md={4}></Grid>
       </Grid>
-    </Container>
+    </MainContainer>
   );
 }

@@ -9,11 +9,8 @@ import { useCallback, useEffect, useState } from 'react';
 // @mui
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 // utils
 import { fTimestamp } from 'src/utils/format-time';
@@ -29,6 +26,7 @@ import Iconify from 'src/components/iconify';
 import { useSettingsContext } from 'src/components/settings';
 //
 import trLocale from '@fullcalendar/core/locales/tr';
+import MainContainer from 'src/pages/mainContainer';
 import CalendarFilters from './components/calendar-filters';
 import CalendarFiltersResult from './components/calendar-filters-result';
 import CalendarForm from './components/calendar-form';
@@ -159,78 +157,60 @@ export default function CalendarView({ calendarData }) {
   );
 
   return (
-    <>
-      <Container maxWidth={settings.themeStretch ? false : 'xl'}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{
-            mb: { xs: 3, md: 5 },
-          }}
-        >
-          <Typography variant="h4">Calendar</Typography>
-          <Button
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-            onClick={onOpenForm}
-          >
-            Yeni Etkinlik
-          </Button>
-        </Stack>
+    <MainContainer>
+      <Button
+        variant="contained"
+        startIcon={<Iconify icon="mingcute:add-line" />}
+        onClick={onOpenForm}
+      >
+        Yeni Etkinlik
+      </Button>
 
-        {canReset && renderResults}
+      {canReset && renderResults}
 
-        <Card>
-          <StyledCalendar>
-            <CalendarToolbar
-              date={date}
-              view={view}
-              loading={eventsLoading}
-              onNextDate={onDateNext}
-              onPrevDate={onDatePrev}
-              locale={trLocale}
-              onToday={onDateToday}
-              onChangeView={onChangeView}
-              onOpenFilters={openFilters.onTrue}
-            />
+      <Card>
+        <StyledCalendar>
+          <CalendarToolbar
+            date={date}
+            view={view}
+            loading={eventsLoading}
+            onNextDate={onDateNext}
+            onPrevDate={onDatePrev}
+            locale={trLocale}
+            onToday={onDateToday}
+            onChangeView={onChangeView}
+            onOpenFilters={openFilters.onTrue}
+          />
 
-            <Calendar
-              locale={trLocale}
-              weekends
-              editable
-              droppable
-              selectable
-              rerenderDelay={10}
-              allDayMaintainDuration
-              eventResizableFromStart
-              ref={calendarRef}
-              initialDate={date}
-              initialView={view}
-              dayMaxEventRows={3}
-              eventDisplay="block"
-              events={dataFiltered}
-              headerToolbar={false}
-              select={onSelectRange}
-              eventClick={onClickEvent}
-              height={smUp ? 720 : 'auto'}
-              eventDrop={(arg) => {
-                onDropEvent(arg, updateEvent);
-              }}
-              eventResize={(arg) => {
-                onResizeEvent(arg, updateEvent);
-              }}
-              plugins={[
-                listPlugin,
-                dayGridPlugin,
-                timelinePlugin,
-                timeGridPlugin,
-                interactionPlugin,
-              ]}
-            />
-          </StyledCalendar>
-        </Card>
-      </Container>
+          <Calendar
+            locale={trLocale}
+            weekends
+            editable
+            droppable
+            selectable
+            rerenderDelay={10}
+            allDayMaintainDuration
+            eventResizableFromStart
+            ref={calendarRef}
+            initialDate={date}
+            initialView={view}
+            dayMaxEventRows={3}
+            eventDisplay="block"
+            events={dataFiltered}
+            headerToolbar={false}
+            select={onSelectRange}
+            eventClick={onClickEvent}
+            height={smUp ? 720 : 'auto'}
+            eventDrop={(arg) => {
+              onDropEvent(arg, updateEvent);
+            }}
+            eventResize={(arg) => {
+              onResizeEvent(arg, updateEvent);
+            }}
+            plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
+          />
+        </StyledCalendar>
+      </Card>
 
       <Dialog
         fullWidth
@@ -269,7 +249,7 @@ export default function CalendarView({ calendarData }) {
         colorOptions={CALENDAR_COLOR_OPTIONS}
         onClickEvent={onClickEventInFilters}
       />
-    </>
+    </MainContainer>
   );
 }
 

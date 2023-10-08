@@ -5,6 +5,7 @@ const ROOTS = {
   DASHBOARD: '/anasayfa',
   CUSTOMER: '/musteri',
   TRACKING: '/randevuTakip',
+  SETTINGS: '/ayarlar',
   CLIENT: '/client',
 };
 
@@ -32,7 +33,7 @@ export const paths = {
     customer: `${ROOTS.CUSTOMER}/detay/5`,
   },
   countryTracking: {
-    notifications: `${ROOTS.TRACKING}/bildirimAyarlari`,
+    notifications: `${ROOTS.SETTINGS}/bildirim`,
     countries: {
       root: `${ROOTS.TRACKING}`,
       spain: `${ROOTS.TRACKING}/ispanya`,

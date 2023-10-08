@@ -1,10 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useContext } from 'react';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { useSettingsContext } from 'src/components/settings';
 import { GlobalContext } from 'src/context/GlobalProvider';
+import MainContainer from 'src/pages/mainContainer';
 import { ChatView } from './view';
 
 // ----------------------------------------------------------------------
@@ -19,12 +20,12 @@ export default function CustomerChatPage() {
   return (
     <>
       <Helmet>
-        <title> Müşteri Ekle</title>
+        <title> Mesajlar</title>
       </Helmet>
-      <Typography variant="h4">Yeni müşteri ekle</Typography>
-      <Container sx={{ marginLeft: 0 }} maxWidth={settings.themeStretch ? false : 'lg'}>
+      <Typography variant="h4">Mesajlaşma ( Whatsapp + Email)</Typography>
+      <MainContainer>
         <ChatView />
-      </Container>
+      </MainContainer>
     </>
   );
 }

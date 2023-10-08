@@ -16,9 +16,9 @@ const NotificationSettingsPage = lazy(() =>
 
 // ----------------------------------------------------------------------
 
-export const countryTrackerRoutes = [
+export const settingsRoutes = [
   {
-    path: 'randevuTakip',
+    path: 'ayarlar',
     element: (
       <AuthGuard>
         <DashboardLayout>
@@ -28,14 +28,6 @@ export const countryTrackerRoutes = [
         </DashboardLayout>
       </AuthGuard>
     ),
-    children: [
-      { element: <CountryTrackerPage />, index: true },
-      { path: 'ispanya', element: <CountryTrackerPage country="ispanya" /> },
-      { path: 'almanya', element: <CountryTrackerPage country="almanya" /> },
-      { path: 'yunanistan', element: <CountryTrackerPage country="yunanistan" /> },
-      { path: 'italya', element: <CountryTrackerPage country="italya" /> },
-      { path: 'hollanda', element: <CountryTrackerPage country="hollanda" /> },
-      { path: 'ayarlar', element: <NotificationSettingsPage /> },
-    ],
+    children: [{ path: 'bildirim', element: <NotificationSettingsPage /> }],
   },
 ];

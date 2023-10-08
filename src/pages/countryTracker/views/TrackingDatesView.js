@@ -1,31 +1,19 @@
 import * as React from 'react';
 // @mui
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import 'moment/locale/tr';
 // components
-import { useSettingsContext } from 'src/components/settings';
-import { useTheme } from '@emotion/react';
-import { Button, Card, CardHeader, Grid, Stack, Switch } from '@mui/material';
-import { bgGradient } from 'src/theme/css';
-import ComponentBlock from 'src/pages/component-block';
-import { LoadingScreen } from 'src/components/loading-screen';
-import CountryService from 'src/api/CountryService';
-import { useState } from 'react';
-import { useResponsive } from 'src/hooks/use-responsive';
-import { RHFAutocomplete, RHFTextField } from 'src/components/hook-form';
-import { Controller, useForm } from 'react-hook-form';
-import { date } from 'yup';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import 'moment/locale/de';
+import { Button, Stack, Switch, colors } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import moment from 'moment';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import moment from 'moment';
+import 'moment/locale/de';
+import { useState } from 'react';
+import CountryService from 'src/api/CountryService';
+import { LoadingScreen } from 'src/components/loading-screen';
+import { useSettingsContext } from 'src/components/settings';
 
 // ----------------------------------------------------------------------
 
@@ -92,8 +80,8 @@ export default function TrackingDatesView(props) {
   };
 
   return (
-    <Container sx={{ minHeight: '40vh' }} maxWidth={'xl'}>
-      <Typography variant="h6" sx={{ mb: 0.5 }}>
+    <>
+      <Typography sx={{ marginTop: 5 }} color={colors.brown[400]} variant="h6">
         Takip aralığı
       </Typography>
 
@@ -129,6 +117,6 @@ export default function TrackingDatesView(props) {
       >
         Kaydet
       </Button>
-    </Container>
+    </>
   );
 }

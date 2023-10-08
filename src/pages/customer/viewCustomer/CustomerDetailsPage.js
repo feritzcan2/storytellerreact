@@ -23,7 +23,7 @@ export default function CustomerDetailsPage(page) {
         <title> Müşteri Listesi</title>
       </Helmet>
       <Typography sx={{ marginBottom: 2 }} variant="h4">
-        Müşteri Listesi
+        Müşteri Detayı
       </Typography>
       {<ViewCustomer id={parseInt(id)} />}
     </>

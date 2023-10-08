@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router';
 import CustomerService from 'src/api/CustomerService';
 import { LoadingScreen } from 'src/components/loading-screen';
+import MainContainer from 'src/pages/mainContainer';
 // @mui
 // routes
 // _mock
@@ -38,26 +39,32 @@ export default function CustomerSearchPage(page) {
   return (
     <>
       <Helmet>
-        <title> Müşteri Listesi</title>
+        <title> Müşteri</title>
       </Helmet>
-      <Typography sx={{ marginBottom: 2 }} variant="h4">
-        Müşteri Listesi
-      </Typography>
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={customerNames}
-        sx={{ width: '100%', minHeight: 303, marginTop: 20 }}
-        onChange={(data, d) => {
-          goToCustomer(d.id);
-        }}
-        text={{ color: 'red' }}
-        color="red"
-        getOptionLabel={(data) => data.name}
-        renderInput={(params) => (
-          <TextField sx={{ minHeight: 501 }} variant="filled" {...params} label="MÜŞTERİ SEÇ..." />
-        )}
-      />
+      <Typography variant="h4">Müşteri Bul</Typography>
+
+      <MainContainer>
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={customerNames}
+          sx={{ width: '100%', minHeight: 303, marginTop: 20 }}
+          onChange={(data, d) => {
+            goToCustomer(d.id);
+          }}
+          text={{ color: 'red' }}
+          color="red"
+          getOptionLabel={(data) => data.name}
+          renderInput={(params) => (
+            <TextField
+              sx={{ minHeight: 501 }}
+              variant="filled"
+              {...params}
+              label="MÜŞTERİ SEÇ..."
+            />
+          )}
+        />
+      </MainContainer>
     </>
   );
 }

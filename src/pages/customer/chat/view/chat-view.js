@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 // @mui
 import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 // routes
@@ -40,7 +39,6 @@ export default function ChatView({ customerId }) {
   const { customerList } = useContext(GlobalContext);
 
   const { conversations, conversationsLoading } = useGetConversations();
-  debugger;
   useEffect(() => {
     let contacts = useGetContacts(customerList);
     setContacts(contacts);
@@ -109,15 +107,13 @@ export default function ChatView({ customerId }) {
 
   if (contacts === null || contacts === undefined) return <LoadingScreen></LoadingScreen>;
   return (
-    <Container>
+    <>
       <Typography
         variant="h4"
         sx={{
           mb: { xs: 3, md: 5 },
         }}
-      >
-        Mesajlaşma ( Whatsapp + Email)
-      </Typography>
+      ></Typography>
 
       <Stack component={Card} direction="row" sx={{ height: '72vh' }}>
         {customerId === undefined && renderNav}
@@ -146,6 +142,6 @@ export default function ChatView({ customerId }) {
           </Stack>
         </Stack>
       </Stack>
-    </Container>
+    </>
   );
 }
