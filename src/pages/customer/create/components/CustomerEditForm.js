@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -13,6 +14,7 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
+
 // utils
 // routes
 import { useRouter } from 'src/routes/hooks';
@@ -160,6 +162,28 @@ export default function CustomerEditForm({ currentUser, configs }) {
               </Label>
             )}
 
+            <Stack sx={{ mb: 5, justifyContent: 'center', alignItems: 'center' }}>
+              <Avatar
+                sx={{ width: 150, height: 150 }}
+                src="https://api-prod-minimal-v510.vercel.app/assets/images/avatar/avatar_2.jpg"
+                maxSize={3145728}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 3,
+                      mx: 'auto',
+                      display: 'block',
+                      textAlign: 'center',
+                      color: 'text.disabled',
+                    }}
+                  >
+                    Allowed *.jpeg, *.jpg, *.png, *.gif
+                    <br />
+                  </Typography>
+                }
+              />
+            </Stack>
             {currentUser && (
               <FormControlLabel
                 labelPlacement="start"
