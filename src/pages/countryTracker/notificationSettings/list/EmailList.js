@@ -17,7 +17,6 @@ import { _roles, _userList } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
-import { ConfirmDialog } from 'src/components/custom-dialog';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSettingsContext } from 'src/components/settings';
@@ -30,7 +29,21 @@ import {
   useTable,
 } from 'src/components/table';
 //
-import { TableCell } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import * as Yup from 'yup';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import { LoadingButton } from '@mui/lab';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  TableCell,
+} from '@mui/material';
+import { useMemo } from 'react';
 import CountryService from 'src/api/CountryService';
 import EmptyContent from 'src/components/empty-content/empty-content';
 import { LoadingScreen } from 'src/components/loading-screen';
@@ -62,7 +75,28 @@ export default function EmailList() {
       .then((result) => {})
       .catch((error) => console.log('error', error));
   };
+  const NewUserSchema = Yup.object().shape({
+    name: Yup.string().required('Lütfen isim girin'),
+    email: Yup.string().required('Lütfen email girin').email('Email adresi geçersiz'),
+  });
 
+  const defaultValues = useMemo(
+    () => ({
+      name: '',
+      email: '',
+    }),
+    []
+  );
+
+  const methods = useForm({
+    resolver: yupResolver(NewUserSchema),
+    defaultValues,
+  });
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
   const table = useTable();
 
   const settings = useSettingsContext();
@@ -70,6 +104,7 @@ export default function EmailList() {
   const router = useRouter();
 
   const confirm = useBoolean();
+  const dialogOpen = useBoolean();
 
   const [tableData, setTableData] = useState(_userList);
 
@@ -96,6 +131,15 @@ export default function EmailList() {
     },
     [table]
   );
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await addMail({ mail: data.email, name: data.name });
+      reset();
+      dialogOpen.onFalse();
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
   const handleDeleteRow = useCallback(
     (id) => {
@@ -121,6 +165,29 @@ export default function EmailList() {
   return (
     <>
       <Grid sx={{ minHeight: 560 }}>
+        <Dialog fullWidth open={dialogOpen.value}>
+          <FormProvider methods={methods} onSubmit={onSubmit}>
+            <DialogTitle sx={{ pb: 2 }}>Email Ekle</DialogTitle>
+
+            {
+              <DialogContent sx={{ typography: 'body2' }}>
+                <RHFTextField name="name" label="Kişinin ismi" />
+                <Divider variant="fullWidth" sx={{ marginTop: 4, marginBottom: 4 }} />
+                <RHFTextField name="email" label="Mail Adresi" />
+              </DialogContent>
+            }
+
+            <DialogActions>
+              <Button onClick={dialogOpen.onFalse} variant="outlined" color="inherit">
+                Vazgeç
+              </Button>
+
+              <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+                Kaydet
+              </LoadingButton>
+            </DialogActions>
+          </FormProvider>
+        </Dialog>
         <Card>
           <Container
             sx={{
@@ -135,6 +202,7 @@ export default function EmailList() {
             <Button
               sx={{ alignSelf: 'flex-end' }}
               variant="contained"
+              onClick={dialogOpen.onTrue}
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
               Yeni Kişi Ekle
@@ -230,29 +298,6 @@ export default function EmailList() {
           />
         </Card>
       </Grid>
-
-      <ConfirmDialog
-        open={confirm.value}
-        onClose={confirm.onFalse}
-        title="Delete"
-        content={
-          <>
-            <strong> {table.selected.length} </strong> tane kaydı silmek istediğine emin misin?
-          </>
-        }
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handleDeleteRows();
-              confirm.onFalse();
-            }}
-          >
-            Sil
-          </Button>
-        }
-      />
     </>
   );
 }
