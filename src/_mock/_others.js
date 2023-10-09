@@ -85,11 +85,11 @@ export const _notifications = [...Array(9)].map((_, index) => ({
   title:
     (index === 0 && `<p><strong>Deja Brady</strong> sent you a friend request</p>`) ||
     (index === 1 &&
-      `<p><strong>Jayvon Hull</strong> mentioned you in <strong><a href='#'>Minimal UI</a></strong></p>`) ||
+      `<p><strong>Jayvon Hull</strong> mentioned you in <strong><a href='#'>Vize Defteri</a></strong></p>`) ||
     (index === 2 &&
-      `<p><strong>Lainey Davidson</strong> added file to <strong><a href='#'>File Manager</a></strong></p>`) ||
+      `<p><strong>Lainey Davidson</strong> added file to <strong><a href='#'>Vize Defteri</a></strong></p>`) ||
     (index === 3 &&
-      `<p><strong>Angelique Morse</strong> added new tags to <strong><a href='#'>File Manager<a/></strong></p>`) ||
+      `<p><strong>Angelique Morse</strong> added new tags to <strong><a href='#'>Vize Defteri<a/></strong></p>`) ||
     (index === 4 &&
       `<p><strong>Giana Brandt</strong> request a payment of <strong>$200</strong></p>`) ||
     (index === 5 && `<p>Your order is placed waiting for shipping</p>`) ||
