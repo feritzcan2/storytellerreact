@@ -50,7 +50,7 @@ export default function UserProfileView({ customerId, session, setShouldRefetch 
       >
         <ProfileCover
           name={`${customer?.name} ${customer?.surname}`}
-          avatarUrl={user?.photoURL}
+          avatarUrl={'https://api-prod-minimal-v510.vercel.app/assets/images/avatar/avatar_2.jpg'}
           coverUrl={_userAbout.coverUrl}
         />
         <Tabs
