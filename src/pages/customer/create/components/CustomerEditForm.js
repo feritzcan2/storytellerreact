@@ -21,6 +21,7 @@ import { useRouter } from 'src/routes/hooks';
 import { MenuItem } from '@mui/material';
 import { DatePicker, DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useNavigate } from 'react-router';
 import CustomerService from 'src/api/CustomerService';
 import FormProvider, { RHFSelect, RHFSwitch, RHFTextField } from 'src/components/hook-form';
 import Iconify from 'src/components/iconify';
@@ -46,10 +47,12 @@ export const INVOICE_SERVICE_OPTIONS = [
 
 export default function CustomerEditForm({ currentUser, configs }) {
   const router = useRouter();
+  const nav = useNavigate();
   const { addCustomer } = CustomerService();
   if (configs === undefined) {
     configs = useContext(GlobalContext).configs;
   }
+  let isEdit = currentUser != undefined && currentUser?.id !== undefined && currentUser?.id > 0;
   const { enqueueSnackbar } = useSnackbar();
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('İsim gerekli'),
@@ -112,7 +115,10 @@ export default function CustomerEditForm({ currentUser, configs }) {
       email: data.email,
     };
     try {
-      addCustomer(data2).then(() => {
+      addCustomer(data2).then((res) => {
+        if (res != undefined && res.id > 0 && isEdit === false) {
+          nav('/musteri/' + res.id);
+        }
         reset();
         enqueueSnackbar(currentUser ? 'Update success!' : 'Create success!');
       });

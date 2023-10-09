@@ -102,7 +102,6 @@ export default function FormDialog({
   };
 
   const onCancel = async () => {
-    debugger;
     if (closedCallback) closedCallback();
     setFormData({
       name: '',

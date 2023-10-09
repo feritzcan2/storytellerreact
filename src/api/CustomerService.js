@@ -111,6 +111,7 @@ export default function CustomerService() {
         customerData.customers = customers2;
 
         setCustomers(customerData);
+        return result.data;
       })
       .catch((err) => {
         if (errorMsg !== undefined)

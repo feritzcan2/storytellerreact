@@ -19,7 +19,6 @@ export default function UserAuth() {
       .then(async (result) => {
         if (result.data.error === null || result.data.error === undefined) {
           setUserData(result.data);
-          debugger;
           setConfigs(result.data.configs);
         } else {
           if (errorMsg) errorMsg(result.data.error.message);
@@ -42,7 +41,6 @@ export default function UserAuth() {
         password,
       })
       .then(async (result) => {
-        debugger;
         if (result.data.error === null) {
           await setUserContext(result);
         } else {
