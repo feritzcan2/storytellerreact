@@ -64,6 +64,8 @@ export default function FormDialog({
   customerIndex,
   editButton,
   setShouldRefetch,
+  shouldShow,
+  closedCallback,
 }) {
   const { configs } = useContext(GlobalContext);
   const params = useParams();
@@ -100,6 +102,8 @@ export default function FormDialog({
   };
 
   const onCancel = async () => {
+    debugger;
+    if (closedCallback) closedCallback();
     setFormData({
       name: '',
       email: '',
@@ -162,7 +166,11 @@ export default function FormDialog({
       onClickSubmit();
     }
   }, [taxChange]);
-
+  useEffect(() => {
+    if (shouldShow === true) {
+      dialog.onTrue();
+    }
+  }, [shouldShow]);
   const handleFileChange = async (e, index) => {
     const newFile = await e[0];
     const fileUrl = await uploadFile(newFile);
@@ -233,7 +241,13 @@ export default function FormDialog({
         </Paper>
       )}
 
-      <Dialog open={dialog.value} onClose={dialog.onFalse}>
+      <Dialog
+        open={dialog.value}
+        onClose={() => {
+          dialog.onFalse();
+          if (closedCallback) closedCallback();
+        }}
+      >
         <DialogTitle style={{ background: 'rgba(145, 158, 101, 0.08)' }}>User Details</DialogTitle>
 
         <DialogContent style={{ background: 'rgba(145, 108, 101, 0.08)', padding: 10 }}>

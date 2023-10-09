@@ -10,6 +10,7 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useBoolean } from 'src/hooks/use-boolean';
 import { useConfigs } from 'src/hooks/use-configs';
 import AnalyticsTasks from '../analytics-tasks';
 import FormDialog from '../form-dialog';
@@ -29,6 +30,7 @@ export default function CustomerCard({
   onViewFiles,
 }) {
   var configData = useConfigs(customer);
+  var showForm = useBoolean(false);
   const renderCustomer = (
     <>
       <Stack
@@ -58,6 +60,7 @@ export default function CustomerCard({
             }}
           />
           <FormDialog
+            closedCallback={showForm.onFalse}
             SelectedCustomerData={customer}
             customerData={customerData}
             setUserData={setUserData}
@@ -65,6 +68,7 @@ export default function CustomerCard({
             uploadUserData={uploadUserData}
             setShouldRefetch={setShouldRefetch}
             editButton
+            shouldShow={showForm.value}
           />
         </Stack>
         {/* Side by Side */}
@@ -105,6 +109,7 @@ export default function CustomerCard({
       >
         {customer.filesReady === false && (
           <Button
+            onClick={() => showForm.onTrue()}
             variant={'soft'}
             color="error"
             startIcon={<Iconify icon="ic:round-access-alarm" />}
