@@ -56,9 +56,9 @@ export default function TrackingDatesView(props) {
     setStartDate(start);
     setEndDate(end);
   };
-  const updateDate = (serviceType, startDate, endDate) => {
+  const updateDate = () => {
     updateTrackingRange({
-      serviceType,
+      serviceType: props.countryData.serviceType,
       startDate,
       endDate,
       isNotificationsEnabled,
@@ -113,6 +113,7 @@ export default function TrackingDatesView(props) {
         disabled={!isUpdated && !isNotifUpdated}
         size="large"
         color="success"
+        onClick={updateDate}
         variant="contained"
       >
         Kaydet

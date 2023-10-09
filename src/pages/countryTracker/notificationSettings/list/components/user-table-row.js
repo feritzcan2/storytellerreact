@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 // @mui
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
-import Iconify from 'src/components/iconify';
+import { useContext } from 'react';
 import { ConfirmDialog } from 'src/components/custom-dialog';
+import Iconify from 'src/components/iconify';
+import { GlobalContext } from 'src/context/GlobalProvider';
 //
 
 // ----------------------------------------------------------------------
@@ -19,6 +21,7 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   if (row == null || row == undefined) return null;
   const { name, mail } = row;
+  const { userData } = useContext(GlobalContext);
 
   const confirm = useBoolean();
   console.log(row);
@@ -36,7 +39,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
 
           <ListItemText
             primary={name}
-            secondary={'Global Consultancy'}
+            secondary={userData.companyName}
             primaryTypographyProps={{ typography: 'body2' }}
             secondaryTypographyProps={{
               component: 'span',

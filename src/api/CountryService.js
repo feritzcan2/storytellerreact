@@ -1,6 +1,6 @@
-import api from './api';
-import { useContext, useReducer } from 'react';
+import { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalProvider';
+import api from './api';
 
 export default function CountryService() {
   let { setCountryAppointmentData, setUserData, userData, countryAppointmentData } =
