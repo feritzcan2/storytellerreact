@@ -24,9 +24,9 @@ import Iconify from 'src/components/iconify';
 import Label from 'src/components/label';
 import Scrollbar from 'src/components/scrollbar';
 //
+import { orderBy } from 'lodash';
 import { GlobalContext } from 'src/context/GlobalProvider';
 import NotificationRow from './NotificationRow';
-import NotificationItem from './notification-item';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ const TABS = [
   {
     value: 'archived',
     label: 'Archived',
-    count: 10,
+    count: 0,
   },
 ];
 
@@ -131,16 +131,13 @@ export default function NotificationsPopover() {
   const renderList = (
     <Scrollbar>
       <List disablePadding>
-        {cont.notifications.map((notification) => (
+        {orderBy(cont.notifications, ['date'], ['desc']).map((notification) => (
           <NotificationRow key={notification.id} notification={notification} />
-        ))}
-        {notifications.map((notification) => (
-          <NotificationItem key={notification.id} notification={notification} />
         ))}
       </List>
     </Scrollbar>
   );
-
+  debugger;
   return (
     <>
       <IconButton

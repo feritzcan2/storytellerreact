@@ -29,13 +29,19 @@ export default function NotificationRow({ notification }) {
       fDateTime(notification.targetDate) +
       '</strong> tarihine randevu atandı.</p>';
   }
+  if (notification.notificationType == 0) {
+    category = 'Dosya Yüklendi';
+    title = ' <p><strong>' + notification.customerName + '</strong> yeni bir dosya yükledi.</p>';
+  }
   if (notification.notificationType == 2) {
     category = 'Yeni Müşteri';
     title = ' <p><strong>' + notification.customerName + '</strong> sisteme eklendi.</p>';
   }
   if (notification.notificationType == 3) {
-    category = 'Ödeme Alındı';
+    category = 'Yeni Kayıt';
     title = ' <p><strong>' + notification.customerName + '</strong> sisteme eklendi.</p>';
+  } else {
+    debugger;
   }
   const renderAvatar = (
     <ListItemAvatar>
@@ -140,7 +146,7 @@ export default function NotificationRow({ notification }) {
   const fileAction = (
     <Stack
       spacing={1}
-      direction="row"
+      direction="column"
       sx={{
         pl: 1,
         p: 1.5,
@@ -149,72 +155,75 @@ export default function NotificationRow({ notification }) {
         bgcolor: 'background.neutral',
       }}
     >
-      <FileThumbnail
-        file="http://localhost:8080/httpsdesign-suriname-2015.mp3"
-        sx={{ width: 40, height: 40 }}
-      />
-
-      <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }} flexGrow={1} sx={{ minWidth: 0 }}>
-        <ListItemText
-          disableTypography
-          primary={
-            <Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }} noWrap>
-              design-suriname-2015.mp3
-            </Typography>
-          }
-          secondary={
-            <Stack
-              direction="row"
-              alignItems="center"
-              sx={{ typography: 'caption', color: 'text.disabled' }}
-              divider={
-                <Box
-                  sx={{
-                    mx: 0.5,
-                    width: 2,
-                    height: 2,
-                    borderRadius: '50%',
-                    bgcolor: 'currentColor',
-                  }}
-                />
-              }
-            >
-              <span>2.3 GB</span>
-              <span>30 min ago</span>
-            </Stack>
-          }
-        />
-
-        <Button size="small" variant="outlined">
-          Download
-        </Button>
+      <Stack spacing={1} direction="row" sx={{}}>
+        <Stack
+          spacing={1}
+          direction={{ xs: 'column', sm: 'row' }}
+          flexGrow={1}
+          sx={{ minWidth: 0, alignItems: 'center' }}
+        >
+          <FileThumbnail
+            file="http://localhost:8080/httpsdesign-suriname-2015.mp3"
+            sx={{ width: 40, height: 40 }}
+          />
+          <ListItemText
+            disableTypography
+            primary={
+              <Typography
+                variant="subtitle2"
+                component="div"
+                sx={{ color: 'text.secondary' }}
+                noWrap
+              >
+                design-suriname-2015.mp3
+              </Typography>
+            }
+            secondary={
+              <Stack
+                direction="row"
+                alignItems="center"
+                sx={{ typography: 'caption', color: 'text.disabled' }}
+                divider={
+                  <Box
+                    sx={{
+                      mx: 0.5,
+                      width: 2,
+                      height: 2,
+                      borderRadius: '50%',
+                      bgcolor: 'currentColor',
+                    }}
+                  />
+                }
+              >
+                <span>2.3 GB</span>
+                <span>30 min ago</span>
+              </Stack>
+            }
+          />
+        </Stack>
+        <Stack spacing={0.5}>
+          <Button size="small" variant="outlined">
+            İndir
+          </Button>
+          <Button size="small" variant="outlined">
+            Onayla
+          </Button>
+          <Button size="small" variant="outlined">
+            Reddet
+          </Button>
+        </Stack>
       </Stack>
+      <Typography
+        variant="subtitle2"
+        component="div"
+        sx={{ color: 'text.primary', textAlign: 'center' }}
+        noWrap
+      >
+        {notification.fileDescription}
+      </Typography>
     </Stack>
   );
 
-  const tagsAction = (
-    <Stack direction="row" spacing={0.75} flexWrap="wrap" sx={{ mt: 1.5 }}>
-      <Label variant="outlined" color="info">
-        Design
-      </Label>
-      <Label variant="outlined" color="warning">
-        Dashboard
-      </Label>
-      <Label variant="outlined">Design system</Label>
-    </Stack>
-  );
-  let text = '';
-
-  const paymentAction = (
-    <Stack direction="row" spacing={1} sx={{ mt: 1.5 }}>
-      <Button size="small" variant="contained">
-        Pay
-      </Button>
-      <Button size="small" variant="outlined">
-        Decline
-      </Button>
-    </Stack>
-  );
   return (
     <ListItemButton
       disableRipple
@@ -225,15 +234,33 @@ export default function NotificationRow({ notification }) {
       }}
     >
       {renderUnReadBadge}
-
       {renderAvatar}
-
       <Stack sx={{ flexGrow: 1 }}>
-        {renderText}
-        {notification.type === 'project' && projectAction}
+        {reader(title)}
+        {notification.notificationType === 0 && fileAction}
         {notification.type === 'file' && fileAction}
-        {notification.type === 'tags' && tagsAction}
-        {notification.type === 'payment' && paymentAction}
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ typography: 'caption', color: 'text.disabled' }}
+          divider={
+            <Box
+              sx={{
+                width: 5,
+                height: 2,
+                bgcolor: 'currentColor',
+                mx: 0.5,
+                borderRadius: '50%',
+              }}
+            />
+          }
+        >
+          <Box sx={{ mt: 1 }}>
+            <Label variant="soft">{category}</Label>
+            {'  -  '}
+            {fToNow(notification.date)}
+          </Box>
+        </Stack>
       </Stack>
     </ListItemButton>
   );
