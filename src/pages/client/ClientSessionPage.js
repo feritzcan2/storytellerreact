@@ -26,6 +26,7 @@ import ContactHero from './contact/contact-hero';
 import CustomerCard from './customerCard/CustomerCard';
 import HandDeliverFilesDialog from './customerCard/HandDeliverFilesDialog';
 import FormDialog from './form-dialog';
+import moment from 'moment';
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +49,7 @@ export default function ContactView() {
   const [error, setError] = useState(null);
   const [customerData, setCustomerData] = useState();
   const { userData } = useContext(GlobalContext);
+
 
   const newCustomerBase = {
     name: '',
@@ -75,7 +77,9 @@ export default function ContactView() {
       fetchConfigs();
     }
     getUserData();
-    setShouldRefetch(false);
+    if (shouldRefetch) {
+      setShouldRefetch(false);
+    }
   }, [shouldRefetch]);
 
   if (isLoading) {
@@ -114,8 +118,10 @@ export default function ContactView() {
         </Typography>
       </div>
     );
+  } else {
+    var configData = useConfigs(customerData);
+
   }
-  var configData = useConfigs(customerData);
   // if (configs === null) return <LoadingScreen />;
   return (
     <div>
@@ -152,10 +158,7 @@ export default function ContactView() {
             <Grid xs={10} md={5} marginTop={{ xs: 10, md: 15 }}>
               <Stack direction="row" alignItems="center" marginBottom={{ xs: 5, md: 15 }}>
                 <Typography variant="h2" sx={{ margin: 1, color: 'common.white' }}>
-                  Kolay
-                </Typography>
-                <Typography variant="h2" sx={{ margin: 1, color: 'common.white' }}>
-                  Başvuru
+                  Kolay Başvuru
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" sx={{ color: 'text.primary', mb: 5 }}>
@@ -163,10 +166,10 @@ export default function ContactView() {
                   Ülke:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {configData.country.name || 'No Country'}
+                  {configData?.country?.name || 'No Country'}
                 </Typography>
                 <Iconify
-                  icon={'flagpack:' + configData.country.code.toLowerCase()}
+                  icon={'flagpack:' + configData?.country?.code.toLowerCase()}
                   sx={{ borderRadius: 0.65, width: 40, height: 40, mr: 1 }}
                 />
               </Stack>
@@ -175,7 +178,7 @@ export default function ContactView() {
                   Vize türü:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {configData.visaType.name}
+                  {configData?.visaType?.name}
                 </Typography>
               </Stack>
               <Stack
@@ -188,14 +191,14 @@ export default function ContactView() {
                   Planlanan seyehat tarihi:
                 </Typography>
                 <Typography variant="h5" sx={{ color: 'common.white', margin: 1 }}>
-                  {fDate(customerData.plannedTravelDate)}
+                  {moment(customerData?.plannedTravelDate).format("DD/MM/YYYY")}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="start" sx={{ color: 'text.primary', mb: 2 }}>
                 <AdminMessage
-                  name={customerData.adminName}
-                  description={customerData.adminMessage}
-                  postedAt={customerData.adminMessageTime}
+                  name={customerData?.adminName}
+                  description={customerData?.adminMessage}
+                  postedAt={customerData?.adminMessageTime}
                 />
               </Stack>
             </Grid>
