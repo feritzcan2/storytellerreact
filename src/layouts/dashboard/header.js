@@ -58,8 +58,6 @@ export default function Header({ onOpenNav }) {
       >
         <NotificationsPopover />
 
-        <SettingsButton />
-
         <AccountPopover />
       </Stack>
     </>

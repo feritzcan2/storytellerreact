@@ -102,16 +102,16 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
   };
 
   const onSubmit = async () => {
-    const updateCustomerrData = [...session.customers];
-    updateCustomerrData[customerIndex] = {
-      ...updateCustomerrData[customerIndex],
+    const updateCustomerData = [...session.customers];
+    updateCustomerData[customerIndex] = {
+      ...updateCustomerData[customerIndex],
       files: filesData,
     };
 
     let updatedsession = session;
     updatedsession = {
       ...session,
-      customers: updateCustomerrData,
+      customers: updateCustomerData,
     };
     console.log('Final Data >', updatedsession);
     await setClients(id, updatedsession);
@@ -362,11 +362,11 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
                         onDrop={(e) => handleFileChange(e, index)}
                         id={index}
                         name={`file_${index}`}
-                        disabled={
-                          selectedfile.fileStatus === 1 ||
-                          selectedfile.fileStatus === 3 ||
-                          !!uploadStatus
-                        }
+                        // disabled={
+                        //   selectedfile.fileStatus === 1 ||
+                        //   selectedfile.fileStatus === 3 ||
+                        //   !!uploadStatus
+                        // }
                       />
                       <a
                         href={filesData[index]?.fileUrl}

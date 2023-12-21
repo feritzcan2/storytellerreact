@@ -449,11 +449,11 @@ export default function FormDialog({
                         onDrop={(e) => handleFileChange(e, index)}
                         id={index}
                         name={`file_${index}`}
-                        disabled={
-                          selectedfile.fileStatus === 1 ||
-                          selectedfile.fileStatus === 3 ||
-                          uploadStatus
-                        }
+                        // disabled={
+                        //   selectedfile.fileStatus === 1 ||
+                        //   selectedfile.fileStatus === 3 ||
+                        //   uploadStatus
+                        // }
                       />
                       <BasicPopover
                         popoverText={selectedfile.requiredFileDetails.description}
