@@ -61,7 +61,6 @@ export function useNavData() {
         subheader: 'Müşteri Yönetimi',
         items: [
           { title: 'Yeni Müşteri', path: paths.customer.newCustomer, icon: ICONS.dashboard },
-          { title: 'Müşteri Bul', path: paths.customer.details, icon: ICONS.external },
           { title: 'Müşteri Listesi', path: paths.customer.customerList, icon: ICONS.user },
           {
             title: 'Mesajlar',

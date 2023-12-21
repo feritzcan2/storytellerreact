@@ -31,15 +31,20 @@ export default function ClosestAppointmentComponent({
       <CardHeader title={title} subheader={subheader} />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {orderBy(data.closestAppointments, ['date'], ['asc']).map((author, index) => (
-          <AuthorItem
-            cities={configs.cities}
-            countries={configs.countries}
-            key={author.customerName}
-            author={author}
-            index={index}
-          />
-        ))}
+        {orderBy(data.closestAppointments, ['date'], ['asc']).map((author, index) => {
+          if (fToNow(author.date).toLowerCase().includes('sonra')) {
+            return (
+              <AuthorItem
+                cities={configs.cities}
+                countries={configs.countries}
+                key={author.customerName}
+                author={author}
+                index={index}
+              />
+            );
+          }
+          return <></>;
+        })}
       </Stack>
     </Card>
   );
@@ -82,9 +87,11 @@ function AuthorItem({ author, index, countries, cities }) {
         </Typography>
       </Box>
 
-      <Label style={{ fontSize: '1rem' }} color="primary">
-        {fToNow(author.date)}
-      </Label>
+      {fToNow(author.date).toLowerCase().includes('sonra') && (
+        <Label style={{ fontSize: '1rem' }} color="primary">
+          {fToNow(author.date)}
+        </Label>
+      )}
     </Stack>
   );
 }

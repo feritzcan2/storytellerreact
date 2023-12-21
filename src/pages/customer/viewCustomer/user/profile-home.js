@@ -249,7 +249,7 @@ export default function ProfileHome({ customer, session, setShouldRefetch }) {
             {renderDates}
             {renderAmountLocation}
             {renderAbout}
-            {renderOtherCustomers}
+            {session.customers.filter((x) => x.id !== customer.id).length > 0 && renderOtherCustomers}
           </Stack>
         </Grid>
 

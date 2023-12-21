@@ -56,7 +56,7 @@ export default function DashboardView() {
         </Grid>
         <Divider sx={{ mt: 3, mb: 55 }}></Divider>
 
-        <Grid xs={12} md={12}>
+        {/* <Grid xs={12} md={12}>
           <Card>
             <Typography sx={{ mt: 2, ml: 4 }} variant="subtitle2">
               Müşteri Analizi
@@ -101,7 +101,7 @@ export default function DashboardView() {
               />
             </Stack>
           </Card>
-        </Grid>
+        </Grid> */}
         <Grid xs={12} md={4}></Grid>
       </Grid>
     </MainContainer>

@@ -86,14 +86,14 @@ export default function CustomerCard({
             </Stack>
             <Typography variant="subtitle2">
               {' '}
-              {customer.appointmentDate ? fDateTime(customer.appointmentDate) : ' Aranıyor'}
+              {customer.appointmentDate ? fDateTime(customer?.appointmentDate) : ' Aranıyor'}
             </Typography>
           </Stack>
           <Stack direction="column" alignItems="center" sx={{ color: 'text.primary', mr: 2 }}>
             <Stack direction="row" alignItems="center">
               <Typography variant="subtitle1">Vergi türü</Typography>
             </Stack>
-            <Typography variant="subtitle2">{configData?.taxType.name}</Typography>
+            <Typography variant="subtitle2">{configData?.taxType?.name}</Typography>
           </Stack>
         </Stack>
       </Stack>
