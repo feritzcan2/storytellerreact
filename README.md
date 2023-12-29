@@ -2,7 +2,7 @@
 
 - Node 16.x || 18.x
 
-## USING YARN (Recommend)
+## USING YARN (Recommend)sss
 
 - yarn install
 - yarn start
