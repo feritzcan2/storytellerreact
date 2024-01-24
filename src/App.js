@@ -16,10 +16,12 @@ import ThemeProvider from 'src/theme';
 
 import AppMain from './AppMain';
 import CombinedContextProviders from './context/CombinedContextProviders';
+import ConfigService from './api/ConfigService';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
+
   const charAt = `
 
   ░░░    ░░░

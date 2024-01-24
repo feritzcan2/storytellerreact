@@ -30,11 +30,16 @@ export default (state, action) => {
         ...state,
         dashboardData: action.payload,
       };
-    case 'SET_CONFIGS':
-      return {
-        ...state,
-        configs: action.payload,
-      };
+      case 'SET_CONFIGS':
+        return {
+          ...state,
+          configs: action.payload,
+        };
+        case 'SET_PINGS':
+          return {
+            ...state,
+            configs: action.payload,
+          };
     case 'SET_CALENDAR_DATA':
       return {
         ...state,

@@ -10,6 +10,7 @@ const initialState = {
   dashboardData: null,
   customerNames: null,
   calendarData: null,
+  servicePings:[]
 };
 
 //const localState = JSON.parse(localStorage.getItem("cm"));
@@ -56,6 +57,13 @@ export const GlobalProvider = ({ children }) => {
       payload: data,
     });
   }
+  function setPings(data) {
+    dispatch({
+      type: 'SET_PINGS',
+      payload: data,
+    });
+  }
+  
   function setCustomerNames(data) {
     dispatch({
       type: 'SET_CUSTOMER_NAMES',
@@ -88,6 +96,8 @@ export const GlobalProvider = ({ children }) => {
         calendarData: state.calendarData,
         setCustomerNames: setCustomerNames,
         customerNames: state.customerNames,
+        setPings: setPings,
+        servicePings: state.servicePings,
       }}
     >
       {children}

@@ -137,7 +137,6 @@ export default function NotificationsPopover() {
       </List>
     </Scrollbar>
   );
-  debugger;
   return (
     <>
       <IconButton

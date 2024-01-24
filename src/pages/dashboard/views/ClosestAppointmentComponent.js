@@ -25,7 +25,7 @@ export default function ClosestAppointmentComponent({
   ...other
 }) {
   console.log(data);
-  if ((data === null) | (data === undefined)) return <LoadingScreen />;
+  if ((data === null) || (data === undefined) || configs ===null) return <LoadingScreen />;
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />

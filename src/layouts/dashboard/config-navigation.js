@@ -55,6 +55,7 @@ export function useNavData() {
         items: [
           { title: 'Anasayfa', path: paths.dashboard.root, icon: ICONS.dashboard },
           { title: 'Takvim', path: paths.dashboard.calendar, icon: ICONS.calendar },
+          { title: 'Servis Durumu', path: paths.dashboard.serviceHealth, icon: ICONS.calendar },
         ],
       },
       {

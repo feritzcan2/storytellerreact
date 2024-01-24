@@ -7,6 +7,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
 import CalendarPage from 'src/pages/dashboard/calendar/CalendarPage';
+import ServiceHealthPage from 'src/pages/ServiceHealth/ServiceHealthPage';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +30,7 @@ export const dashboardRoutes = [
     children: [
       { element: <Dashboard />, index: true },
       { path: 'takvim', element: <CalendarPage /> },
+      { path: 'serviceHealth', element: <ServiceHealthPage /> },
     ],
   },
 ];

@@ -41,7 +41,6 @@ export default function NotificationRow({ notification }) {
     category = 'Yeni Kayıt';
     title = ' <p><strong>' + notification.customerName + '</strong> sisteme eklendi.</p>';
   } else {
-    debugger;
   }
   const renderAvatar = (
     <ListItemAvatar>
