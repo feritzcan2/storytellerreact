@@ -167,9 +167,7 @@ data
   
   return (
     <>
-      <Helmet>
-        <title> Takvim</title>
-      </Helmet>
+      
       <Typography sx={{ marginBottom: 2 }} variant="h4">
         Takvim
       </Typography>
@@ -177,7 +175,7 @@ data
               <div id="chart">
                   {data.map((dat) => {
                 let c1 = chart(dat)
-        return                 <ReactApexChart options={c1.options} series={c1.series} type="area" height={350} />
+        return                 <ReactApexChart key={dat.config.id} options={c1.options} series={c1.series} type="area" height={350} />
 
  
       })}

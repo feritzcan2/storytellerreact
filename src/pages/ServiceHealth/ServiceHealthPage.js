@@ -47,7 +47,6 @@ export default function ServiceHealthPage() {
       </Typography>
       {Object.entries(data).map((dat) => {
         return <ServiceHealthChart key={dat[0]} serviceType ={dat[0]} data = {dat[1]}/>
- 
       })}
     </>
   );
