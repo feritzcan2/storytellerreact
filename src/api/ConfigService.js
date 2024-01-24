@@ -30,7 +30,6 @@ export default function ConfigService() {
       });
   };
   const getPings = async (data, errorMsg) => {
-    
 
     let lastUpdateDate = localStorage.getItem('lastPingUpdateDate');
     var route= 'admin/pings'
@@ -38,7 +37,7 @@ export default function ConfigService() {
       route+='?date='+lastUpdateDate
     }
     let output = {}
-          debugger
+          
 
     return api
       .get(route)
@@ -47,7 +46,8 @@ export default function ConfigService() {
           result !== undefined &&
           (result.data.error === null || result.data.error === undefined)
         ) {
-          
+          try{
+
           const updatesByConfigId = result.data.reduce((acc, update) => {
 
             const { id } = update;
@@ -62,7 +62,7 @@ export default function ConfigService() {
           if(configs == null || configs === undefined)
           cnfg = await getConfigs()
         
-          for( let a=0; a<cnfg.searchConfigs.legnth;a++){
+          for( let a=0; a<cnfg.searchConfigs.length;a++){
             
             let search = cnfg.searchConfigs[a].id
             let index = entries.findIndex(x=>x[0]==""+search)
@@ -91,6 +91,10 @@ export default function ConfigService() {
            localStorage.setItem('lastPingUpdateDate', lastUpdateDate);
           setPings(output);
           return output
+          }catch(error){
+            debugger
+            console.log(error)
+          }
         } else {
           if (errorMsg !== undefined) errorMsg(result.data.error.message);
         }

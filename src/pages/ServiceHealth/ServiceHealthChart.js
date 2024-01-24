@@ -92,7 +92,7 @@ data
                                     dates.push([lastDate,lastVal])
 
             }
-
+debugger
 
     return { series: [
       {
