@@ -38,7 +38,7 @@ export default function ConfigService() {
       route+='?date='+lastUpdateDate
     }
     let output = {}
-          
+          debugger
 
     return api
       .get(route)
@@ -87,7 +87,7 @@ export default function ConfigService() {
 
             localStorage.setItem('ping'+key, jsonString);
           }
-          if(lastUpdateDate === null || lastUpdateDate === undefined) lastUpdateDate = new Date().toISOString()
+          lastUpdateDate = new Date().toISOString()
            localStorage.setItem('lastPingUpdateDate', lastUpdateDate);
           setPings(output);
           return output

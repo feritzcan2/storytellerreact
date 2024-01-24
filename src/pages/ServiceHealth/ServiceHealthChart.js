@@ -109,7 +109,7 @@ data
         stacked: false,
         height: 350,
         zoom: {
-          type: "x",
+          type: "y",
           enabled: true,
           autoScaleYaxis: true
         },
