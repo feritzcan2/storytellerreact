@@ -40,7 +40,7 @@ export default function DashboardView() {
           <Grid xs={6} md={6} lg={6}>
             <CountryDatesWidget
               configs={configs}
-              countryAppointmentData={countryAppointmentData}
+              countryAppointmentData={configs.searchConfigs}
               list={_appInstalled}
             />
           </Grid>

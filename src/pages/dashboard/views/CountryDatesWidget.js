@@ -14,7 +14,13 @@ import { fToNow } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
-export default function CountryDatesWidget({ countryAppointmentData, subheader, list, ...other }) {
+export default function CountryDatesWidget({
+  configs,
+  countryAppointmentData,
+  subheader,
+  list,
+  ...other
+}) {
   if (countryAppointmentData === undefined || countryAppointmentData.length === 0)
     return <LoadingScreen sx={{ minHeight: 200 }} />;
 
@@ -24,9 +30,9 @@ export default function CountryDatesWidget({ countryAppointmentData, subheader, 
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3 }}>
-          {countryAppointmentData.map((country) => (
-            <CountryItem key={country.id} country={country} />
-          ))}
+          {countryAppointmentData.map((countryData) => {
+            return <CountryItem configs={configs} key={countryData.id} countryData={countryData} />;
+          })}
         </Stack>
       </Scrollbar>
     </Card>
@@ -45,42 +51,53 @@ function findLowestDate(officeData) {
   let anyDatesFound = false;
   let updated = false;
   let updateMinute = 0;
-
-  for (const office of officeData) {
-    let updateMinutes = getMinuteDifference(office);
-    if (updateMinutes < 10) {
-      updated = true;
-      updateMinute = updateMinutes;
-      if (office.dates.length > 0) {
-        const officeMinDate = new Date(
-          Math.min(...office.dates.map((dateStr) => new Date(dateStr)))
-        );
-        if (lowestDate === null || officeMinDate < lowestDate) {
-          lowestDate = officeMinDate;
-        }
-        anyDatesFound = true; // Set the flag to true since we found non-empty date arrays
-      }
+  let updateMinutes = getMinuteDifference(officeData);
+  if (updateMinutes < 10) {
+    updated = true;
+    updateMinute = updateMinutes;
+    if (officeData.appointmentDate !== undefined) {
+      lowestDate = officeData.appointmentDate;
+      anyDatesFound = true; // Set the flag to true since we found non-empty date arrays
     }
   }
+
   return {
     updated: updated,
     updateMinute: updateMinute,
-    lowestDate: anyDatesFound ? lowestDate : null,
+    lowestDate: officeData.appointmentDate !== undefined ? officeData.appointmentDate : null,
   };
 }
 
-function CountryItem({ country }) {
-  const lowestDateData = findLowestDate(country.officeData);
+function CountryItem({ configs, countryData }) {
+  const lowestDateData = findLowestDate(countryData);
+  let country = configs.countries.find((x) => x.id == countryData.countryId);
+  let visaCategory = configs.visaCategories.find((x) => x.id == countryData.visaCategoryId);
+
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
-      <Stack direction="row" alignItems="center" flexGrow={1} sx={{ minWidth: 120 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        flexGrow={1}
+        sx={{ minWidth: 120, alignItems: 'flex-end' }}
+      >
         <Iconify
-          icon={GetCountryFlag(country.name)}
+          icon={GetCountryFlag(configs, countryData)}
           sx={{ borderRadius: 0.65, width: 28, mr: 1 }}
         />
-        <Typography variant="subtitle2" noWrap>
-          {country.name.charAt(0).toLocaleUpperCase('tr-TR') + country.name.slice(1)}
-        </Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          flexGrow={1}
+          sx={{ justifyContent: 'left', marginLeft: '30px' }}
+        >
+          <Typography variant="subtitle2" noWrap sx={{ minWidth: '150px' }}>
+            {country.name}
+          </Typography>
+          <Typography variant="subtitle2" noWrap sx={{ marginLeft: '40px' }}>
+            {visaCategory.name}
+          </Typography>
+        </Stack>
       </Stack>
 
       {lowestDateData.updated === false ? (
@@ -88,16 +105,21 @@ function CountryItem({ country }) {
       ) : (
         lowestDateData.updateMinute + 'dakika önce'
       )}
-      {GetDateLabel(country)}
+      {GetDateLabel(countryData)}
     </Stack>
   );
 }
+function GetCountryFlag(configs, name) {
+  let country = configs.countries.find((x) => x.id == name.countryId);
+  return 'flagpack:' + country.code.toLowerCase();
+}
 function GetDateLabel(countryData) {
-  const lowestDateData = findLowestDate(countryData.officeData);
+  const lowestDateData = findLowestDate(countryData);
+
   if (lowestDateData.updated === true) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(
-      lowestDateData.lowestDate
+      new Date(lowestDateData.lowestDate)
     );
     if (lowestDateData.lowestDate !== null) {
       return (
@@ -125,14 +147,9 @@ function GetDateLabel(countryData) {
     );
   }
 }
-function GetCountryFlag(name) {
-  if (name.toLowerCase() === 'almanya') return 'flagpack:de';
-  if (name.toLowerCase() === 'hollanda') return 'flagpack:nl';
-  if (name === 'ispanya') return 'flagpack:es';
-  if (name.toLowerCase() === 'yunanistan') return 'flagpack:gr';
-  if (name === 'italya') return 'flagpack:it';
-}
+
 const getMinuteDifference = (country) => {
+  if (!country || !country.updateDate) return 100;
   let date1 = new Date();
   let date2 = new Date(country.updateDate);
   const diffInMilliseconds = Math.abs(date2 - date1);
