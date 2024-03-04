@@ -15,9 +15,13 @@ export const isAuthenticated = () => {
   return accessToken !== null;
 };
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
-export const setToken = (Token) => {
+export const setToken = (token) => {
   localStorage.setItem(TOKEN_KEY, token);
   sessionStorage.setItem(TOKEN_KEY, token);
+};
+export const setOrganisationId = (organisationId) => {
+  localStorage.setItem("OrganisationId", organisationId);
+  sessionStorage.setItem("OrganisationId", organisationId);
 };
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);

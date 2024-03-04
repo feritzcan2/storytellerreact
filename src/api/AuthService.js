@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { logout, setToken } from '../context/AuthContext';
+import { logout, setToken,setOrganisationId } from '../context/AuthContext';
 import { GlobalContext } from '../context/GlobalProvider';
 import api from './api';
 
@@ -9,6 +9,7 @@ export default function UserAuth() {
 
   const setUserContext = async (result) => {
     setToken(result.data.tokenData.jwtToken, result.data.tokenData.jwtToken.organisationId);
+    setOrganisationId( result.data.tokenData.jwtToken.organisationId);
     setUserData(result.data.userData);
     return Navigate('/');
   };

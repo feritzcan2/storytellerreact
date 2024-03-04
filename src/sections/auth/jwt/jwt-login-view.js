@@ -42,8 +42,8 @@ export default function JwtLoginView() {
   });
 
   const defaultValues = {
-    email: 'feritzcan',
-    password: 'adminferit',
+    email: 'demo',
+    password: 'demodemo',
   };
 
   const methods = useForm({
@@ -122,10 +122,10 @@ export default function JwtLoginView() {
           <div> Giriş yapmak için bu bilgileri kullanabilirsin</div>
           <p></p>
           <div>
-            Kullanıcı adı <strong> feritzcan</strong>
+            Kullanıcı adı <strong> demo</strong>
           </div>
           <div>
-            Şifre <strong> adminferit</strong>
+            Şifre <strong> demodemo</strong>
           </div>
         </Stack>
       </Alert>
